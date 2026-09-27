@@ -1,0 +1,1615 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#F6F2EA" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="6 Week Recomp" />
+<title>Katy Recomp MASTER v33 • 6 Week Recomp</title>
+<style>
+:root{
+  --bg:#F6F2EA; --card:#FFFFFF; --card2:#F0ECE3; --muted:#667275; --text:#163536;
+  --accent:#2E9F98; --accent2:#6FC5BE; --border:#DED8CE; --good:#4FAE78; --warn:#F2B35D; --danger:#D96C74;
+  --shadow:0 10px 28px rgba(34,55,55,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(180deg,#FBF8F1 0%,var(--bg) 42%,#EEF4F1 100%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit}
+.app{max-width:860px;margin:0 auto;min-height:100vh;padding:env(safe-area-inset-top) 14px calc(92px + env(safe-area-inset-bottom))}
+.header{display:flex;justify-content:space-between;align-items:center;padding:18px 4px 10px}
+.brand{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3,p{margin:0}
+h1{font-size:29px;line-height:1.05}
+h2{font-size:20px}
+h3{font-size:15px}
+.sub{color:var(--muted);font-size:13px;margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:linear-gradient(180deg,#FFFFFF,#FCFBF8);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:var(--shadow)}
+.card.full{grid-column:1/-1}
+.kicker{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+.big{font-size:30px;font-weight:800}
+.metric{display:flex;justify-content:space-between;gap:12px;align-items:end}
+.progress{height:8px;background:#E8E3DA;border-radius:999px;overflow:hidden;margin-top:10px}
+.progress > span{display:block;height:100%;background:var(--accent);border-radius:999px}
+.ring{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;position:relative;grid-area:1/1;background:conic-gradient(var(--accent) var(--pct),#E8E3DA 0)}
+.ring:before{content:"";width:96px;height:96px;border-radius:50%;background:var(--card);position:absolute;inset:18px}
+.ringwrap{position:relative;width:132px;height:132px;display:grid;place-items:center}
+.ringtext{position:relative;text-align:center;grid-area:1/1;z-index:2;display:grid;place-items:center;line-height:1.05}
+.ringtext strong{display:block;font-size:26px;margin:0}
+.section{margin-top:18px}
+.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:4px}
+.tab{white-space:nowrap;border:1px solid var(--border);background:#FFFDF9;color:var(--text);border-radius:999px;padding:10px 14px}
+.tab.active{background:var(--accent);color:#061617;border-color:transparent;font-weight:700}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.stack{display:flex;flex-direction:column;gap:8px}
+.btn{border:none;border-radius:14px;padding:12px 14px;background:var(--accent);color:#07191a;font-weight:800}
+.btn.secondary{background:#EFEAE1;color:var(--text);border:1px solid var(--border)}
+.btn.ghost{background:#F7FBFA;color:#227A75;border:1px solid #B8DCD8}
+.btn.danger{background:#FFF1F2;color:#A6404A;border:1px solid #E7B9BE}
+.small{font-size:12px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;background:#202e30;color:#aaf0f4;border:1px solid #275458;padding:5px 8px;border-radius:999px;font-size:11px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{font-size:12px;color:var(--muted);display:block}
+input,select,textarea{width:100%;margin-top:6px;background:#FFFEFB;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:11px}
+textarea{min-height:110px;resize:vertical}
+.exercise{margin-top:12px}
+.exercise-head{display:flex;gap:12px;align-items:flex-start}
+.demo{width:108px;min-width:108px;height:auto;min-height:108px;border-radius:14px;background:#F2EFE8;object-fit:cover;border:1px solid var(--border)}
+.demo.fallback{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:11px;text-align:center;padding:10px 8px;box-sizing:border-box;overflow:hidden;line-height:1.2}
+.set-table{display:grid;grid-template-columns:46px 1fr 1fr 50px;gap:7px;margin-top:12px;align-items:center}
+.set-table input{margin:0;padding:9px 8px}
+.check{width:22px;height:22px}
+.timerbar{position:sticky;top:8px;z-index:5;background:#E7F6F3;border:1px solid #B3DDD7;padding:10px 12px;border-radius:14px;margin:8px 0 12px;display:none}
+.timerbar.show{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.timerbig{font-size:24px;font-weight:800}
+.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(250,247,240,.95);backdrop-filter:blur(15px);border-top:1px solid var(--border);padding:9px 8px calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;z-index:10}
+.navin{width:min(860px,100%);display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.nav button{background:transparent;border:none;color:var(--muted);padding:9px 4px;border-radius:12px;font-size:11px}
+.nav button.active{color:#1D7A74;background:#E2F3F0}
+.page{display:none}.page.active{display:block}
+.daycard{cursor:pointer}
+.goalpill{font-size:12px;color:var(--muted)}
+.milestone{padding:10px 0;border-bottom:1px solid #2b2b2b}
+.milestone:last-child{border-bottom:0}
+.chart{display:flex;align-items:end;gap:8px;height:150px;margin-top:10px}
+.bar{flex:1;height:100%;background:#E9E4DA;border-radius:8px 8px 3px 3px;position:relative;min-width:24px}
+.bar > span{position:absolute;left:0;right:0;bottom:0;background:var(--accent);border-radius:8px 8px 3px 3px}
+.bar label{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:10px}
+.toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%);background:#eafcfd;color:#0a2527;padding:10px 14px;border-radius:12px;font-weight:700;display:none;z-index:99}
+.toast.show{display:block}
+hr{border:none;border-top:1px solid var(--border);margin:14px 0}
+
+.weekstrip{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0 16px}
+.weekday{border:1px solid var(--border);background:#FFFDF9;border-radius:14px;padding:9px 3px;text-align:center;font-size:11px;color:var(--muted);cursor:pointer;transition:transform .12s ease,background .12s ease,border-color .12s ease;user-select:none;-webkit-tap-highlight-color:transparent}
+.weekday strong{display:block;color:var(--text);font-size:14px;margin-top:2px}
+.weekday.today{border-color:#79C9C2;background:#EAF7F5}.weekday:active{transform:scale(.96);background:#E6F4F1}
+.weekday.done{box-shadow:inset 0 -3px 0 var(--good)}
+.component-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.component{border:1px solid var(--border);background:#FFFDF9;border-radius:15px;padding:12px}
+.component.done{border-color:#9ED7B7;background:#F1FBF5}
+.component label{display:flex;align-items:center;justify-content:space-between;color:var(--text);font-weight:700;gap:8px}
+.component .small{margin-top:5px}
+.week-goals{display:flex;gap:8px;overflow:auto;padding-bottom:4px;margin-top:10px}
+.goalchip{white-space:nowrap;border-radius:999px;padding:8px 11px;background:#F2EEE6;border:1px solid var(--border);font-size:12px}
+.goalchip strong{color:#1D7A74}
+.soft-highlight{background:linear-gradient(135deg,#FFF7E8,#F0FAF7)!important;border-color:#E9D5AA!important}
+
+
+.coach{margin-top:14px;border-top:1px solid var(--border);padding-top:12px}
+.coach-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;border:0;background:#EEF7F4;color:var(--text);padding:12px 14px;border-radius:12px;font-weight:800;font-size:14px}
+.coach-body{display:none;padding:12px 4px 2px}
+.coach-body.open{display:block}
+.coach-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.coach-box{background:#FAF8F3;border:1px solid var(--border);border-radius:12px;padding:10px}
+.coach-box b{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#287C76;margin-bottom:5px}
+.coach-box p{margin:0;font-size:13px;line-height:1.42;color:var(--text)}
+.coach-cue{margin-top:9px;background:#FFF5DF;border:1px solid #E9D4A7;border-radius:12px;padding:11px;font-size:13px}
+@media(max-width:520px){.coach-grid{grid-template-columns:1fr}}
+
+
+.move-btn{border:1px solid var(--border);background:#F6F2EA;color:#2E736E;border-radius:999px;padding:6px 10px;font-weight:700;font-size:11px}
+.drag-handle{font-size:16px;color:#7D8A87;cursor:grab;padding:2px 5px}
+.daycard.dragover{outline:2px dashed #57AAA3;outline-offset:3px;background:#F0FAF7}
+.move-sheet{position:fixed;inset:0;display:none;z-index:50;background:rgba(10,30,30,.25);align-items:flex-end}
+.move-sheet.open{display:flex}
+.move-sheet-panel{width:100%;background:#FFFDF9;border-radius:22px 22px 0 0;padding:18px 18px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -18px 50px rgba(20,40,40,.16)}
+.move-sheet-panel h3{margin:0 0 12px}
+.move-day-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.move-day-btn{border:1px solid var(--border);background:#FFF;color:var(--text);border-radius:12px;padding:12px 6px;font-weight:700}
+.move-day-btn.active{background:#E4F4F1;border-color:#79C9C2;color:#1D7A74}
+.schedule-tools{display:flex;justify-content:flex-end;margin:4px 0 10px}
+.component .component-actions{display:flex;gap:6px;align-items:center;margin-top:8px}
+
+
+.demo.fallback a{display:block;width:100%;box-sizing:border-box;overflow-wrap:anywhere;word-break:normal;line-height:1.15;margin:0!important;padding:2px 0}
+.demo.fallback div{max-width:100%;overflow-wrap:anywhere}
+.exercise-head{align-items:flex-start}
+.exercise-head .demo{flex:0 0 108px}
+.coach-toggle{gap:8px;flex-wrap:wrap;text-align:left}
+.coach-toggle span:first-child{flex:1 1 120px}
+.coach-toggle span:last-child{flex:0 1 auto;font-size:12px;color:#3B7772}
+@media(max-width:420px){
+  .exercise-head{gap:12px}
+  .exercise-head .demo{flex-basis:104px;width:104px;min-width:104px}
+  .demo.fallback{padding:9px 7px}
+  .coach-toggle{font-size:13px;padding:11px 12px}
+}
+
+
+.exercise-note{margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
+.exercise-note label{display:block;font-weight:800;font-size:13px;margin-bottom:7px;color:var(--text)}
+.exercise-note label span{font-weight:500;color:var(--muted)}
+.exercise-note textarea,.weekly-review textarea{width:100%;box-sizing:border-box;min-height:78px;resize:vertical;border:1px solid var(--border);border-radius:13px;background:#FFFDF9;color:var(--text);font:inherit;font-size:14px;line-height:1.4;padding:11px 12px;outline:none}
+.exercise-note textarea:focus,.weekly-review textarea:focus{border-color:#79C9C2;box-shadow:0 0 0 3px rgba(87,170,163,.12)}
+.weekly-review textarea{margin-top:12px;min-height:100px}
+
+
+.component.clickable{cursor:pointer;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease}
+.component.clickable:active{transform:scale(.985);border-color:#79C9C2}
+.component-openhint{font-size:11px;color:#2E817B;font-weight:800;margin-top:8px}
+.touch-ghost{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;background:#174B49;color:#fff;border-radius:12px;padding:10px 12px;font-weight:800;font-size:13px;box-shadow:0 10px 28px rgba(0,0,0,.18);max-width:220px;transform:translate(-9999px,-9999px)}
+.drag-handle{touch-action:none;-webkit-user-select:none;user-select:none}
+@media(max-width:640px){
+  .drag-handle{font-size:20px;padding:8px 10px;border-radius:10px;background:#F0ECE3}
+}
+
+@media(max-width:640px){
+ .grid{grid-template-columns:1fr 1fr}.card{padding:14px}.component-grid{grid-template-columns:1fr 1fr}.big{font-size:26px}.formgrid{grid-template-columns:1fr}
+}
+.metric-click{cursor:pointer;-webkit-tap-highlight-color:transparent}.metric-click:active{transform:scale(.99)}
+.week-detail-row{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:8px;padding:10px 0;border-bottom:1px solid #e7e2d8}.week-detail-row:last-child{border-bottom:0}.week-detail-row strong{text-align:right}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div><div class="brand">6 Week Recomp</div><h1 id="pageTitle">Dashboard</h1><div class="sub" id="pageSub">Stronger, freer, more consistent.</div></div>
+    <button class="btn secondary" id="quickAdd">+ Log</button>
+  </div>
+
+  <div id="timerBar" class="timerbar">
+    <div><div class="small" id="timerLabel">Workout timer</div><div class="timerbig" id="timerDisplay">00:00</div></div>
+    <div class="row"><button class="btn ghost" id="timerPause">Pause</button><button class="btn secondary" id="timerStop">Stop</button></div>
+  </div>
+
+  <section id="home" class="page active"></section>
+  <section id="workouts" class="page"></section>
+  <section id="log" class="page"></section>
+  <section id="progressPage" class="page"></section>
+  <section id="more" class="page"></section>
+</div>
+
+<div class="nav"><div class="navin">
+  <button data-page="home" class="active">Home</button>
+  <button data-page="workouts">Workouts</button>
+  <button data-page="log">Log</button>
+  <button data-page="progressPage">Progress</button>
+  <button data-page="more">More</button>
+</div></div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+
+const COACHING = {"90_90": {"title": "90/90 Hip Switches", "goal": "Hip rotation control for straddles, splits and pole positions.", "how": "Sit tall with both knees bent about 90°. Rotate both thighs together from one side to the other without using momentum.", "focus": "Keep your sit bones heavy and torso as tall as your current mobility allows. Move from the hip joints.", "feel": "Deep hip rotators and inner/outer hip working; a mild stretch is fine.", "tempo": "3 sec to rotate → 1 sec pause → 3 sec back.", "cue": "Rotate the thighs; don't throw the knees.", "avoid": "Forcing the knees down, collapsing through the chest, or sharp/pinching hip pain."}, "adductor_rocks": {"title": "Adductor Rock-Backs", "goal": "Open the inner thighs while keeping pelvic control.", "how": "From hands and knees, extend one leg out to the side with the foot planted. Keep a neutral spine and slowly send your hips backward.", "focus": "Hinge at the hips rather than rounding your low back.", "feel": "A lengthening stretch along the inner thigh of the straight leg.", "tempo": "3 sec back → 1–2 sec pause → 2 sec forward.", "cue": "Long spine, hips back.", "avoid": "Bouncing, twisting the pelvis, or pushing into groin pinching."}, "half_kneel_hf": {"title": "Half-Kneeling Hip-Flexor Stretch", "goal": "Improve hip extension for splits and backbends.", "how": "Kneel with one knee down. Gently tuck your pelvis, squeeze the glute of the kneeling side, then shift forward only enough to create the stretch.", "focus": "Posterior pelvic tilt first; distance forward second.", "feel": "Front of the hip/thigh on the kneeling side, not the low back.", "tempo": "Ease in over 3–5 sec; breathe slowly for the prescribed hold.", "cue": "Belt buckle up, glute on.", "avoid": "Arching the low back to fake more range."}, "straddle_pancake": {"title": "Straddle / Pancake", "goal": "Build usable straddle range for inversions and pole shapes.", "how": "Sit in a comfortable straddle. Rotate the pelvis forward and hinge your torso between the legs while keeping the spine long.", "focus": "Anterior pelvic tilt and hip hinge before trying to get the chest lower.", "feel": "Inner thighs and hamstrings lengthening.", "tempo": "Slow 3–5 sec entry; relaxed breathing during the hold.", "cue": "Lead with the pelvis, not the forehead.", "avoid": "Rounding aggressively or forcing the knees toward the floor."}, "straddle_leg_lifts": {"title": "Seated Straddle Leg Lifts", "goal": "Active straddle strength so you can lift your legs into an inversion rather than relying on passive flexibility.", "how": "Sit tall in a straddle. Brace gently, keep one knee straight and lift that heel off the floor without leaning away. Lower with control.", "focus": "Keep the thigh externally rotated enough that the kneecap stays oriented upward; make the lift small and clean.", "feel": "Hip flexors and upper thigh working hard, with abs stabilizing the pelvis. Hip-flexor effort is expected.", "tempo": "1–2 sec lift → 1 sec hold → 3 sec lower.", "cue": "Lift from the hip; stay tall.", "avoid": "Rocking backward, bending the knee, or using momentum."}, "straddle_compression": {"title": "Straddle Compression Lifts", "goal": "Compression strength for higher, wider and more controlled inversion entries.", "how": "Sit tall in a straddle, place hands on the floor in front, brace, and try to lift both straight legs while keeping the torso controlled.", "focus": "Think ribs toward pelvis while the hip flexors actively lift the thighs.", "feel": "Strong hip-flexor/upper-thigh effort plus deep abdominal bracing.", "tempo": "1 sec lift → 1–2 sec hold → 3 sec lower.", "cue": "Compress first, then lift.", "avoid": "Throwing the torso backward or sacrificing straight knees for height."}, "active_straddle_hold": {"title": "Active Straddle Hold", "goal": "Own your straddle range instead of only stretching into it.", "how": "Create your widest controlled straddle and actively hold the legs there using the hips rather than forcing them farther with your hands.", "focus": "Long legs, active quads and controlled pelvis.", "feel": "Outer/inner hips and thighs working; not joint pain.", "tempo": "Build tension gradually, hold while breathing, release slowly.", "cue": "Make the muscles hold the shape.", "avoid": "Forcing maximal passive range."}, "reverse_grip_row": {"title": "Reverse-Grip Dumbbell Row", "goal": "Build lats/upper back and pulling strength that carries over to pole.", "how": "Hinge at the hips with a long spine. Hold dumbbells with palms forward/underhand. Pull elbows toward your back pockets/lower ribs, then lower fully under control.", "focus": "Keep shoulders away from ears and initiate by drawing the upper arm back rather than curling the weight.", "feel": "Lats beneath the armpits and mid-back; biceps assist.", "tempo": "2 sec pull → 1 sec squeeze → 3 sec lower.", "cue": "Elbows to back pockets.", "avoid": "Shrugging, jerking, overextending the low back, or turning it into a curl."}, "oh_triceps": {"title": "Overhead Triceps Extension", "goal": "Train the long head of the triceps through a lengthened position.", "how": "Hold one dumbbell overhead. Keep upper arms mostly vertical as you bend the elbows and lower the weight behind your head, then extend the elbows.", "focus": "Ribs stacked over pelvis; elbows point mostly forward.", "feel": "Stretch and contraction along the back of the upper arms.", "tempo": "3 sec lower → brief stretch → 2 sec extend.", "cue": "Move at the elbows, not the ribs.", "avoid": "Flared ribs, excessive elbow drift, or shoulder pain."}, "band_lat_pulldown": {"title": "High-Anchored Band Lat Pulldown", "goal": "Vertical pulling strength for pole and shoulder-mount preparation.", "how": "Anchor the band high. Kneel or sit with arms overhead, then drive elbows down toward your ribs/back pockets. Return until the lats are long again.", "focus": "Keep ribs controlled and shoulders away from ears.", "feel": "Lats along the sides of your back, with biceps assisting.", "tempo": "2 sec pull → 1 sec squeeze → 3 sec return.", "cue": "Elbows down, chest tall.", "avoid": "Leaning far back or shrugging."}, "skull_crushers": {"title": "Dumbbell Skull Crushers", "goal": "Direct triceps work, especially the back of the upper arm.", "how": "Lie down with arms above shoulders. Keep upper arms fairly still while bending the elbows to lower the dumbbells beside/behind your head; extend to finish.", "focus": "Only the forearms should make most of the movement.", "feel": "Triceps doing the work; a mild stretch near the long head is normal.", "tempo": "3 sec lower → 1 sec pause → 2 sec extend.", "cue": "Pin the upper arms in space.", "avoid": "Turning it into a pullover or letting elbows flare dramatically."}, "rear_delt_fly": {"title": "Bent-Over Rear-Delt Fly", "goal": "Rear delts and upper-back definition/postural strength.", "how": "Hinge forward, keep a soft elbow bend, and sweep the arms out and slightly back until the upper arms are roughly in line with the torso.", "focus": "Use light enough weight that the rear shoulder moves the load without shrugging.", "feel": "Back of the shoulders and upper back.", "tempo": "2 sec lift → 1 sec squeeze → 3 sec lower.", "cue": "Reach wide, not high.", "avoid": "Shrugging or swinging heavy dumbbells."}, "lateral_raise": {"title": "Dumbbell Lateral Raise", "goal": "Build the side delts for shoulder shape.", "how": "Stand tall with soft elbows. Raise the arms out in the scapular plane, slightly forward of directly sideways, then lower slowly.", "focus": "Lead with the elbows and stop around shoulder height if comfortable.", "feel": "Side of the shoulder. Upper traps may assist but shouldn't dominate.", "tempo": "2 sec raise → 1 sec pause → 3 sec lower.", "cue": "Elbows wide; shoulders down.", "avoid": "Swinging, shrugging, or forcing above a comfortable range."}, "zottman": {"title": "Zottman Curl", "goal": "Train biceps plus forearms/elbow flexors.", "how": "Curl palms-up, rotate to palms-down near the top, then lower slowly in the pronated position. Reset at the bottom.", "focus": "Keep elbows close to your sides.", "feel": "Biceps on the way up and forearms strongly on the way down.", "tempo": "2 sec curl → rotate → 3 sec lower.", "cue": "Own the lowering phase.", "avoid": "Swinging the torso."}, "straight_leg_raise": {"title": "Straight-Leg Raises", "goal": "Active hip-flexion/compression strength for pole inversions.", "how": "Keep the knee straight and actively raise the leg from the hip while maintaining pelvic control.", "focus": "Range only counts while you can keep the pelvis and trunk controlled.", "feel": "Hip flexors working with abs stabilizing.", "tempo": "2 sec lift → 1 sec hold → 3 sec lower.", "cue": "Straight knee, quiet pelvis.", "avoid": "Momentum or arching the low back to create height."}, "scap_push": {"title": "Scapular Push-Ups", "goal": "Serratus and shoulder-blade control for stable pole shoulders.", "how": "From a plank or modified plank with elbows straight, let shoulder blades glide gently together, then push the floor away so they spread apart.", "focus": "The elbows stay straight; motion comes from the shoulder blades.", "feel": "Muscles around the rib cage/under the armpits working.", "tempo": "2 sec glide in → 2 sec push away.", "cue": "Push the floor away.", "avoid": "Bending elbows or dropping through the low back."}, "reverse_crunch": {"title": "Reverse Crunch with Pelvic Curl", "goal": "Train abdominal pelvic control for inversion mechanics.", "how": "Bring knees toward the torso, then use the abs to curl the pelvis off the floor slightly. Lower the pelvis slowly before moving the legs away.", "focus": "The important part is the pelvic curl, not simply bringing knees toward your chest.", "feel": "Lower portion of the abdominal wall working; hip flexors assist with leg position.", "tempo": "2 sec curl → 1 sec squeeze → 3 sec lower.", "cue": "Curl the tailbone toward the ribs.", "avoid": "Swinging the legs for momentum."}, "dead_bug": {"title": "Dead Bug", "goal": "Maintain rib-to-pelvis control while the limbs move.", "how": "Lie on your back with hips/knees bent. Exhale gently to stack ribs over pelvis, then slowly extend opposite arm and leg without losing trunk position.", "focus": "Make the range smaller if the low back arches away from your controlled position.", "feel": "Deep abdominal bracing, not neck tension.", "tempo": "3 sec extend → 1 sec pause → 3 sec return.", "cue": "Quiet torso, moving limbs.", "avoid": "Chasing range after pelvic control is lost."}, "hip_thrust": {"title": "Hip Thrust", "goal": "Load the glutes through hip extension.", "how": "Set upper back against a bench, feet planted. Drive through the whole foot and extend the hips until the torso is roughly parallel to the floor, then lower under control.", "focus": "Finish by squeezing the glutes with ribs down and pelvis controlled rather than hyperextending the spine.", "feel": "Glutes should be the main limiter; hamstrings may assist.", "tempo": "2 sec up → 2 sec squeeze → 3 sec lower.", "cue": "Ribs down, squeeze glutes to finish.", "avoid": "Overarching the low back or placing feet so far away that hamstrings dominate."}, "db_rdl": {"title": "Dumbbell Romanian Deadlift", "goal": "Build hamstrings and glutes in a lengthened position.", "how": "Hold dumbbells close to the thighs. Soften the knees, push the hips backward and let the weights travel close to the legs. Stop when hamstring tension or pelvic position limits you; stand by driving the hips forward.", "focus": "Vertical-ish shins, long spine, lats lightly engaged.", "feel": "A strong loaded stretch in hamstrings and glutes, not the low back.", "tempo": "3–4 sec lower → brief pause → 2 sec stand.", "cue": "Send the hips back; keep the weights close.", "avoid": "Squatting the movement, reaching weights away from the legs, or chasing floor depth."}, "rev_curtsy": {"title": "Reverse Lunge → Curtsy Lunge", "goal": "Single-leg glute strength with multiplanar control.", "how": "Step back into a controlled reverse lunge, return, then step the same leg diagonally behind into a comfortable curtsy. Repeat before switching sides.", "focus": "Keep the working knee tracking with the foot and pelvis controlled.", "feel": "Glute of the standing leg, including side glute; quads will contribute.", "tempo": "3 sec lower → controlled drive up; no bouncing.", "cue": "Own the standing hip.", "avoid": "Collapsing the knee inward or taking an excessively deep curtsy."}, "sumo_squat": {"title": "Sumo Squat", "goal": "Train glutes/adductors and legs in a wide stance.", "how": "Take a comfortable wide stance with toes turned out. Sit down between the hips while knees track in the same direction as the toes, then stand tall.", "focus": "Use the widest stance you can control without hip pinching.", "feel": "Glutes, inner thighs and quads.", "tempo": "3 sec lower → 1 sec pause → 2 sec stand.", "cue": "Knees follow toes; push the floor apart.", "avoid": "Knees collapsing inward or forcing turnout from the knees."}, "band_abduction": {"title": "Band Hip Abduction", "goal": "Target the lateral glutes/hip abductors.", "how": "Maintain a stable pelvis while pressing the thighs apart against the band, then return slowly without letting the band snap you back.", "focus": "Small controlled range and constant tension.", "feel": "Side/upper glutes burning.", "tempo": "2 sec out → 1 sec squeeze → 3 sec return.", "cue": "Move from the hips, not the feet.", "avoid": "Rocking the pelvis to create range."}, "half_split": {"title": "Half-Split Hamstring Stretch", "goal": "Improve hamstring range for front splits.", "how": "From half-kneeling, shift hips back and straighten the front knee to your comfortable range. Hinge forward from the hips.", "focus": "Keep the front leg aligned and spine long.", "feel": "Back of the front thigh.", "tempo": "Ease in slowly; breathe through the hold.", "cue": "Hips back, chest long.", "avoid": "Aggressive rounding or nerve-like tingling/shooting sensations."}, "front_split": {"title": "Front Split", "goal": "Make your existing split range easier and more accessible.", "how": "Slide into your controlled front split with hips as square as possible. Support yourself with hands/blocks as needed.", "focus": "Quality and square-ish hips over forcing depth.", "feel": "Front hamstring and rear hip flexor/quadriceps stretching.", "tempo": "Enter over 5–10 sec, breathe during hold, exit slowly.", "cue": "Square first, depth second.", "avoid": "Dropping suddenly into end range."}, "active_leg_lift": {"title": "Active Straight-Leg Lift", "goal": "Turn passive hamstring flexibility into active leg height for pole.", "how": "Keep the knee straight and lift the leg using your own muscles without pulling it with your hands.", "focus": "Stable pelvis and straight knee before height.", "feel": "Hip flexors working while hamstrings lengthen.", "tempo": "2 sec lift → 1–2 sec hold → 3 sec lower.", "cue": "Own every inch.", "avoid": "Leaning away to fake height."}, "cat_cow": {"title": "Cat–Cow", "goal": "Controlled spinal articulation before backbending.", "how": "On hands and knees, slowly move from spinal flexion into comfortable extension, articulating through the spine.", "focus": "Spread movement across the whole spine rather than hinging only at the low back.", "feel": "Gentle motion, not a maximal stretch.", "tempo": "4–5 sec each direction with your breath.", "cue": "Move one section at a time.", "avoid": "Forcing end range."}, "thread_needle": {"title": "Thread the Needle", "goal": "Thoracic rotation and shoulder mobility.", "how": "From hands and knees, slide one arm underneath the other and rotate through the upper back. Return and repeat.", "focus": "Let the rib cage rotate while hips stay relatively quiet.", "feel": "Upper-back/shoulder stretch.", "tempo": "3 sec rotate → brief pause → 3 sec return.", "cue": "Rotate the ribs.", "avoid": "Forcing the shoulder into discomfort."}, "puppy": {"title": "Puppy Pose", "goal": "Open shoulders/lats and thoracic extension for backbends.", "how": "From hands and knees, walk hands forward while keeping hips over knees and let the chest move toward the floor.", "focus": "Lengthen through the sides of the body and upper back while keeping the low back comfortable.", "feel": "Shoulders, lats and chest.", "tempo": "Ease in over 5 sec; slow breathing during hold.", "cue": "Chest forward and down; hips stay back.", "avoid": "Dumping the entire stretch into the lumbar spine."}, "band_pass": {"title": "Band Shoulder Pass-Throughs", "goal": "Controlled shoulder flexion and chest opening.", "how": "Hold a light band wide. With straight elbows, move it from in front of the body overhead and toward the back only through a comfortable range, then return.", "focus": "Use a wide enough grip to keep the motion smooth.", "feel": "Shoulders/chest opening without pinching.", "tempo": "3 sec each direction.", "cue": "Wide grip, quiet ribs.", "avoid": "Forcing a narrow grip or compensating with a large back arch."}, "band_lat_stretch": {"title": "Band Lat Stretch", "goal": "Improve overhead shoulder range for pole and bridges.", "how": "Hold an anchored band and sit hips back while allowing the arm to lengthen overhead.", "focus": "Keep ribs controlled so the stretch reaches the lat rather than becoming only spinal extension.", "feel": "Side of back from armpit toward ribs.", "tempo": "Slow entry; breathe through the hold.", "cue": "Long from hip to fingertips.", "avoid": "Shoulder pinching."}, "thoracic_ext": {"title": "Thoracic Extension Over Roller", "goal": "Improve upper-back extension so backbends are less lumbar-dominant.", "how": "Place a foam roller/rolled towel across the upper back. Support your head and gently extend over it, then return. Move to another upper-back segment as needed.", "focus": "Extension through the thoracic spine while keeping the lower ribs reasonably controlled.", "feel": "Opening across upper back/chest.", "tempo": "3 sec extend → 1–2 sec breathe → 3 sec return.", "cue": "Open the upper back.", "avoid": "Cranking the neck or low back."}, "sphinx_cobra": {"title": "Sphinx → Cobra", "goal": "Practice distributed spinal extension with active support.", "how": "Begin in sphinx on forearms. Lengthen through the crown of the head and gently lift the chest. Progress toward cobra by using the hands only as much as needed while keeping the body long.", "focus": "Think forward-and-up, not simply bending backward.", "feel": "Abdominal/front-body stretch with back muscles active; no sharp lumbar pinch.", "tempo": "3 sec rise → 1–2 breaths → 3 sec lower.", "cue": "Get long before you get high.", "avoid": "Shrugging or jamming into the low back."}, "bridge": {"title": "Backbend / Bridge Progression", "goal": "Improve shoulder flexion, thoracic extension and an even backbend shape for pole.", "how": "Lie on your back with knees bent and feet about hip-width. Place hands beside your ears with fingers toward your shoulders. Press through hands and feet to lift. Think about pushing the floor away and moving your chest through your arms.", "focus": "Straighten the arms as tolerated, open shoulders/upper back, keep knees tracking forward, and distribute the curve through the whole body.", "feel": "Strong opening through shoulders/chest/front body with legs and glutes supporting you. Back muscles work, but there should not be a sharp localized low-back pinch.", "tempo": "2–3 sec lift → hold 10–20 sec with steady breathing → 3–5 sec lower.", "cue": "Chest through the arms; make the curve long.", "avoid": "Knees falling outward, elbows flaring excessively, breath-holding, or forcing height by compressing the lumbar spine."}};
+
+Object.assign(COACHING,{
+  one_arm_db_row:{title:"One-Arm Dumbbell Row",goal:"Build upper-back and lat strength for a balanced, defined upper body.",how:"Brace one hand on a bench, hinge with a long spine, and row the dumbbell toward your hip.",focus:"Keep shoulder down and torso quiet.",feel:"Lat and mid-back, with biceps assisting.",tempo:"2 sec pull → 1 sec squeeze → 3 sec lower.",cue:"Elbow to hip.",avoid:"Twisting or shrugging."},
+  db_shoulder_press:{title:"Dumbbell Shoulder Press",goal:"Build shoulder strength and shape while training triceps.",how:"Start dumbbells around shoulder height and press overhead without flaring the ribs.",focus:"Stack ribs over pelvis and keep wrists over elbows.",feel:"Shoulders and triceps.",tempo:"2 sec press → 3 sec lower.",cue:"Press tall, ribs down.",avoid:"Leaning back to finish reps."},
+  triceps_kickback:{title:"Dumbbell Triceps Kickback",goal:"Directly train the back of the upper arm.",how:"Hinge forward, pin the upper arm beside your torso, then straighten the elbow fully and return slowly.",focus:"Upper arm stays still; only the forearm moves.",feel:"Triceps, especially at full extension.",tempo:"2 sec extend → 1 sec squeeze → 3 sec return.",cue:"Pin elbow, straighten, squeeze.",avoid:"Swinging or letting the elbow drop."},
+  standard_db_curl:{title:"Dumbbell Biceps Curl",goal:"Keep elbow-flexor strength balanced without making biceps the focus.",how:"Stand tall, palms forward, and curl without moving the upper arms.",focus:"Keep elbows close to your sides.",feel:"Front of upper arm.",tempo:"2 sec curl → 1 sec squeeze → 3 sec lower.",cue:"Quiet elbows.",avoid:"Swinging or leaning back."},
+  elevated_sumo:{title:"Elevated Sumo Squat",goal:"Train glutes through a deeper squat range.",how:"Take a wide stance with each foot on a stable elevation, hold the weight between your legs, and sit down between your hips.",focus:"Drive through the whole foot and keep knees tracking with toes.",feel:"Glutes and inner thighs; quads assist.",tempo:"3 sec lower → brief pause → 2 sec stand.",cue:"Sit between the hips.",avoid:"Knees collapsing inward or unstable platforms."},
+  single_leg_hip_thrust:{title:"Single-Leg Hip-Thrust Burnout",goal:"Finish the glutes one side at a time.",how:"Support your upper back, plant one foot, lift the other leg, and drive the planted heel down as you raise your hips.",focus:"Keep hips level and ribs down.",feel:"Glute of the planted leg.",tempo:"2 sec up → 1 sec squeeze → 2–3 sec down.",cue:"Level hips, heel down.",avoid:"Twisting or continuing after controlled form breaks."},
+  straight_leg_kickback:{title:"Straight-Leg Kickback",goal:"Train glute extension with minimal knee movement.",how:"Brace on a bench, keep the working leg relatively straight, and drive it back and slightly up from the hip.",focus:"Keep pelvis square and torso stable.",feel:"Glute, not low back.",tempo:"2 sec lift → 1 sec squeeze → 3 sec lower.",cue:"Move from the hip.",avoid:"Opening the pelvis or using momentum."},
+  glute_bridge:{title:"Glute Bridge",goal:"Accumulate controlled glute volume.",how:"Lie on your back with feet planted, gently tuck the pelvis, and squeeze the glutes to lift the hips.",focus:"Ribs down and shins roughly vertical at the top.",feel:"Glutes; hamstrings may assist.",tempo:"2 sec up → 1–2 sec squeeze → 3 sec lower.",cue:"Tuck, squeeze, lift.",avoid:"Finishing by arching the low back."},
+  bridal_lateral_pulse:{title:"Bridal Arms: Lateral Raise Pulses",goal:"Light high-rep shoulder finisher.",how:"With very light weights, hold arms in a comfortable partial lateral-raise position and make small controlled pulses.",focus:"Keep shoulders away from ears.",feel:"Side shoulders burning, not neck pain.",tempo:"Small continuous controlled pulses.",cue:"Tiny range, long neck.",avoid:"Shrugging or swinging."},
+  bridal_goalpost:{title:"Bridal Arms: Goalpost Press",goal:"High-rep shoulder finisher for endurance and shape.",how:"Hold very light weights with elbows bent in a goalpost shape and press upward through a comfortable range.",focus:"Ribs stay down; movement stays controlled.",feel:"Shoulders and triceps.",tempo:"Steady controlled reps for time.",cue:"Goalpost to tall.",avoid:"Back arching or painful shoulder range."},
+  bridal_rear_pulse:{title:"Bridal Arms: Rear-Delt Pulses",goal:"Finish rear shoulders and upper back with light resistance.",how:"Hinge slightly, open arms out and back, and pulse through a small controlled range.",focus:"Keep traps relaxed.",feel:"Back of shoulders and upper back.",tempo:"Small controlled pulses.",cue:"Reach wide, not high.",avoid:"Shrugging."},
+  bridal_triceps_pulse:{title:"Bridal Arms: Triceps Kickback Pulses",goal:"Finish the triceps with a light high-rep set.",how:"Hinge forward, straighten the elbows behind you, and pulse near full extension with very light weights.",focus:"Upper arms stay pinned.",feel:"Back of upper arms.",tempo:"Small continuous pulses.",cue:"Long arms, squeeze back.",avoid:"Swinging or dropping the elbows."}
+});
+
+const APP_CONFIG = {
+  schemaVersion: 6,
+  programStartDate: "2026-09-14",
+  goals: {
+    weeks: 6, lagreePerWeek: 3, strengthPerWeek: 2, mobilityPerWeek: 3,
+    poleClassesPerWeek: 1, poleConditioningPerWeek: 1,
+    calories: 1700, proteinMin: 90, proteinMax: 105, fiberMin: 25, fiberMax: 30, waterMin: 70, waterMax: 80, weeklySteps: 44000,
+    sleepHours: 7.5
+  },
+  schedule: {
+    Monday: {type:"Lagree + Mobility", sessionKey:"mon_lagree", simple:true, mobility:true, exercises:[
+      {key:"90_90",name:"90/90 Hip Switches",sets:2,reps:"8/side",timed:false},
+      {key:"adductor_rocks",name:"Adductor Rock-Backs",sets:2,reps:"10/side"},
+      {key:"half_kneel_hf",name:"Half-Kneeling Hip-Flexor Stretch",sets:2,reps:"45 sec/side",seconds:45},
+      {key:"straddle_pancake",name:"Straddle / Pancake",sets:2,reps:"45–60 sec",seconds:50},
+      {key:"straddle_leg_lifts",name:"Seated Straddle Leg Lifts",sets:2,reps:"8/side"},
+      {key:"straddle_compression",name:"Straddle Compression Lifts",sets:2,reps:"5–8"},
+      {key:"active_straddle_hold",name:"Active Straddle Hold",sets:2,reps:"15–20 sec",seconds:18}
+    ]},
+    Tuesday: {type:"Upper Body + Bridal Arms", sessionKey:"tue_upper", strength:true, exercises:[
+      {key:"wall_slides",name:"Wall Slides",sets:1,reps:"8",warmup:true},
+      {key:"open_books",name:"Open Books",sets:1,reps:"5/side",warmup:true},
+      {key:"arm_circles",name:"Arm Circles",sets:1,reps:"10 forward + 10 backward",warmup:true},
+      {key:"one_arm_db_row",name:"One-Arm Dumbbell Row",sets:3,reps:"8–12/side",strength:true},
+      {key:"db_shoulder_press",name:"Dumbbell Shoulder Press",sets:3,reps:"8–12",strength:true},
+      {key:"rear_delt_fly",name:"Bent-Over Rear-Delt Fly",sets:3,reps:"10–15",search:"bent over dumbbell reverse fly"},
+      {key:"lateral_raise",name:"Dumbbell Lateral Raise",sets:3,reps:"12–20",search:"side lateral raise"},
+      {key:"oh_triceps",name:"Overhead Triceps Extension",sets:3,reps:"10–15",search:"dumbbell standing triceps extension"},
+      {key:"triceps_kickback",name:"Dumbbell Triceps Kickback",sets:3,reps:"12–20",strength:true},
+      {key:"standard_db_curl",name:"Dumbbell Biceps Curl",sets:2,reps:"10–15",strength:true},
+      {key:"bridal_lateral_pulse",name:"Bridal Arms: Lateral Raise Pulses",sets:2,reps:"40 sec",seconds:40},
+      {key:"bridal_goalpost",name:"Bridal Arms: Goalpost Press",sets:2,reps:"40 sec",seconds:40},
+      {key:"bridal_rear_pulse",name:"Bridal Arms: Rear-Delt Pulses",sets:2,reps:"40 sec",seconds:40},
+      {key:"bridal_triceps_pulse",name:"Bridal Arms: Triceps Kickback Pulses",sets:2,reps:"40 sec",seconds:40}
+    ]},
+    Wednesday: {type:"Pole Conditioning + Active Flexibility", sessionKey:"wed_pole_cond", poleConditioning:true, exercises:[
+      {key:"straddle_leg_lifts",name:"Seated Straddle Leg Lifts",sets:3,reps:"6–10/side"},
+      {key:"straddle_compression",name:"Seated Straddle Compression Lifts",sets:3,reps:"5–8"},
+      {key:"straight_leg_raise",name:"Straight-Leg Raises",sets:3,reps:"6–10"},
+      {key:"active_straddle_hold",name:"Active Straddle Hold",sets:3,reps:"10–20 sec",seconds:15},
+      {key:"scap_push",name:"Scapular Push-Ups",sets:2,reps:"8–12",search:"scapular push up"},
+      {key:"reverse_crunch",name:"Reverse Crunch with Pelvic Curl",sets:2,reps:"8–12",search:"reverse crunch"},
+      {key:"dead_bug",name:"Dead Bug",sets:2,reps:"6–8/side"},
+      {key:"straddle_pancake",name:"Pancake / Straddle Stretch",sets:2,reps:"45–60 sec",seconds:50}
+    ]},
+    Thursday: {type:"Lower Body + Splits", sessionKey:"thu_lower", strength:true, mobility:true, exercises:[
+      {key:"hip_thrust",name:"Hip Thrust",sets:4,reps:"10–15",search:"barbell hip thrust"},
+      {key:"elevated_sumo",name:"Elevated Sumo Squat",sets:3,reps:"15",strength:true},
+      {key:"single_leg_hip_thrust",name:"Single-Leg Hip-Thrust Burnout",sets:2,reps:"to controlled failure/side",strength:true},
+      {key:"straight_leg_kickback",name:"Straight-Leg Kickback",sets:3,reps:"15/side",strength:true},
+      {key:"glute_bridge",name:"Glute Bridge",sets:3,reps:"15",strength:true},
+      {key:"half_kneel_hf",name:"Half-Kneeling Hip-Flexor Stretch",sets:2,reps:"45–60 sec/side",seconds:50},
+      {key:"half_split",name:"Half-Split Hamstring Stretch",sets:2,reps:"45–60 sec/side",seconds:50},
+      {key:"front_split",name:"Front Split",sets:2,reps:"45–60 sec/side",seconds:50},
+      {key:"straddle_pancake",name:"Straddle / Pancake",sets:2,reps:"60 sec",seconds:60},
+      {key:"active_leg_lift",name:"Active Straight-Leg Lift",sets:2,reps:"6–8/side"}
+    ]},
+    Friday: {type:"Lagree", sessionKey:"fri_lagree", simple:true, exercises:[]},
+    Saturday: {type:"Lagree + Back/Shoulder Mobility", sessionKey:"sat_lagree", simple:true, mobility:true, exercises:[
+      {key:"cat_cow",name:"Cat-Cow",sets:1,reps:"8 slow",search:"cat cow"},
+      {key:"thread_needle",name:"Thread the Needle",sets:2,reps:"6/side"},
+      {key:"puppy",name:"Puppy Pose",sets:2,reps:"45 sec",seconds:45},
+      {key:"band_pass",name:"Band Shoulder Pass-Throughs",sets:2,reps:"8–10"},
+      {key:"band_lat_stretch",name:"Band Lat Stretch",sets:2,reps:"45 sec/side",seconds:45},
+      {key:"thoracic_ext",name:"Thoracic Extension",sets:2,reps:"6–8"},
+      {key:"sphinx_cobra",name:"Sphinx → Cobra",sets:1,reps:"5 controlled"},
+      {key:"bridge",name:"Backbend / Bridge Progression",sets:3,reps:"10–20 sec",seconds:15}
+    ]},
+    Sunday: {type:"Recovery + Walking", sessionKey:"sun_recovery", simple:true, exercises:[]}
+  }
+};
+
+// Approved exercise substitutions. These are intentionally limited to close
+// variations or exercises that fill the same slot in Katy's program.
+const EXERCISE_VARIATIONS = {
+  reverse_grip_row:[
+    {key:"one_arm_db_row",name:"One-Arm Dumbbell Row",sets:3,reps:"8–12/side",search:"one-arm dumbbell row",strength:true,why:"Same horizontal-pull slot with more unilateral control.",coach:{goal:"Train lats, mid-back and biceps one side at a time.",how:"Brace one hand on a bench or sturdy surface, hinge with a long spine, and row the dumbbell toward your hip.",focus:"Keep the shoulder away from your ear and let the elbow travel back toward your hip.",feel:"Lat and mid-back, with biceps assisting.",tempo:"2 sec pull → 1 sec squeeze → 3 sec lower.",cue:"Elbow to hip.",avoid:"Twisting the torso or shrugging."}},
+    {key:"neutral_db_row",name:"Neutral-Grip Dumbbell Row",sets:3,reps:"8–12",search:"bent over two-dumbbell row with palms in",strength:true,why:"Same row pattern with a neutral grip.",coach:{goal:"Build lats and upper-back pulling strength.",how:"Hinge at the hips, hold dumbbells with palms facing each other, and row toward the lower ribs.",focus:"Keep ribs controlled and shoulders down.",feel:"Lats and mid-back, with biceps assisting.",tempo:"2 sec pull → 1 sec squeeze → 3 sec lower.",cue:"Pull elbows back, not shoulders up.",avoid:"Jerking or overextending the low back."}}
+  ],
+  oh_triceps:[
+    {key:"single_arm_oh_triceps",name:"Single-Arm Overhead Triceps Extension",sets:3,reps:"10–12/side",search:"standing one-arm dumbbell triceps extension",strength:true,why:"Same overhead triceps pattern, one arm at a time.",coach:{goal:"Train the long head of the triceps in a lengthened position.",how:"Hold one dumbbell overhead, bend only at the elbow to lower it behind your head, then extend.",focus:"Keep ribs stacked and upper arm mostly vertical.",feel:"Back of the upper arm.",tempo:"3 sec lower → brief stretch → 2 sec extend.",cue:"Upper arm stays tall.",avoid:"Arching the low back or letting the elbow drift wide."}}
+  ],
+  band_lat_pulldown:[
+    {key:"single_arm_band_lat",name:"Single-Arm Band Lat Pulldown",sets:3,reps:"10–15/side",strength:true,why:"Same vertical-pull pattern with unilateral control.",coach:{goal:"Build lat strength for pole pulling and shoulder-mount preparation.",how:"Anchor the band high. Pull one elbow down toward your side/back pocket while keeping your torso tall.",focus:"Shoulder stays away from the ear; ribs stay controlled.",feel:"Lat along the side of the back, with biceps assisting.",tempo:"2 sec pull → 1 sec squeeze → 3 sec return.",cue:"Elbow to back pocket.",avoid:"Leaning far away from the anchor."}},
+    {key:"kneeling_band_lat",name:"Kneeling Band Lat Pulldown",sets:3,reps:"10–15",strength:true,why:"Same lat-focused vertical pull with a stable kneeling setup.",coach:{goal:"Train lats through an overhead-to-ribs pulling path.",how:"Kneel under a high band anchor and pull both elbows down toward your ribs.",focus:"Stay tall and keep shoulders down.",feel:"Lats and upper back.",tempo:"2 sec pull → 1 sec squeeze → 3 sec return.",cue:"Elbows down, chest tall.",avoid:"Turning it into a row by leaning far back."}}
+  ],
+  skull_crushers:[
+    {key:"close_grip_db_press",name:"Close-Grip Dumbbell Press",sets:3,reps:"8–12",strength:true,why:"Triceps-dominant press; the woman's guide explicitly paired this as a skull-crusher alternative.",coach:{goal:"Train triceps with a press pattern while keeping elbows close.",how:"Lie down with dumbbells close together over the chest. Lower with elbows tucked, then press up.",focus:"Keep forearms stacked and elbows relatively close to the torso.",feel:"Triceps, with chest assisting.",tempo:"2–3 sec lower → 1 sec press.",cue:"Elbows in; press through triceps.",avoid:"Flaring elbows wide or bouncing."}},
+    {key:"band_triceps_pushdown",name:"Band Triceps Pushdown",sets:3,reps:"10–15",strength:true,why:"Direct triceps work with a different elbow position.",coach:{goal:"Train triceps through elbow extension.",how:"Anchor a band high, pin elbows near your sides, and straighten the arms down.",focus:"Upper arms stay still while the forearms move.",feel:"Back of the upper arms.",tempo:"2 sec press → 1 sec squeeze → 3 sec return.",cue:"Pin elbows; finish long.",avoid:"Rocking the torso or letting elbows drift forward."}}
+  ],
+  rear_delt_fly:[
+    {key:"band_face_pull",name:"Band Face Pull",sets:3,reps:"10–15",strength:true,why:"Same rear-shoulder/upper-back slot with more external rotation.",coach:{goal:"Train rear delts, upper back and shoulder-blade control.",how:"Anchor a band around face height and pull toward your face with elbows high, separating the hands slightly.",focus:"Finish with shoulder blades controlled, not shrugged.",feel:"Rear shoulders and upper back.",tempo:"2 sec pull → 1 sec squeeze → 3 sec return.",cue:"Pull apart as you pull back.",avoid:"Arching the back or yanking with momentum."}},
+    {key:"chest_supported_rear_fly",name:"Chest-Supported Rear-Delt Fly",sets:3,reps:"10–15",strength:true,why:"Same rear-delt emphasis with less torso stabilization.",coach:{goal:"Isolate rear delts and upper back.",how:"Lie chest-down on an incline bench and sweep light dumbbells out to the sides.",focus:"Move from the rear shoulders and keep traps relaxed.",feel:"Back of shoulders and upper back.",tempo:"2 sec lift → 1 sec squeeze → 3 sec lower.",cue:"Reach wide, not high.",avoid:"Shrugging or using too much weight."}}
+  ],
+  lateral_raise:[
+    {key:"around_worlds",name:"Dumbbell Around-the-Worlds",sets:3,reps:"8–12",strength:true,why:"Broader shoulder variation that still fills the shoulder-shaping slot, with more front-delt involvement than a pure lateral raise.",coach:{goal:"Train the shoulders through a larger controlled arc.",how:"With light dumbbells, sweep the arms out and upward in a wide arc, then return with control within a comfortable shoulder range.",focus:"Use a light load and keep shoulders away from ears.",feel:"Side and front shoulders; upper chest may assist.",tempo:"2–3 sec up → controlled 3 sec return.",cue:"Make a wide smooth circle.",avoid:"Shrugging, swinging, or forcing painful overhead range."}},
+    {key:"front_to_lateral_raise",name:"Front-to-Lateral Raise",sets:3,reps:"8–12",strength:true,why:"Shoulder-slot variation combining front and side-delt work.",coach:{goal:"Train front and side delts with controlled arm paths.",how:"Raise the dumbbells forward, lower, then raise them out to the sides; alternate directions as one controlled sequence.",focus:"Keep ribs down and elbows softly bent.",feel:"Front and side of shoulders.",tempo:"2 sec raise → 1 sec pause → 3 sec lower.",cue:"Light weight, clean path.",avoid:"Swinging or shrugging."}}
+  ],
+  zottman:[
+    {key:"standard_db_curl",name:"Supinated Dumbbell Curl",sets:2,reps:"10–12",search:"dumbbell bicep curl",strength:true,why:"More direct biceps emphasis without the pronated lowering phase.",coach:{goal:"Train the biceps through elbow flexion.",how:"Stand tall with palms forward and curl the dumbbells without moving the upper arms.",focus:"Keep elbows close to your sides.",feel:"Front of the upper arm.",tempo:"2 sec curl → 1 sec squeeze → 3 sec lower.",cue:"Curl without swinging.",avoid:"Leaning back or letting elbows travel forward."}},
+    {key:"hammer_curl",name:"Hammer Curl",sets:2,reps:"10–12",search:"hammer curls",strength:true,why:"Same elbow-flexion slot with more brachialis/forearm contribution.",coach:{goal:"Train biceps, brachialis and forearms.",how:"Curl with palms facing each other while keeping elbows near your sides.",focus:"Keep wrists neutral and torso still.",feel:"Front/outer upper arm and forearms.",tempo:"2 sec curl → 1 sec squeeze → 3 sec lower.",cue:"Thumbs up; elbows quiet.",avoid:"Swinging the dumbbells."}},
+    {key:"alternating_db_curl",name:"Alternating Dumbbell Curl",sets:2,reps:"10–12/side",strength:true,why:"Same biceps slot with one-arm-at-a-time focus.",coach:{goal:"Train biceps with unilateral control.",how:"Curl one dumbbell at a time with the palm turning up as you lift.",focus:"Keep the nonworking arm quiet and torso tall.",feel:"Biceps of the working arm.",tempo:"2 sec curl → 1 sec squeeze → 3 sec lower.",cue:"Pinkie slightly up at the top.",avoid:"Rotating the torso to help the lift."}}
+  ],
+  db_rdl:[
+    {key:"b_stance_rdl",name:"B-Stance RDL",sets:3,reps:"8–12/side",strength:true,why:"Same hip-hinge/posterior-chain pattern with more single-leg emphasis.",coach:{goal:"Train glutes and hamstrings with most load on one leg.",how:"Place one foot slightly behind as a kickstand. Keep most weight on the front leg and hinge the hips back.",focus:"Keep hips square and spine long.",feel:"Hamstring and glute of the front leg.",tempo:"3 sec lower → 1 sec pause → 2 sec stand.",cue:"Front hip back; back foot is a kickstand.",avoid:"Shifting weight heavily to the back foot or opening the hips."}},
+    {key:"single_leg_rdl",name:"Single-Leg RDL",sets:3,reps:"8–12/side",strength:true,why:"Same hinge muscles with a true unilateral balance challenge.",coach:{goal:"Train glutes and hamstrings one side at a time while building hip stability.",how:"Stand on one leg, send the opposite leg back as your torso hinges forward, then drive through the standing leg to return.",focus:"Keep hips square and use a support if balance limits the target muscles.",feel:"Standing-leg hamstring and glute.",tempo:"3 sec lower → 1 sec pause → 2 sec stand.",cue:"Reach the back heel long as the hips move back.",avoid:"Opening the pelvis or turning it into a squat."}}
+  ],
+  rev_curtsy:[
+    {key:"heel_elevated_goblet",name:"Heel-Elevated Goblet Squat",sets:3,reps:"8–12",strength:true,why:"Approved replacement for the reverse-lunge/curtsy slot when you want the elevated goblet-squat option; it replaces the exercise rather than adding extra volume.",coach:{goal:"Train quads and glutes through a squat pattern with heels elevated.",how:"Stand with heels on a small stable elevation, hold one dumbbell at the chest, sit down between the hips, then stand tall.",focus:"Keep knees tracking with toes and torso controlled.",feel:"Quads and glutes; depth only as comfortable for the knees.",tempo:"3 sec lower → brief pause → 2 sec stand.",cue:"Knees forward, whole foot supported, stand tall.",avoid:"Unstable heel support, knees collapsing inward, or forcing painful depth."}}
+  ]
+};
+
+const STORAGE_KEY="katy_recomp_pwa_v3";
+const emptyState=()=>({
+  schemaVersion:APP_CONFIG.schemaVersion,
+  programStartDate:APP_CONFIG.programStartDate,
+  settings:{weightUnit:"lb", pregnancyMode:false, goals:{...APP_CONFIG.goals}},
+  daily:{}, exerciseLogs:{}, exerciseNotes:{}, weeklyNotes:{}, exerciseSwaps:{week:{},ongoing:{}}, customExercises:{}, componentPlans:{week:{},ongoing:{}}, adaptiveReviews:{}, sessionLogs:{}, componentLogs:{}, scheduleMoves:{}, activities:[], poleClasses:[], imports:[], milestones:[],
+  timers:{}, lastUpdated:new Date().toISOString()
+});
+let state=loadState();
+let exdb=[];
+let activeTimer=null;
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw) return emptyState();
+    const x=JSON.parse(raw);
+    const base=emptyState();
+    return {...base,...x,
+      exerciseSwaps:{week:{...(base.exerciseSwaps?.week||{}),...((x.exerciseSwaps||{}).week||{})},ongoing:{...(base.exerciseSwaps?.ongoing||{}),...((x.exerciseSwaps||{}).ongoing||{})}},
+      componentPlans:{week:{...(base.componentPlans?.week||{}),...((x.componentPlans||{}).week||{})},ongoing:{...(base.componentPlans?.ongoing||{}),...((x.componentPlans||{}).ongoing||{})}}, adaptiveReviews:{...(base.adaptiveReviews||{}),...(x.adaptiveReviews||{})},
+      settings:{...base.settings,...(x.settings||{}),goals:{...APP_CONFIG.goals,...((x.settings||{}).goals||{})}}
+    };
+  }catch(e){return emptyState()}
+}
+function save(){state.lastUpdated=new Date().toISOString();localStorage.setItem(STORAGE_KEY,JSON.stringify(state));renderAll()}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800)}
+function isoDate(d=new Date()){return d.toISOString().slice(0,10)}
+function localISODate(d=new Date()){const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
+function weekIndex(dateStr=localISODate()){
+  const start=new Date(state.programStartDate+"T00:00:00");
+  const d=new Date(dateStr+"T00:00:00");
+  return Math.max(0,Math.floor((d-start)/(7*86400000)));
+}
+function weekDates(idx=weekIndex()){
+  const start=new Date(state.programStartDate+"T00:00:00"); start.setDate(start.getDate()+idx*7);
+  return Array.from({length:7},(_,i)=>{const d=new Date(start);d.setDate(start.getDate()+i);return localISODate(d)});
+}
+function dayName(dateStr){return new Date(dateStr+"T12:00:00").toLocaleDateString(undefined,{weekday:"long"})}
+
+function programEndDate(){
+  const d=new Date(state.programStartDate+"T00:00:00");
+  d.setDate(d.getDate() + state.settings.goals.weeks*7 - 1);
+  return localISODate(d);
+}
+function programStatus(dateStr=localISODate()){
+  if(dateStr < state.programStartDate) return "before";
+  if(dateStr > programEndDate()) return "after";
+  return "active";
+}
+function fmtShortDate(d){
+  return new Date(d+"T12:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"});
+}
+
+function todayData(){const d=localISODate(); return state.daily[d]||(state.daily[d]={})}
+function sessionDone(dateStr,key){return !!(state.sessionLogs[dateStr+"::"+key]?.completed)}
+
+function componentDone(weekIdx,key){return !!state.componentLogs?.[weekIdx+"::"+key]?.completed}
+function setComponent(weekIdx,key,completed=true,completedDate=localISODate()){
+  state.componentLogs = state.componentLogs || {};
+  state.componentLogs[weekIdx+"::"+key]={completed,completedDate};
+  persistWithoutRerender();
+  const cb=event?.target; const card=cb?.closest?.('.component,.card'); if(card) card.classList.toggle('done',completed);
+  toast(completed?'Workout marked done':'Workout reopened');
+}
+
+
+const COMPONENT_WORKOUTS = {
+  lagree_1:{title:"Lagree",sourceDay:"Monday",simple:true,exerciseKeys:[]},
+  mobility_straddle:{title:"Active Straddle Mobility",sourceDay:"Monday",exerciseKeys:["90_90","adductor_rocks","half_kneel_hf","straddle_pancake","straddle_leg_lifts","straddle_compression","active_straddle_hold"]},
+  strength_upper:{title:"Upper Body + Bridal Arms",sourceDay:"Tuesday",exerciseKeys:["wall_slides","open_books","arm_circles","one_arm_db_row","db_shoulder_press","rear_delt_fly","lateral_raise","oh_triceps","triceps_kickback","standard_db_curl","bridal_lateral_pulse","bridal_goalpost","bridal_rear_pulse","bridal_triceps_pulse"],strength:true},
+  pole_conditioning:{title:"Pole Conditioning + Active Flexibility",sourceDay:"Wednesday",exerciseKeys:["straddle_leg_lifts","straddle_compression","straight_leg_raise","active_straddle_hold","scap_push","reverse_crunch","dead_bug","straddle_pancake"]},
+  strength_lower:{title:"Lower Body Strength",sourceDay:"Thursday",exerciseKeys:["hip_thrust","elevated_sumo","single_leg_hip_thrust","straight_leg_kickback","glute_bridge"],strength:true},
+  mobility_splits:{title:"Splits Mobility",sourceDay:"Thursday",exerciseKeys:["half_kneel_hf","half_split","front_split","straddle_pancake","active_leg_lift"]},
+  lagree_2:{title:"Lagree",sourceDay:"Friday",simple:true,exerciseKeys:[]},
+  lagree_3:{title:"Lagree",sourceDay:"Saturday",simple:true,exerciseKeys:[]},
+  mobility_back:{title:"Back + Shoulder Mobility",sourceDay:"Saturday",exerciseKeys:["cat_cow","thread_needle","puppy","band_pass","band_lat_stretch","thoracic_ext","sphinx_cobra","bridge"]},
+  recovery_walk:{title:"Recovery + Easy Walking",sourceDay:"Sunday",simple:true,exerciseKeys:[]}
+};
+function baseExerciseByKey(key){
+  for(const s of Object.values(APP_CONFIG.schedule)){
+    const ex=(s.exercises||[]).find(e=>e.key===key);
+    if(ex) return ex;
+  }
+  return null;
+}
+function variantExerciseByKey(key){
+  for(const list of Object.values(EXERCISE_VARIATIONS)){
+    const ex=(list||[]).find(e=>e.key===key);
+    if(ex) return ex;
+  }
+  return null;
+}
+function exerciseByKey(key){return baseExerciseByKey(key)||variantExerciseByKey(key)||state.customExercises?.[key]||null}
+function approvedVariations(baseKey){return EXERCISE_VARIATIONS[baseKey]||[]}
+function currentExerciseFor(baseKey,w=weekIndex()){
+  state.exerciseSwaps=state.exerciseSwaps||{week:{},ongoing:{}};
+  state.exerciseSwaps.week=state.exerciseSwaps.week||{};
+  state.exerciseSwaps.ongoing=state.exerciseSwaps.ongoing||{};
+  const wk=state.exerciseSwaps.week[w+"::"+baseKey];
+  const ongoing=state.exerciseSwaps.ongoing[baseKey];
+  const selected=wk || (ongoing && w>=Number(ongoing.fromWeek) ? ongoing.variantKey : null);
+  return exerciseByKey(selected)||baseExerciseByKey(baseKey)||state.customExercises?.[baseKey]||null;
+}
+function persistWithoutRerender(){
+  state.lastUpdated=new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+}
+function setExerciseSwap(baseKey,variantKey,scope,w,componentKey){
+  state.exerciseSwaps=state.exerciseSwaps||{week:{},ongoing:{}};
+  state.exerciseSwaps.week=state.exerciseSwaps.week||{};
+  state.exerciseSwaps.ongoing=state.exerciseSwaps.ongoing||{};
+  const wk=w+"::"+baseKey;
+  if(scope==="week") state.exerciseSwaps.week[wk]=variantKey;
+  if(scope==="ongoing"){
+    delete state.exerciseSwaps.week[wk];
+    state.exerciseSwaps.ongoing[baseKey]={variantKey,fromWeek:w};
+  }
+  if(scope==="next"){
+    // Preserve whatever is active this week before replacing the ongoing rule.
+    // This prevents a future change from unexpectedly altering the current week.
+    const currentKey=currentExerciseFor(baseKey,w)?.key || baseKey;
+    state.exerciseSwaps.week[wk]=currentKey;
+    state.exerciseSwaps.ongoing[baseKey]={variantKey,fromWeek:w+1};
+  }
+  persistWithoutRerender();
+  toast(scope==="week"?"Variation set for this week":scope==="next"?"Variation starts next week":"Variation set from this week on");
+  openComponent(componentKey,w);
+}
+function resetExerciseSwap(baseKey,w,componentKey){
+  state.exerciseSwaps=state.exerciseSwaps||{week:{},ongoing:{}};
+  if(state.exerciseSwaps.week) delete state.exerciseSwaps.week[w+"::"+baseKey];
+  if(state.exerciseSwaps.ongoing) delete state.exerciseSwaps.ongoing[baseKey];
+  persistWithoutRerender();
+  toast("Back to original exercise");
+  openComponent(componentKey,w);
+}
+function addCustomExercise(baseKey,w,componentKey){
+  const name=prompt("Exercise name"); if(!name) return;
+  const sets=Number(prompt("Sets?","3")||3); const reps=prompt("Rep target?","8–12")||"8–12";
+  const key="custom_"+Date.now(); state.customExercises=state.customExercises||{};
+  state.customExercises[key]={key,name,sets,reps,strength:true,why:"Custom exercise added in app."};
+  state.exerciseSwaps.week[w+"::"+baseKey]=key; persistWithoutRerender(); toast("Custom exercise added for this week"); openComponent(componentKey,w);
+}
+function planKeysForComponent(componentKey,w=weekIndex()){
+  const meta=componentMeta(componentKey); if(!meta) return [];
+  state.componentPlans=state.componentPlans||{week:{},ongoing:{}};
+  state.componentPlans.week=state.componentPlans.week||{}; state.componentPlans.ongoing=state.componentPlans.ongoing||{};
+  return state.componentPlans.week[w+"::"+componentKey] || state.componentPlans.ongoing[componentKey] || [...(meta.exerciseKeys||[])];
+}
+function saveComponentPlan(componentKey,w,keys,scope="week"){
+  state.componentPlans=state.componentPlans||{week:{},ongoing:{}};
+  if(scope==="ongoing"){state.componentPlans.ongoing[componentKey]=[...keys]; delete state.componentPlans.week[w+"::"+componentKey];}
+  else state.componentPlans.week[w+"::"+componentKey]=[...keys];
+  persistWithoutRerender(); openComponent(componentKey,w); toast(scope==="ongoing"?"Plan updated going forward":"Plan updated for this week");
+}
+function editExerciseSettings(baseKey,w,componentKey){
+  const ex=currentExerciseFor(baseKey,w); if(!ex) return;
+  const name=prompt("Exercise name",ex.name); if(!name) return;
+  const sets=Math.max(1,Number(prompt("Sets",String(ex.sets||3))||ex.sets||3));
+  const reps=prompt("Reps / target",String(ex.reps||"8–12"))||ex.reps||"8–12";
+  const rest=Number(prompt("Rest seconds",String(ex.restSec||90))||ex.restSec||90);
+  const scope=confirm("Make this change part of the plan going forward?\n\nOK = going forward\nCancel = this week only")?"ongoing":"week";
+  const key="custom_"+Date.now(); state.customExercises=state.customExercises||{};
+  state.customExercises[key]={...ex,key,name,sets,reps,restSec:rest,strength:trackingStyle(ex)==="strength",why:"Edited in app."};
+  setExerciseSwap(baseKey,key,scope,w,componentKey);
+}
+function reorderExercise(baseKey,w,componentKey,dir){
+  const keys=planKeysForComponent(componentKey,w),i=keys.indexOf(baseKey),j=i+dir;if(i<0||j<0||j>=keys.length)return;
+  [keys[i],keys[j]]=[keys[j],keys[i]]; saveComponentPlan(componentKey,w,keys,"week");
+}
+function deleteExerciseFromPlan(baseKey,w,componentKey){
+  if(!confirm("Remove this exercise from this week's workout?"))return;
+  saveComponentPlan(componentKey,w,planKeysForComponent(componentKey,w).filter(k=>k!==baseKey),"week");
+}
+function addExerciseToPlan(w,componentKey){
+  const name=prompt("Exercise name");if(!name)return;const sets=Math.max(1,Number(prompt("Sets","3")||3));const reps=prompt("Reps / target","8–12")||"8–12";const rest=Number(prompt("Rest seconds","90")||90);
+  const key="custom_"+Date.now();state.customExercises=state.customExercises||{};state.customExercises[key]={key,name,sets,reps,restSec:rest,strength:true,why:"Added in app."};
+  const keys=planKeysForComponent(componentKey,w);keys.push(key);
+  const ongoing=confirm("Add this exercise to the plan going forward?\n\nOK = going forward\nCancel = this week only");saveComponentPlan(componentKey,w,keys,ongoing?"ongoing":"week");
+}
+function adaptiveSuggestions(w){
+  const prev=Math.max(0,w-1), out=[];
+  for(const key of ["strength_upper","strength_lower"]){
+    for(const baseKey of planKeysForComponent(key,prev)){
+      const ex=currentExerciseFor(baseKey,prev)||exerciseByKey(baseKey); if(!ex) continue;
+      const log=latestExerciseLog(ex.key,weekDates(w)[0]); const notes=Object.entries(state.exerciseNotes||{}).filter(([k])=>k.endsWith("::"+ex.key)&&weekDates(prev).includes(k.slice(0,10))).map(x=>x[1]).join(" ");
+      let msg=progressionSuggestion(ex);
+      if(/hurt|pain|don.?t like|didn.?t like|unexpected|biceps/i.test(notes)) msg="Review this exercise before repeating it. Your note suggests discomfort, poor target-muscle feel, or dislike.";
+      else if(log?.rpe==="Easy") msg="Last session felt easy. Consider adding reps first, then a small load increase if form stays strong.";
+      else if(log?.rpe==="Maxed") msg="Last session was maxed. Keep or reduce the load rather than progressing this week.";
+      out.push({name:ex.name,msg,note:notes});
+    }
+  }
+  return out;
+}
+function adaptivePanel(w){
+  if(w<=0)return ""; const items=adaptiveSuggestions(w); const status=state.adaptiveReviews?.["week_"+w]?.status||"pending";
+  return `<div class="card soft-highlight"><div class="row"><div><div class="kicker">Next-week review</div><h2>Proposed Week ${w+1} adjustments</h2></div><span class="badge">${status}</span></div><div class="small">Based on your completed weights/reps, difficulty and exercise notes. Nothing changes automatically.</div>${items.slice(0,8).map(x=>`<div class="milestone"><b>${x.name}</b><div class="small">${x.msg}</div>${x.note?`<div class="small">Your note: ${x.note}</div>`:""}</div>`).join("")}<div class="component-actions"><button class="move-btn" onclick="state.adaptiveReviews=state.adaptiveReviews||{};state.adaptiveReviews['week_${w}']={status:'accepted',at:new Date().toISOString()};save();renderWorkouts()">Accept review</button><button class="move-btn" onclick="state.adaptiveReviews=state.adaptiveReviews||{};state.adaptiveReviews['week_${w}']={status:'keep previous',at:new Date().toISOString()};save();renderWorkouts()">Keep previous plan</button></div></div>`;
+}
+function componentMeta(key){return COMPONENT_WORKOUTS[key]||null}
+
+function baseComponentsForDay(name){
+  const map={
+    Monday:[
+      {key:"lagree_1",label:"Lagree",category:"lagree",detail:"Suggested Monday"},
+      {key:"mobility_straddle",label:"Active Straddle Mobility",category:"mobility",detail:"Can be done any day this week"}
+    ],
+    Tuesday:[
+      {key:"strength_upper",label:"Upper Body + Bridal Arms",category:"strength",detail:"Back, shoulders, triceps + light high-rep finisher"}
+    ],
+    Wednesday:[
+      {key:"pole_conditioning",label:"Pole Conditioning",category:"poleConditioning",detail:"Active flexibility + inversion support"}
+    ],
+    Thursday:[
+      {key:"strength_lower",label:"Lower Body Strength",category:"strength",detail:"Glute/posterior-chain focus"},
+      {key:"mobility_splits",label:"Splits Mobility",category:"mobility",detail:"Can be moved to another day"}
+    ],
+    Friday:[
+      {key:"lagree_2",label:"Lagree",category:"lagree",detail:"Suggested Friday"}
+    ],
+    Saturday:[
+      {key:"lagree_3",label:"Lagree",category:"lagree",detail:"Suggested Saturday"},
+      {key:"mobility_back",label:"Back + Shoulder Mobility",category:"mobility",detail:"Can be moved to another day"}
+    ],
+    Sunday:[
+      {key:"recovery_walk",label:"Recovery / Easy Walking",category:"recovery",detail:"Optional recovery focus"}
+    ]
+  };
+  return map[name]||[];
+}
+function movedDayFor(weekIdx,key){
+  return state.scheduleMoves?.[weekIdx+"::"+key] || null;
+}
+function scheduledDayForComponent(weekIdx,key){
+  const moved=movedDayFor(weekIdx,key);
+  if(moved) return moved;
+  for(const day of Object.keys(APP_CONFIG.schedule)){
+    if(baseComponentsForDay(day).some(c=>c.key===key)) return day;
+  }
+  return null;
+}
+function moveComponent(weekIdx,key,toDay){
+  state.scheduleMoves=state.scheduleMoves||{};
+  const original=Object.keys(APP_CONFIG.schedule).find(day=>baseComponentsForDay(day).some(c=>c.key===key));
+  if(toDay===original) delete state.scheduleMoves[weekIdx+"::"+key];
+  else state.scheduleMoves[weekIdx+"::"+key]=toDay;
+  save();
+  toast("Moved to "+toDay);
+  renderHome(); renderWorkouts();
+}
+function resetWeekSchedule(weekIdx=weekIndex()){
+  state.scheduleMoves=state.scheduleMoves||{};
+  Object.keys(state.scheduleMoves).forEach(k=>{ if(k.startsWith(weekIdx+"::")) delete state.scheduleMoves[k] });
+  save(); renderHome(); renderWorkouts(); toast("Week reset to suggested schedule");
+}
+function moveMenu(weekIdx,key,label){
+  const days=Object.keys(APP_CONFIG.schedule);
+  const current=scheduledDayForComponent(weekIdx,key);
+  const buttons=days.map(d=>`<button class="move-day-btn ${d===current?"active":""}" onclick="moveComponent(${weekIdx},'${key}','${d}');closeMoveMenu()">${d}</button>`).join("");
+  document.getElementById("moveSheetTitle").textContent="Move "+label;
+  document.getElementById("moveSheetDays").innerHTML=buttons;
+  document.getElementById("moveSheet").classList.add("open");
+}
+function closeMoveMenu(){document.getElementById("moveSheet")?.classList.remove("open")}
+let dragInfo=null;
+
+let touchDrag=null;
+function clearTouchTargets(){
+  document.querySelectorAll(".daycard.dragover").forEach(el=>el.classList.remove("dragover"));
+}
+function touchDragStart(ev,weekIdx,key){
+  const t=ev.touches?.[0]; if(!t) return;
+  ev.preventDefault();
+  clearTouchTargets();
+  const ghost=document.createElement("div");
+  const meta=componentMeta(key);
+  ghost.className="touch-ghost";
+  ghost.textContent=meta?.title||key;
+  document.body.appendChild(ghost);
+  touchDrag={weekIdx,key,ghost,targetDay:null};
+  moveTouchGhost(t.clientX,t.clientY);
+  document.addEventListener("touchmove",touchDragMove,{passive:false});
+  document.addEventListener("touchend",touchDragEnd,{passive:false});
+  document.addEventListener("touchcancel",touchDragEnd,{passive:false});
+}
+function moveTouchGhost(x,y){
+  if(!touchDrag?.ghost) return;
+  touchDrag.ghost.style.transform=`translate(${x+14}px,${y+14}px)`;
+}
+function touchDragMove(ev){
+  if(!touchDrag) return;
+  ev.preventDefault();
+  const t=ev.touches?.[0]; if(!t) return;
+  moveTouchGhost(t.clientX,t.clientY);
+  if(touchDrag.ghost) touchDrag.ghost.style.display="none";
+  const el=document.elementFromPoint(t.clientX,t.clientY);
+  if(touchDrag.ghost) touchDrag.ghost.style.display="block";
+  clearTouchTargets();
+  const card=el?.closest?.(".daycard[data-day]");
+  if(card){
+    card.classList.add("dragover");
+    touchDrag.targetDay=card.dataset.day;
+  }else{
+    touchDrag.targetDay=null;
+  }
+}
+function touchDragEnd(ev){
+  if(!touchDrag) return;
+  ev.preventDefault();
+  const {weekIdx,key,targetDay,ghost}=touchDrag;
+  ghost?.remove();
+  clearTouchTargets();
+  touchDrag=null;
+  document.removeEventListener("touchmove",touchDragMove);
+  document.removeEventListener("touchend",touchDragEnd);
+  document.removeEventListener("touchcancel",touchDragEnd);
+  if(targetDay) moveComponent(weekIdx,key,targetDay);
+}
+
+function dragStartComponent(ev,weekIdx,key){
+  dragInfo={weekIdx,key};
+  try{ev.dataTransfer.effectAllowed="move"; ev.dataTransfer.setData("text/plain",key)}catch(e){}
+}
+function dragOverDay(ev){ev.preventDefault(); ev.currentTarget.classList.add("dragover")}
+function dragLeaveDay(ev){ev.currentTarget.classList.remove("dragover")}
+function dropOnDay(ev,day){
+  ev.preventDefault(); ev.currentTarget.classList.remove("dragover");
+  if(dragInfo) moveComponent(dragInfo.weekIdx,dragInfo.key,day);
+  dragInfo=null;
+}
+
+function componentsForDay(name,weekIdx=weekIndex()){
+  const all=Object.keys(APP_CONFIG.schedule).flatMap(day=>baseComponentsForDay(day));
+  return all.filter(c=>scheduledDayForComponent(weekIdx,c.key)===name).map(c=>({
+    ...c,
+    detail: movedDayFor(weekIdx,c.key) ? `Moved here for Week ${weekIdx+1}` : c.detail
+  }));
+}
+
+function componentByKey(key){
+  for(const day of Object.keys(APP_CONFIG.schedule)){
+    const found=componentsForDay(day).find(c=>c.key===key);
+    if(found) return found;
+  }
+  return null;
+}
+function markComponentForDate(key,dateStr,completed=true){
+  const w=weekIndex(dateStr);
+  setComponent(w,key,completed,dateStr);
+}
+function nextIncompleteComponent(category,dateStr=localISODate()){
+  const w=weekIndex(dateStr);
+  const all=Object.keys(APP_CONFIG.schedule).flatMap(day=>componentsForDay(day));
+  return all.find(c=>c.category===category && !componentDone(w,c.key));
+}
+function creditActivityToWeeklyGoal(type,name="",dateStr=localISODate()){
+  const t=(type+" "+name).toLowerCase();
+  let key=null;
+  if(t.includes("pole class")){
+    state.poleClasses.push({id:Date.now()+"p",date:dateStr,completed:true});
+    return "pole_class";
+  }
+  if(t.includes("pole conditioning")) key="pole_conditioning";
+  else if(t.includes("upper") && (t.includes("strength")||t.includes("body"))) key="strength_upper";
+  else if(t.includes("lower") && (t.includes("strength")||t.includes("body"))) key="strength_lower";
+  else if(t.includes("back") && t.includes("mobility")) key="mobility_back";
+  else if(t.includes("split") && t.includes("mobility")) key="mobility_splits";
+  else if((t.includes("straddle")||t.includes("active flex")) && t.includes("mobility")) key="mobility_straddle";
+  // Generic/bonus activities must never consume a scheduled workout slot.
+  // Only named scheduled routines (handled above) are credited to componentLogs.
+  else if(t.includes("lagree")) key=null;
+  else if(t.includes("mobility")) key=null;
+  else if(t.includes("strength")) key=null;
+  if(key){
+    const w=weekIndex(dateStr);
+    state.componentLogs=state.componentLogs||{};
+    state.componentLogs[w+"::"+key]={completed:true,completedDate:dateStr};
+  }
+  return key;
+}
+function creditWorkoutText(txt,dateStr){
+  const t=String(txt||"").toLowerCase();
+  if(!t) return [];
+  const credited=[];
+  const push=k=>{if(k && !credited.includes(k)){const w=weekIndex(dateStr);state.componentLogs=state.componentLogs||{};state.componentLogs[w+"::"+k]={completed:true,completedDate:dateStr};credited.push(k)}};
+  if(t.includes("upper body")||t.includes("upper strength")) push("strength_upper");
+  if(t.includes("lower body")||t.includes("lower strength")) push("strength_lower");
+  if(t.includes("pole conditioning")) push("pole_conditioning");
+  if(t.includes("back") && t.includes("mobility")) push("mobility_back");
+  if(t.includes("split") && t.includes("mobility")) push("mobility_splits");
+  if((t.includes("straddle")||t.includes("active flexibility")) && t.includes("mobility")) push("mobility_straddle");
+  const lagreeMentions=(t.match(/lagree/g)||[]).length;
+  // A Lagree entered through ChatGPT import is an actual/bonus activity on that date,
+  // not completion of the next scheduled Lagree card.
+  for(let i=0;i<lagreeMentions;i++) state.activities.push({id:Date.now()+"impLagree"+Math.random(),date:dateStr,type:"Lagree",name:"Bonus Lagree",durationMin:0,steps:0,notes:"Imported from ChatGPT",source:"chatgpt"});
+  if(t.includes("pole class")) state.poleClasses.push({id:Date.now()+"imp"+Math.random(),date:dateStr,completed:true});
+  return credited;
+}
+function activitiesInWeek(w=weekIndex()){
+  const dates=new Set(weekDates(w));
+  return (state.activities||[]).filter(a=>dates.has(a.date));
+}
+function bonusActivitiesOnDate(dateStr){
+  return (state.activities||[]).filter(a=>a.date===dateStr);
+}
+function removeBonusActivity(id){
+  const a=(state.activities||[]).find(x=>x.id===id);
+  if(!a) return;
+  if(!confirm(`Remove ${a.name||a.type||"this bonus activity"} from ${fmtShortDate(a.date)}?`)) return;
+  state.activities=(state.activities||[]).filter(x=>x.id!==id);
+  // A manual Pole Class also creates a poleClasses record. Remove one matching record only.
+  if((a.type||"").toLowerCase()==="pole class"){
+    const i=(state.poleClasses||[]).findIndex(x=>x.date===a.date&&x.completed);
+    if(i>=0) state.poleClasses.splice(i,1);
+  }
+  save();
+  toast("Bonus activity removed");
+  renderHome();
+  renderWorkouts();
+}
+function weeklyComponentCounts(w=weekIndex()){
+  const all=Object.values(APP_CONFIG.schedule).flatMap((_,i)=>componentsForDay(Object.keys(APP_CONFIG.schedule)[i]));
+  const count=cat=>all.filter(c=>c.category===cat&&componentDone(w,c.key)).length;
+  const bonus=activitiesInWeek(w);
+  const bonusLagree=bonus.filter(a=>(a.type||"").toLowerCase()==="lagree").length;
+  return {lagree:count("lagree")+bonusLagree,strength:count("strength"),mobility:count("mobility"),poleConditioning:count("poleConditioning")};
+}
+function allBaseComponents(){
+  return Object.keys(APP_CONFIG.schedule).flatMap(day=>baseComponentsForDay(day));
+}
+function componentInfo(key){
+  return allBaseComponents().find(c=>c.key===key) || {key,label:componentMeta(key)?.title||key,category:"other",detail:""};
+}
+function completedComponentsOnDate(dateStr){
+  const w=weekIndex(dateStr);
+  return Object.entries(state.componentLogs||{}).filter(([k,v])=>{
+    if(!v?.completed || v.completedDate!==dateStr) return false;
+    return Number(k.split("::")[0])===w;
+  }).map(([k,v])=>({key:k.split("::")[1],...componentInfo(k.split("::")[1]),completedDate:v.completedDate}));
+}
+function poleClassesOnDate(dateStr){
+  return (state.poleClasses||[]).filter(x=>x.date===dateStr&&x.completed);
+}
+function completedLabelsOnDate(dateStr){
+  const vals=completedComponentsOnDate(dateStr).map(c=>c.label+" ✓");
+  if(poleClassesOnDate(dateStr).length) vals.push("Pole class ✓");
+  bonusActivitiesOnDate(dateStr).forEach(a=>vals.push(((a.name||a.type||"Bonus activity") + " (bonus) ✓")));
+  return vals;
+}
+
+function setSession(dateStr,key,completed=true,extra={}){state.sessionLogs[dateStr+"::"+key]={...(state.sessionLogs[dateStr+"::"+key]||{}),completed,...extra};save()}
+function pct(n,d){return d?Math.min(100,Math.round(n/d*100)):0}
+function parseUpper(rep){const m=String(rep).match(/(\d+)\D*[-–]\D*(\d+)/);return m?+m[2]:null}
+function latestExerciseLog(exKey,before=localISODate()){
+  return Object.entries(state.exerciseLogs).filter(([k,v])=>k.endsWith("::"+exKey)&&k.slice(0,10)<before)
+    .sort((a,b)=>b[0].localeCompare(a[0]))[0]?.[1]||null;
+}
+function progressionSuggestion(ex){
+  const prev=latestExerciseLog(ex.key);
+  const preg=!!state.settings.pregnancyMode;
+  if(!prev||!prev.sets?.length) return preg ? "Pregnancy mode: use a comfortable, familiar load and leave a few reps in reserve." : "No previous session yet.";
+  const upper=parseUpper(ex.reps);
+  const complete=prev.sets.every(s=>s.done);
+  const same=prev.sets.every(s=>String(s.weight)===String(prev.sets[0].weight));
+  const hit=upper&&prev.sets.every(s=>Number(s.reps)>=upper);
+
+  if(preg){
+    if(complete&&hit) return "Pregnancy mode: maintain this load if it feels good. Increase only modestly if it feels clearly easy and you are cleared to do so.";
+    return "Pregnancy mode: prioritize good form, comfort and a few reps in reserve over beating last time.";
+  }
+
+  if(complete&&same&&hit){
+    if(ex.key.includes("band")) return "All sets hit the top of the range. Use a slightly heavier band or more tension.";
+    return "All sets hit the top of the range. Consider a small weight increase next time.";
+  }
+  return "Keep the same load and try to add a rep while staying in range.";
+}
+
+async function loadExerciseDB(){
+  try{
+    const r=await fetch("https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json",{cache:"force-cache"});
+    exdb=await r.json();
+  }catch(e){exdb=[]}
+}
+function findDemo(ex){
+  if(!exdb.length) return null;
+  const aliases={
+    oh_triceps:["standing dumbbell triceps extension"],
+    skull_crushers:["lying triceps press"],
+    rear_delt_fly:["reverse flyes","rear delt dumbbell flyes"],
+    lateral_raise:["side lateral raise"],
+    zottman:["zottman curl"],
+    hip_thrust:["barbell hip thrust","hip thrust"],
+    db_rdl:["romanian deadlift with dumbbells","dumbbell romanian deadlift"],
+    reverse_crunch:["reverse crunch"],
+    cat_cow:["cat stretch"]
+  };
+  const norm=s=>String(s||"").toLowerCase().replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim();
+  const candidates=[...(aliases[ex.key]||[]), ex.name].filter(Boolean);
+  for(const q of candidates){
+    const exact=exdb.find(x=>norm(x.name)===norm(q));
+    if(exact) return exact;
+  }
+  return null;
+}
+function demoHtml(ex){
+  const d=findDemo(ex);
+  if(d?.images?.[0]){
+    const src="https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/"+d.images[0];
+    const searchQ=encodeURIComponent(ex.name+" exercise form demo");
+    return `<a href="https://www.youtube.com/results?search_query=${searchQ}" target="_blank" rel="noopener" aria-label="Open ${ex.name} demo">
+      <img class="demo" src="${src}" alt="${d.name}" onerror="this.parentElement.outerHTML=fallbackDemoHtml('${encodeURIComponent(ex.name)}')">
+    </a>`;
+  }
+  return fallbackDemoHtml(encodeURIComponent(ex.name));
+}
+function fallbackDemoHtml(encodedName){
+  const name=decodeURIComponent(encodedName);
+  const q=encodeURIComponent(name+" exercise form demo");
+  const iq=encodeURIComponent(name+" exercise form");
+  return `<div class="demo fallback" style="padding:8px">
+    <div style="font-weight:700;color:var(--text);font-size:11px">No exact demo</div>
+    <a href="https://www.youtube.com/results?search_query=${q}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:700;font-size:11px">▶ Video demo</a>
+    <a href="https://www.google.com/search?tbm=isch&q=${iq}" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:700;font-size:11px">▧ Photo search</a>
+  </div>`;
+}
+function weeklyPacing(dates,g,today=localISODate()){
+  const currentIndex=Math.max(0,Math.min(6,dates.indexOf(today)>=0?dates.indexOf(today):0));
+  const throughYesterday=dates.slice(0,currentIndex);
+  const remainingDays=Math.max(1,7-currentIndex);
+  const sumField=(list,field)=>list.reduce((sum,d)=>sum+Number(state.daily[d]?.[field]||0),0);
+  const loggedCount=(list,field)=>list.filter(d=>Number(state.daily[d]?.[field]||0)>0).length;
+  const prior={
+    steps:sumField(throughYesterday,'steps'),
+    calories:sumField(throughYesterday,'calories'),
+    protein:sumField(throughYesterday,'protein')
+  };
+  const todayVals={
+    steps:Number(state.daily[today]?.steps||0),
+    calories:Number(state.daily[today]?.calories||0),
+    protein:Number(state.daily[today]?.protein||0)
+  };
+  const targets={steps:Number(g.weeklySteps||0),calories:Number(g.calories||0)*7,protein:Number(g.proteinMin||0)*7};
+  const pace={
+    steps:Math.max(0,Math.ceil((targets.steps-prior.steps)/remainingDays)),
+    calories:Math.max(0,Math.round((targets.calories-prior.calories)/remainingDays)),
+    protein:Math.max(0,Math.ceil((targets.protein-prior.protein)/remainingDays))
+  };
+  const toGo={
+    steps:Math.max(0,pace.steps-todayVals.steps),
+    calories:Math.max(0,pace.calories-todayVals.calories),
+    protein:Math.max(0,pace.protein-todayVals.protein)
+  };
+  const totalsThroughToday={
+    steps:prior.steps+todayVals.steps,
+    calories:prior.calories+todayVals.calories,
+    protein:prior.protein+todayVals.protein
+  };
+  const elapsed=Math.max(1,currentIndex+1);
+  const avgLogged={
+    calories:(()=>{const n=loggedCount(dates.slice(0,currentIndex+1),'calories');return n?Math.round(totalsThroughToday.calories/n):0})(),
+    protein:(()=>{const n=loggedCount(dates.slice(0,currentIndex+1),'protein');return n?Math.round(totalsThroughToday.protein/n):0})(),
+    steps:Math.round(totalsThroughToday.steps/elapsed)
+  };
+  return {currentIndex,remainingDays,prior,todayVals,targets,pace,toGo,totalsThroughToday,avgLogged};
+}
+function dailyFocusHtml(p,g,preg=false){
+  const fmt=n=>Number(n||0).toLocaleString();
+  let stepText='';
+  if(p.todayVals.steps>0){
+    stepText=p.toGo.steps>0
+      ? `${fmt(p.todayVals.steps)} logged • about <strong>${fmt(p.toGo.steps)} more</strong> today would put you on weekly pace.`
+      : `${fmt(p.todayVals.steps)} logged • <strong>you’re on pace</strong> for your weekly step goal.`;
+  }else stepText=`Aim for about <strong>${fmt(p.pace.steps)} steps today</strong> to stay on pace for ${fmt(g.weeklySteps)} this week.`;
+
+  let proteinText='';
+  if(p.todayVals.protein>0){
+    proteinText=p.toGo.protein>0
+      ? `${Math.round(p.todayVals.protein)} g logged • aim for about <strong>${Math.round(p.toGo.protein)} g more</strong> today to move toward a ${g.proteinMin} g/day weekly average.`
+      : `${Math.round(p.todayVals.protein)} g logged • <strong>minimum weekly protein pace met for today.</strong>`;
+  }else proteinText=`Aim for about <strong>${Math.round(p.pace.protein)} g protein today</strong> to finish the week averaging at least ${g.proteinMin} g/day.`;
+
+  let calorieText='';
+  if(preg){
+    calorieText='Pregnancy Mode is on. Use calories as a fueling log rather than a deficit or catch-up target.';
+  }else if(p.todayVals.calories>0){
+    const diff=p.todayVals.calories-p.pace.calories;
+    if(diff>150) calorieText=`${fmt(p.todayVals.calories)} kcal logged. You’re above today’s mathematical weekly pace by about ${fmt(diff)} kcal. <strong>No aggressive compensation needed.</strong>`;
+    else if(p.toGo.calories>150) calorieText=`${fmt(p.todayVals.calories)} kcal logged. Your weekly pacing math leaves about <strong>${fmt(p.toGo.calories)} kcal</strong> for today, but use hunger/recovery rather than forcing an exact number.`;
+    else calorieText=`${fmt(p.todayVals.calories)} kcal logged • <strong>roughly on weekly calorie pace.</strong>`;
+  }else calorieText=`Weekly pacing is about <strong>${fmt(p.pace.calories)} kcal today</strong>. Treat this as context, not a hard cap.`;
+
+  return `<div class="card full soft-highlight" style="border:1px solid #CFE9E5;background:#F5FBF9">
+    <div class="kicker">Today’s focus</div><h2>Stay on weekly pace</h2>
+    <div class="sub" style="margin-bottom:12px">The app adjusts today’s guidance from what you’ve already logged this week. Steps can be caught up directly; protein is a practical target; calories stay flexible.</div>
+    <div style="display:grid;gap:10px">
+      <div><strong>Steps</strong><div class="small" style="margin-top:2px">${stepText}</div></div>
+      <div><strong>Protein</strong><div class="small" style="margin-top:2px">${proteinText}</div></div>
+      <div><strong>Calories</strong><div class="small" style="margin-top:2px">${calorieText}</div></div>
+    </div>
+    <hr>
+    <div class="small"><strong>Week so far:</strong> ${fmt(p.totalsThroughToday.steps)} steps • ${p.avgLogged.protein||'—'} g avg protein${p.avgLogged.calories?` • ${fmt(p.avgLogged.calories)} kcal avg`:''}</div>
+  </div>`;
+}
+function weeklyComparisonHtml(w){
+  if(w<=0) return "";
+  const summarize=wi=>{const ds=weekDates(wi);let steps=0,c=[],p=[],f=[],wa=[];ds.forEach(d=>{const x=state.daily[d]||{};steps+=Number(x.steps||0);if(x.calories)c.push(Number(x.calories));if(x.protein)p.push(Number(x.protein));if(x.fiber!==""&&x.fiber!=null)f.push(Number(x.fiber));if(x.water!==""&&x.water!=null)wa.push(Number(x.water));});const avg=a=>a.length?Math.round(a.reduce((x,y)=>x+y,0)/a.length):0;return{steps,cal:avg(c),pro:avg(p),fib:avg(f),water:avg(wa)}};
+  const a=summarize(w-1),b=summarize(w);
+  const line=(label,x,y,unit="")=>`<div class="week-detail-row" style="grid-template-columns:1.2fr 1fr 1fr"><span>${label}</span><strong>${x?x.toLocaleString()+unit:"—"}</strong><strong>${y?y.toLocaleString()+unit:"—"}</strong></div>`;
+  return `<div class="card full"><div class="kicker">Week-over-week</div><h2>Last week vs this week</h2><div class="week-detail-row" style="grid-template-columns:1.2fr 1fr 1fr"><span></span><span class="kicker">Last week</span><span class="kicker">This week</span></div>${line("Avg calories",a.cal,b.cal," kcal")}${line("Avg protein",a.pro,b.pro," g")}${line("Avg fiber",a.fib,b.fib," g")}${line("Avg fluids",a.water,b.water," oz")}${line("Total steps",a.steps,b.steps,"")}</div>`;
+}
+
+function renderHome(){
+  const w=weekIndex(), dates=weekDates(w), g=state.settings.goals;
+  let steps=0, cals=[], prots=[], fibers=[], waters=[], sleeps=[];
+  const counts=weeklyComponentCounts(w);
+  const lagree=counts.lagree, strength=counts.strength, mob=counts.mobility, poleC=counts.poleConditioning;
+  dates.forEach(d=>{
+    const dd=state.daily[d]||{};
+    steps+=Number(dd.steps||0);
+    if(dd.calories) cals.push(Number(dd.calories));
+    if(dd.protein) prots.push(Number(dd.protein));
+    if(dd.fiber!==""&&dd.fiber!=null) fibers.push(Number(dd.fiber));
+    if(dd.water!==""&&dd.water!=null) waters.push(Number(dd.water));
+    if(dd.sleepHours) sleeps.push(Number(dd.sleepHours));
+  });
+  const poleClasses=state.poleClasses.filter(x=>dates.includes(x.date)&&x.completed).length;
+  const weekNum=Math.min(g.weeks,w+1), overall=Math.max(0,Math.min(100,Math.round((w + ((dates.indexOf(localISODate())+1)/7))/g.weeks*100)));
+  const comp=Math.round((pct(lagree,g.lagreePerWeek)+pct(strength,g.strengthPerWeek)+pct(mob,g.mobilityPerWeek)+pct(poleClasses,g.poleClassesPerWeek)+pct(poleC,g.poleConditioningPerWeek)+pct(steps,g.weeklySteps))/6);
+  const avg=x=>x.length?Math.round(x.reduce((a,b)=>a+b,0)/x.length):0;
+  const today=localISODate(), td=state.daily[today]||{};
+  const preg=!!state.settings.pregnancyMode;
+  const status=programStatus(today);
+  // Before the 6-week program starts, show today's actual daily log on Home
+  // rather than a blank Week 1 total. Pre-program entries do not count toward Week 1.
+  const displaySteps=status==="before"?Number(td.steps||0):steps;
+  const displayCals=status==="before"?Number(td.calories||0):avg(cals);
+  const displayProtein=status==="before"?Number(td.protein||0):avg(prots);
+  document.getElementById("home").innerHTML=`
+  <div class="weekstrip">
+    ${dates.map(d=>{const dn=dayName(d);const comps=componentsForDay(dn,w);const any=comps.some(c=>componentDone(w,c.key));return `<div class="weekday ${d===localISODate()?"today":""} ${any?"done":""}" role="button" tabindex="0" aria-label="Open ${dn} workout" onclick="openDay('${dn}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDay('${dn}')}">${dn.slice(0,1)}<strong>${new Date(d+"T12:00:00").getDate()}</strong></div>`}).join("")}
+  </div>
+  <div class="small" style="margin:-8px 0 10px;text-align:center">Tap a day to open that day’s workout.</div>
+  <div class="week-goals">
+    <div class="goalchip">Lagree <strong>${lagree}/${g.lagreePerWeek}</strong></div>
+    <div class="goalchip">Strength <strong>${strength}/${g.strengthPerWeek}</strong></div>
+    <div class="goalchip">Mobility <strong>${mob}/${g.mobilityPerWeek}</strong></div>
+    <div class="goalchip">Pole cond. <strong>${poleC}/${g.poleConditioningPerWeek}</strong></div>
+    <div class="goalchip">Pole class <strong>${poleClasses}/${g.poleClassesPerWeek}</strong></div>
+  </div>
+  <div class="grid" style="margin-top:12px">
+    ${preg?`<div class="card full soft-highlight">
+      <div class="row"><div><div class="kicker">Pregnancy mode</div><h2>Maintain strength, mobility & recovery</h2><div class="sub">No fat-loss scoring or pressure to hit PRs. Use comfort, form and recovery to guide training.</div></div><span class="badge">ON</span></div>
+    </div>`:""}
+    <div class="card full"><div class="row"><div><div class="kicker">Today</div><div class="big">Creatine ${td.habitCreatine?"✓":"○"} <span style="font-size:.65em">• Post-meal movement ${td.postMealMovement?"✓":"○"}</span></div>${td.dailyReminder?`<div class="small" style="margin-top:6px"><strong>Note:</strong> ${td.dailyReminder}</div>`:""}</div></div></div>
+    <div class="card full row">
+      <div><div class="kicker">6-week goal</div><div class="big">Week ${weekNum} of ${g.weeks}</div><div class="sub">${overall}% through the program</div></div>
+      <div class="ringwrap"><div class="ring" style="--pct:${overall}%"></div><div class="ringtext"><strong>${overall}%</strong><span class="small">progress</span></div></div>
+    </div>
+    <div class="card"><div class="kicker">Consistency</div><div class="big">${comp}%</div><div class="progress"><span style="width:${comp}%"></span></div></div>
+    <div class="card metric-click" onclick="openWeeklyDetail('sleep')"><div class="kicker">Sleep last night</div><div class="big">${td.sleepHours?td.sleepHours+"h":"—"}</div><div class="small">Goal ${g.sleepHours}h</div></div>
+    <div class="card metric-click" onclick="openWeeklyDetail('lagree')"><div class="kicker">Lagree</div><div class="big">${lagree}/${g.lagreePerWeek}</div></div>
+    <div class="card metric-click" onclick="openWeeklyDetail('strength')"><div class="kicker">Strength</div><div class="big">${strength}/${g.strengthPerWeek}</div></div>
+    <div class="card metric-click" onclick="openWeeklyDetail('mobility')"><div class="kicker">Mobility</div><div class="big">${mob}/${g.mobilityPerWeek}</div></div>
+    <div class="card metric-click" onclick="openWeeklyDetail('pole')"><div class="kicker">Pole</div><div class="big">${poleClasses}/${g.poleClassesPerWeek}</div><div class="small">Conditioning ${poleC}/${g.poleConditioningPerWeek}</div></div>
+    <div class="card metric-click" onclick="openWeeklyDetail('steps')"><div class="kicker">${status==="before"?"Today's steps":"Steps"}</div><div class="big">${displaySteps.toLocaleString()}</div><div class="small">${status==="before"?"Logged today • Week 1 starts "+fmtShortDate(state.programStartDate):"of "+g.weeklySteps.toLocaleString()}</div>${status==="before"?"":`<div class="progress"><span style="width:${pct(displaySteps,g.weeklySteps)}%"></span></div>`}</div>
+    <div class="card metric-click" onclick="openWeeklyDetail('nutrition')"><div class="kicker">${status==="before"?"Today's nutrition":(preg?"Fueling":"Nutrition avg")}</div><div class="big">${displayCals||"—"} kcal</div><div class="small">${status==="before"?"":(preg?"No deficit target • ":"")}${displayProtein||"—"} g protein${status==="before"?" • logged today":""}</div><div class="small">${status==="before"?((td.fiber??"—")+" g fiber • "+(td.water??"—")+" oz fluids"):(avg(fibers)||"—")+" g avg fiber • "+(avg(waters)||"—")+" oz avg fluids"}</div></div>
+    ${status==="active"?weeklyComparisonHtml(w):""}
+    <div class="card full">
+      ${status==="before"
+        ? `<div class="row"><div><div class="kicker">Program starts</div><h2>${fmtShortDate(state.programStartDate)}</h2><div class="sub">Your Week 1 schedule is ready. Daily food, sleep and steps can still be logged today.</div></div><button class="btn" onclick="switchPage('workouts')">View Week 1</button></div>`
+        : status==="after"
+        ? `<div class="row"><div><div class="kicker">Program complete</div><h2>6 weeks finished</h2><div class="sub">Your history and logs are still available.</div></div><button class="btn" onclick="switchPage('progressPage')">View progress</button></div>`
+        : `<div class="row"><div><div class="kicker">Today</div><h2>${dayName(today)}</h2><div class="sub">${APP_CONFIG.schedule[dayName(today)]?.type||"Recovery"} • suggested schedule</div></div><button class="btn" onclick="openDay('${dayName(today)}')">Open day</button></div>`
+      }
+    </div>
+  </div>`;
+}
+function openWeeklyDetail(type){
+  const dates=weekDates(weekIndex()), today=localISODate();
+  const used=dates.filter(d=>d<=today);
+  const fmt=d=>new Date(d+"T12:00:00").toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
+  let title="Week so far", body="";
+  if(type==="nutrition"){
+    title="Nutrition this week";
+    body=`<div class="week-detail-row" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr;align-items:end"><span></span><span class="kicker">Calories</span><span class="kicker">Protein</span><span class="kicker">Fiber</span><span class="kicker">Fluids</span></div>`+used.map(d=>{const x=state.daily[d]||{};return `<div class="week-detail-row" style="grid-template-columns:1fr 1fr 1fr 1fr 1fr"><span>${fmt(d)}</span><strong>${x.calories!==""&&x.calories!=null?Number(x.calories).toLocaleString()+" kcal":"—"}</strong><strong>${x.protein!==""&&x.protein!=null?x.protein+" g":"—"}</strong><strong>${x.fiber!==""&&x.fiber!=null?x.fiber+" g":"—"}</strong><strong>${x.water!==""&&x.water!=null?x.water+" oz":"—"}</strong></div>`}).join("");
+  } else if(type==="steps" || type==="sleep"){
+    title=type==="steps"?"Steps this week":"Sleep this week";
+    body=used.map(d=>{const x=state.daily[d]||{},v=type==="steps"?x.steps:x.sleepHours;return `<div class="week-detail-row" style="grid-template-columns:1fr 1fr"><span>${fmt(d)}</span><strong>${v!==""&&v!=null?(type==="steps"?Number(v).toLocaleString()+" steps":v+" h"):"—"}</strong></div>`}).join("");
+  } else {
+    title=type.charAt(0).toUpperCase()+type.slice(1)+" this week";
+    body=used.map(d=>{
+      const completed=completedComponentsOnDate(d);
+      let vals=[];
+      if(type==="lagree") {
+        vals=completed.filter(c=>c.category==="lagree").map(c=>c.label+" ✓");
+        bonusActivitiesOnDate(d).filter(a=>(a.type||"").toLowerCase()==="lagree").forEach(a=>vals.push(`${a.name||"Bonus Lagree"} ✓ <button class="move-btn" style="margin-left:6px;padding:5px 9px" onclick="event.stopPropagation();removeBonusActivity('${a.id}')">Remove</button>`));
+      }
+      if(type==="strength") vals=completed.filter(c=>c.category==="strength").map(c=>c.label+" ✓");
+      if(type==="mobility") vals=completed.filter(c=>c.category==="mobility").map(c=>c.label+" ✓");
+      if(type==="pole"){
+        vals=completed.filter(c=>c.category==="poleConditioning").map(c=>c.label+" ✓");
+        if(poleClassesOnDate(d).length) vals.push("Pole class ✓");
+      }
+      return `<div class="week-detail-row" style="grid-template-columns:1fr 1.6fr"><span>${fmt(d)}</span><strong>${vals.join(" • ")||"—"}</strong></div>`;
+    }).join("");
+  }
+  document.getElementById("weeklyDetailTitle").textContent=title;
+  document.getElementById("weeklyDetailBody").innerHTML=body||'<div class="small">Nothing logged yet.</div>';
+  document.getElementById("weeklyDetailSheet").classList.add("open");
+}
+function closeWeeklyDetail(){document.getElementById("weeklyDetailSheet")?.classList.remove("open")}
+
+function renderWorkouts(){
+  const now=new Date(), currentW=weekIndex(), sunday=now.getDay()===0, preview=sunday;
+  const w=preview?Math.min(state.settings.goals.weeks-1,currentW+1):currentW, names=Object.keys(APP_CONFIG.schedule), dates=weekDates(w);
+  document.getElementById("workouts").innerHTML=`
+    ${preview?`<div class="card soft-highlight"><div class="kicker">Sunday preview</div><h2>Week ${w+1} is ready</h2><div class="small">Your upcoming Monday–Sunday plan is available all day Sunday so you can prepare for the week. Today’s current-week workout and logging remain available.</div></div>${adaptivePanel(w)}`:""}
+    <div class="weekstrip">${dates.map(d=>{const dn=dayName(d);const any=completedLabelsOnDate(d).length>0;return `<div class="weekday ${d===localISODate()?"today":""} ${any?"done":""}" role="button" tabindex="0" aria-label="Open ${dn}" onclick="openDay('${dn}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDay('${dn}')} ">${dn.slice(0,1)}<strong>${new Date(d+"T12:00:00").getDate()}</strong></div>`}).join("")}</div>
+    <div class="schedule-tools"><button class="move-btn" onclick="resetWeekSchedule(${w})">Reset week</button></div>
+    <div class="small" style="margin:-2px 0 12px;text-align:center">Tap a workout to open it. Completed and bonus workouts stay attached to the day you actually did them.</div>
+    <div class="stack">${names.map((n,i)=>{
+      const s=APP_CONFIG.schedule[n], comps=componentsForDay(n,w), d=dates[i], actual=completedLabelsOnDate(d);
+      return `<div class="card daycard" data-day="${n}" ondragover="dragOverDay(event)" ondragleave="dragLeaveDay(event)" ondrop="dropOnDay(event,'${n}')">
+        <div class="row" onclick="openDay('${n}',${w})"><div><div class="kicker">${n}</div><h2>${s.type}</h2><div class="sub">${comps.length?comps.map(c=>c.label).join(" • "):"Nothing scheduled"}</div>${actual.length?`<div class="small" style="margin-top:7px"><strong>Completed:</strong> ${actual.join(" • ")}</div>`:""}</div><div class="badge">Open</div></div>
+        <div class="component-grid">
+          ${comps.map(c=>{const rec=state.componentLogs?.[w+"::"+c.key], done=!!rec?.completed, when=rec?.completedDate;return `<div class="component clickable ${done?"done":""}" draggable="true" ondragstart="dragStartComponent(event,${w},'${c.key}')" onclick="if(!event.target.closest('input,button,.drag-handle')) openComponent('${c.key}',${w})">
+            <label>${c.label}<input class="check" type="checkbox" ${done?"checked":""} onclick="event.stopPropagation()" onchange="setComponent(${w},'${c.key}',this.checked)"></label>
+            <div class="small">${done&&when&&dayName(when)!==n?`Completed ${fmtShortDate(when)} • `:""}${c.detail}</div>
+            <div class="component-openhint">Tap to open workout →</div>
+            <div class="component-actions">
+              <span class="drag-handle" aria-label="Drag ${c.label}" role="button" ontouchstart="touchDragStart(event,${w},'${c.key}')" onclick="event.stopPropagation()">☰</span>
+              <button class="move-btn" onclick="event.stopPropagation();moveMenu(${w},'${c.key}','${c.label.replace(/'/g,"")}')">Move</button>
+            </div>
+          </div>`}).join("")}
+        </div>
+      </div>`
+    }).join("")}</div>`;
+}
+function openDay(name,w=weekIndex()){
+  switchPage("workouts");
+  const d=weekDates(w).find(x=>dayName(x)===name)||localISODate(), comps=componentsForDay(name,w), completed=completedComponentsOnDate(d), poleDone=poleClassesOnDate(d).length>0, bonus=bonusActivitiesOnDate(d);
+  const scheduledKeys=new Set(comps.map(c=>c.key));
+  const extras=completed.filter(c=>!scheduledKeys.has(c.key));
+  const completionRows=[...completed.map(c=>c.label+" ✓"), ...(poleDone?["Pole class ✓"]:[]), ...bonus.map(a=>(a.name||a.type||"Bonus activity")+" (bonus) ✓")];
+  document.getElementById("pageTitle").textContent=name;
+  document.getElementById("pageSub").textContent="Scheduled + completed workouts";
+  document.getElementById("workouts").innerHTML=`
+    <div class="small" style="margin-bottom:8px">${fmtShortDate(d)} • What was scheduled and what you actually completed.</div>
+    <div class="row" style="margin-bottom:12px"><button class="btn secondary" onclick="renderWorkouts();document.getElementById('pageTitle').textContent='Workouts';document.getElementById('pageSub').textContent='Your weekly plan.'">← Week</button></div>
+    ${completionRows.length?`<div class="card soft-highlight"><div class="kicker">Completed ${name}</div><h2>${completionRows.join(" + ")}</h2><div class="small">These are attached to ${fmtShortDate(d)}, even if they were bonus or originally scheduled on another day.</div></div>`:""}
+    <div class="card">
+      <div class="kicker">${name}</div><h2>${comps.length?comps.map(c=>c.label).join(" + "):"Nothing scheduled"}</h2>
+      <div class="component-grid">
+      ${comps.map(c=>{const rec=state.componentLogs?.[w+"::"+c.key],done=!!rec?.completed,when=rec?.completedDate;return `<div class="component clickable ${done?"done":""}" onclick="if(!event.target.closest('input,button'))openComponent('${c.key}',${w})">
+        <label>${c.label}<input class="check" type="checkbox" ${done?"checked":""} onclick="event.stopPropagation()" onchange="setComponent(${w},'${c.key}',this.checked)"></label>
+        <div class="small">${done&&when&&when!==d?`Completed ${fmtShortDate(when)} • `:""}${c.detail}</div>
+        <div class="component-openhint">Open actual workout →</div>
+        <div class="component-actions"><button class="move-btn" onclick="event.stopPropagation();moveMenu(${w},'${c.key}','${c.label.replace(/'/g,"")}')">Move to another day</button></div>
+      </div>`}).join("")||'<div class="sub">Nothing was originally scheduled here.</div>'}
+      </div>
+    </div>
+    ${extras.length||poleDone||bonus.length?`<div class="card exercise"><div class="kicker">Bonus / completed here</div><h2>Added to ${name}</h2>${extras.map(c=>`<div class="milestone row"><span>${c.label}</span><span class="badge">Done</span></div>`).join("")}${poleDone?`<div class="milestone row"><span>Pole Class</span><span class="badge">Done</span></div>`:""}${bonus.map(a=>`<div class="milestone row"><span>${a.name||a.type||"Bonus activity"} <span class="small">(bonus)</span></span><button class="move-btn" onclick="removeBonusActivity('${a.id}')">Remove</button></div>`).join("")}</div>`:""}`;
+}
+
+function openComponent(key,w=weekIndex()){
+  const meta=componentMeta(key); if(!meta) return;
+  switchPage("workouts");
+  const scheduledDay=scheduledDayForComponent(w,key)||meta.sourceDay;
+  const d=weekDates(w).find(x=>dayName(x)===scheduledDay)||localISODate();
+  document.getElementById("pageTitle").textContent=meta.title;
+  document.getElementById("pageSub").textContent=`Scheduled ${scheduledDay} • Week ${w+1}`;
+
+  const exercises=planKeysForComponent(key,w).map(baseKey=>({baseKey,ex:currentExerciseFor(baseKey,w)})).filter(x=>x.ex);
+  const body=exercises.map(x=>renderExercise(x.ex,d,x.baseKey,w,key)).join("");
+  const completed=componentDone(w,key);
+
+  document.getElementById("workouts").innerHTML=`
+    <div class="row" style="margin-bottom:12px">
+      <button class="btn secondary" onclick="renderWorkouts();document.getElementById('pageTitle').textContent='Workouts';document.getElementById('pageSub').textContent='Your weekly plan.'">← Week</button>
+      ${!meta.simple?`<button class="btn" onclick="startWorkoutTimer('${meta.title.replace(/'/g,"")}')">Start Workout Timer</button>`:""}
+    </div>
+    ${state.settings.pregnancyMode?`<div class="card soft-highlight"><div class="kicker">Pregnancy mode</div><div class="sub">Modify or stop any movement that feels uncomfortable. Keep a few reps in reserve and do not chase PRs. For pole, prioritize low-risk conditioning and avoid new high-fall-risk skills unless specifically cleared.</div></div>`:""}
+    <div class="card">
+      <div class="row">
+        <div><div class="kicker">Weekly workout</div><h2>${meta.title}</h2><div class="sub">Scheduled ${scheduledDay}. You can move it without losing weekly credit.</div></div>
+        <label style="display:flex;gap:8px;align-items:center;font-weight:700"><input class="check" type="checkbox" ${completed?"checked":""} onchange="setComponent(${w},'${key}',this.checked)"> Done</label>
+      </div>
+      <div class="component-actions" style="margin-top:10px"><button class="move-btn" onclick="moveMenu(${w},'${key}','${meta.title.replace(/'/g,"")}')">Move to another day</button>${!meta.simple?`<button class="move-btn" onclick="addExerciseToPlan(${w},'${key}')">+ Add exercise</button>`:""}</div>
+    </div>
+    ${body || `<div class="card exercise"><h3>${meta.title}</h3><p class="sub">${key.startsWith("lagree")?"Complete your Lagree class, then mark this workout Done above.":"Use this as a recovery-focused session and mark it Done when complete."}</p></div>`}
+    ${meta.strength?`<div class="card exercise"><div class="kicker">Post-workout</div><div class="formgrid">
+      <div><label>Energy (1–5)<input type="number" min="1" max="5" value="${state.sessionLogs[d+"::"+key]?.energy||""}" onchange="saveSessionField('${d}','${key}','energy',this.value)"></label></div>
+      <div><label>Soreness (1–5)<input type="number" min="1" max="5" value="${state.sessionLogs[d+"::"+key]?.soreness||""}" onchange="saveSessionField('${d}','${key}','soreness',this.value)"></label></div>
+    </div></div>`:""}
+  `;
+}
+
+function saveSessionField(d,key,f,v){state.sessionLogs[d+"::"+key]={...(state.sessionLogs[d+"::"+key]||{}),[f]:v};save()}
+
+function toggleCoach(id){
+  const el=document.getElementById(id);
+  if(el) el.classList.toggle("open");
+}
+function coachHtml(ex){
+  const c=COACHING[ex.key]||ex.coach;
+  if(!c) return "";
+  const id="coach_"+ex.key+"_"+Math.random().toString(36).slice(2,7);
+  return `<div class="coach" style="margin-top:16px">
+    <button class="coach-toggle" onclick="toggleCoach('${id}')"><span>Technique coach</span><span>How it should feel + tempo ▾</span></button>
+    <div class="coach-body" id="${id}">
+      <div class="coach-box"><b>Why you're doing it</b><p>${c.goal}</p></div>
+      <div class="coach-grid">
+        <div class="coach-box"><b>How to do it</b><p>${c.how}</p></div>
+        <div class="coach-box"><b>Focus</b><p>${c.focus}</p></div>
+        <div class="coach-box"><b>You should feel</b><p>${c.feel}</p></div>
+        <div class="coach-box"><b>Tempo</b><p>${c.tempo}</p></div>
+        <div class="coach-box"><b>Avoid</b><p>${c.avoid}</p></div>
+      </div>
+      <div class="coach-cue"><b>Mind → muscle cue:</b> ${c.cue}</div>
+    </div>
+  </div>`;
+}
+
+
+
+function exerciseDisplayName(key){
+  let found=null;
+  Object.values(APP_CONFIG.schedule).forEach(s=>(s.exercises||[]).forEach(e=>{if(e.key===key)found=e.name}));
+  Object.values(EXERCISE_VARIATIONS).forEach(list=>(list||[]).forEach(e=>{if(e.key===key)found=e.name}));
+  return found||String(key||"").replaceAll("_"," ").replace(/\b\w/g,c=>c.toUpperCase());
+}
+
+function copyWeeklyFeedback(w=weekIndex()){
+  const dates=new Set(weekDates(w));
+  const exerciseName={};
+  Object.values(APP_CONFIG.schedule).forEach(s=>(s.exercises||[]).forEach(e=>exerciseName[e.key]=e.name));
+  Object.values(EXERCISE_VARIATIONS).forEach(list=>(list||[]).forEach(e=>exerciseName[e.key]=e.name));
+  const lines=[`WEEK ${w+1} WORKOUT FEEDBACK`];
+  const wn=state.weeklyNotes?.[weeklyReviewKey(w)];
+  if(wn) lines.push(`Overall: ${wn}`);
+  notesForWeek(w).forEach(n=>lines.push(`${n.date} — ${exerciseName[n.exercise]||n.exercise}: ${n.note}`));
+  if(lines.length===1) lines.push("No notes saved yet.");
+  const payload=lines.join("\n");
+  if(navigator.clipboard?.writeText){navigator.clipboard.writeText(payload).then(()=>toast("Feedback copied for ChatGPT")).catch(()=>window.prompt("Copy this feedback:",payload))}
+  else window.prompt("Copy this feedback:",payload);
+}
+
+function exerciseNoteKey(exKey,dateStr){return dateStr+"::"+exKey}
+function saveExerciseNote(exKey,dateStr,value){
+  state.exerciseNotes=state.exerciseNotes||{};
+  const k=exerciseNoteKey(exKey,dateStr);
+  if(String(value||"").trim()) state.exerciseNotes[k]=String(value).trim();
+  else delete state.exerciseNotes[k];
+  // Save silently so iPhone keyboard Done/blur does not rerender the app
+  // or kick the user back to the workout/main page.
+  persistWithoutRerender();
+}
+function weeklyReviewKey(w){return "week_"+w}
+function saveWeeklyNote(w,value){
+  state.weeklyNotes=state.weeklyNotes||{};
+  const k=weeklyReviewKey(w);
+  if(String(value||"").trim()) state.weeklyNotes[k]=String(value).trim();
+  else delete state.weeklyNotes[k];
+  save();
+}
+function notesForWeek(w=weekIndex()){
+  const dates=new Set(weekDates(w));
+  return Object.entries(state.exerciseNotes||{})
+    .filter(([k])=>dates.has(k.split("::")[0]))
+    .map(([k,v])=>({date:k.split("::")[0],exercise:k.split("::")[1],note:v}));
+}
+
+function variationHtml(baseKey,currentEx,w,componentKey){
+  const vars=approvedVariations(baseKey);
+  if(!vars.length) return "";
+  const base=baseExerciseByKey(baseKey);
+  const selectId="variation_"+baseKey+"_"+w;
+  const options=[base,...vars].map(v=>`<option value="${v.key}" ${currentEx.key===v.key?"selected":""}>${v.name}</option>`).join("");
+  const currentWhy=currentEx.key===baseKey?"Original programmed exercise.":(currentEx.why||"Approved same-purpose variation.");
+  return `<div class="card" style="margin-top:12px;background:#FFFDF9;box-shadow:none;border:1px solid var(--line)">
+    <div class="row"><div><div class="kicker">Approved variations</div><div class="small">Only close variations or same-purpose replacements are available for this slot.</div></div><span class="badge">Optional</span></div>
+    <label style="display:block;margin-top:10px">Exercise
+      <select id="${selectId}">${options}</select>
+    </label>
+    <div class="small" style="margin-top:8px">Current: <b>${currentEx.name}</b> • ${currentWhy}</div>
+    <div class="component-actions" style="margin-top:10px;flex-wrap:wrap">
+      <button class="move-btn" onclick="setExerciseSwap('${baseKey}',document.getElementById('${selectId}').value,'week',${w},'${componentKey}')">Use this week</button>
+      <button class="move-btn" onclick="setExerciseSwap('${baseKey}',document.getElementById('${selectId}').value,'ongoing',${w},'${componentKey}')">Use from this week on</button>
+      <button class="move-btn" onclick="setExerciseSwap('${baseKey}',document.getElementById('${selectId}').value,'next',${w},'${componentKey}')">Start next week</button>
+      <button class="move-btn" onclick="resetExerciseSwap('${baseKey}',${w},'${componentKey}')">Original</button>
+      <button class="move-btn" onclick="addCustomExercise('${baseKey}',${w},'${componentKey}')">Custom exercise</button>
+    </div>
+    <div class="small" style="margin-top:8px">Each variation keeps its own weight/reps history, so it will not overwrite the original exercise's progress.</div>
+  </div>`;
+}
+
+function renderExercise(ex,d,baseKey=ex.key,w=weekIndex(),componentKey="strength_upper"){
+  const k=d+"::"+ex.key;
+  const style=trackingStyle(ex);
+  const log=state.exerciseLogs[k]||{sets:Array.from({length:ex.sets},()=>({weight:"",reps:"",done:false})),rpe:""};
+  state.exerciseLogs[k]=log;
+
+  const rows=Array.from({length:ex.sets},(_,i)=>{
+    const s=log.sets[i]||{};
+    if(style==="strength"){
+      return `<div>${i+1}</div>
+        <input inputmode="decimal" placeholder="${state.settings.weightUnit}" value="${s.weight??""}" onchange="setEx('${k}',${i},'weight',this.value)">
+        <input inputmode="numeric" placeholder="reps" value="${s.reps??""}" onchange="setEx('${k}',${i},'reps',this.value)">
+        <input class="check" type="checkbox" ${s.done?"checked":""} onchange="setEx('${k}',${i},'done',this.checked);autoRest('${ex.key}')">`;
+    }
+    if(style==="timed"){
+      return `<div>${i+1}</div>
+        <div class="small" style="align-self:center">${ex.seconds||""} sec</div>
+        <button class="btn ghost" onclick="startCountdown(${ex.seconds||30},'${ex.name.replace(/'/g,"")}')">Start</button>
+        <input class="check" type="checkbox" ${s.done?"checked":""} onchange="setEx('${k}',${i},'done',this.checked)">`;
+    }
+    return `<div>${i+1}</div>
+      <div class="small" style="align-self:center">${ex.reps}</div>
+      <input inputmode="numeric" placeholder="actual reps" value="${s.reps??""}" onchange="setEx('${k}',${i},'reps',this.value)">
+      <input class="check" type="checkbox" ${s.done?"checked":""} onchange="setEx('${k}',${i},'done',this.checked)">`;
+  }).join("");
+
+  const prev=latestExerciseLog(ex.key,d);
+  const headers = style==="strength"
+    ? `<div class="small">Set</div><div class="small">Weight</div><div class="small">Reps</div><div class="small">Done</div>`
+    : style==="timed"
+    ? `<div class="small">Set</div><div class="small">Target</div><div class="small">Timer</div><div class="small">Done</div>`
+    : `<div class="small">Set</div><div class="small">Target</div><div class="small">Actual</div><div class="small">Done</div>`;
+
+  return `<div class="card exercise">
+    <div class="exercise-head">${demoHtml(ex)}<div style="flex:1"><div class="row"><div><h3>${ex.name}</h3><div class="sub">${ex.sets} sets • ${ex.reps}</div></div></div>
+    ${style==="strength"?`<div class="small" style="margin-top:8px">${progressionSuggestion(ex)}</div>`:""}</div></div>
+    <div class="component-actions" style="margin-top:10px;flex-wrap:wrap"><button class="move-btn" onclick="editExerciseSettings('${baseKey}',${w},'${componentKey}')">Edit</button><button class="move-btn" onclick="reorderExercise('${baseKey}',${w},'${componentKey}',-1)">↑</button><button class="move-btn" onclick="reorderExercise('${baseKey}',${w},'${componentKey}',1)">↓</button><button class="move-btn" onclick="deleteExerciseFromPlan('${baseKey}',${w},'${componentKey}')">Remove</button></div>${variationHtml(baseKey,ex,w,componentKey)}
+    ${coachHtml(ex)}
+    <div class="set-table" style="margin-top:14px">${headers}${rows}</div>
+    <div class="exercise-note">
+      <label>Exercise notes <span>optional</span></label>
+      <textarea placeholder="e.g. Didn’t like this one, used a different weight, felt it somewhere unexpected, or swapped the exercise…" onblur="saveExerciseNote('${ex.key}','${d}',this.value)">${state.exerciseNotes?.[exerciseNoteKey(ex.key,d)]||""}</textarea>
+      <div class="small">Saved with this workout for next week’s adjustments.</div>
+    </div>
+    ${style==="strength"?`<div class="formgrid" style="margin-top:12px">
+      <div><label>Difficulty<select onchange="setExRpe('${k}',this.value)"><option value="">Choose</option>${["Easy","Good","Hard","Maxed"].map(x=>`<option ${log.rpe===x?"selected":""}>${x}</option>`).join("")}</select></label></div>
+      <div><label>Previous<div class="small" style="margin-top:10px">${prev?prev.sets.map(s=>`${s.weight||"—"}×${s.reps||"—"}`).join(" / "):"No prior log"}</div></label></div>
+    </div>`:""}
+  </div>`;
+}
+function setEx(k,i,f,v){const log=state.exerciseLogs[k];log.sets[i]=log.sets[i]||{};log.sets[i][f]=v;persistWithoutRerender()}
+function setExRpe(k,v){state.exerciseLogs[k].rpe=v;persistWithoutRerender();toast('Difficulty saved')}
+
+function trackingStyle(ex){
+  const strengthKeys=new Set(["reverse_grip_row","oh_triceps","band_lat_pulldown","skull_crushers","rear_delt_fly","lateral_raise","zottman","hip_thrust","db_rdl","rev_curtsy","sumo_squat","band_abduction","one_arm_db_row","db_shoulder_press","triceps_kickback","standard_db_curl","elevated_sumo","single_leg_hip_thrust","straight_leg_kickback","glute_bridge"]);
+  if(ex?.strength || strengthKeys.has(ex.key)) return "strength";
+  if(ex.seconds) return "timed";
+  return "reps";
+}
+
+
+function renderLog(){
+  const d=localISODate(), x=state.daily[d]||{};
+  document.getElementById("log").innerHTML=`
+  <div class="card">
+    <div class="kicker">Daily check-in</div><h2>${new Date(d+"T12:00:00").toLocaleDateString(undefined,{month:"long",day:"numeric"})}</h2>
+    <div class="formgrid" style="margin-top:12px">
+      <label>Steps<input type="number" id="steps" value="${x.steps||""}"><span class="small">${x.stepsUpdatedAt?"Last updated "+new Date(x.stepsUpdatedAt).toLocaleString():"Not updated yet"}</span></label>
+      <label>Calories<input type="number" id="calories" value="${x.calories||""}"></label>
+      <label>Protein (g)<input type="number" id="protein" value="${x.protein||""}"></label>
+      <label>Fiber (g)<input type="number" id="fiber" value="${x.fiber||""}"></label>
+      <label>Fluids (oz)<input type="number" id="water" value="${x.water||""}"></label>
+      <label>Weight (${state.settings.weightUnit})<input type="number" step=".1" id="weight" value="${x.weight||""}"></label>
+    </div>
+    <div style="margin-top:14px"><div class="kicker">Daily habits</div><div class="formgrid" style="margin-top:8px">
+      <label style="display:flex;align-items:center;gap:8px">Creatine <input type="checkbox" id="habitCreatine" ${x.habitCreatine?"checked":""}></label>
+      <label style="display:flex;align-items:center;gap:8px">Post-meal movement <input type="checkbox" id="postMealMovement" ${x.postMealMovement?"checked":""}></label>
+    </div></div>
+    <label style="margin-top:12px">Notes to self<textarea id="dailyReminder" placeholder="Tuesday: remember to...">${x.dailyReminder||""}</textarea></label>
+    <button class="btn" style="margin-top:12px" onclick="saveDailyBasics()">Save Daily Log</button>
+  </div>
+  <div class="card exercise">
+    <div class="kicker">Sleep</div><h2>Last night's sleep</h2>
+    <div class="formgrid" style="margin-top:12px">
+      <label>Fell asleep<input type="time" id="sleepStart" value="${x.sleepStart||""}"></label>
+      <label>Woke up<input type="time" id="sleepEnd" value="${x.sleepEnd||""}"></label>
+      <label>Awakenings<select id="awakenings"><option ${x.awakenings==0?"selected":""}>0</option><option ${x.awakenings==1?"selected":""}>1</option><option ${x.awakenings==2?"selected":""}>2</option><option ${x.awakenings=="3+"?"selected":""}>3+</option></select></label>
+      <label>Awake overnight (min)<input type="number" id="awakeMin" value="${x.awakeMin||""}"></label>
+      <label>Sleep quality (1–5)<input type="number" min="1" max="5" id="sleepQuality" value="${x.sleepQuality||""}"></label>
+      <label>Estimated sleep<input disabled value="${x.sleepHours?x.sleepHours+" hours":"Calculated on save"}"></label>
+    </div>
+    <label style="margin-top:10px">Sleep note<textarea id="sleepNote" placeholder="Woke at 4:10 and couldn't fall back asleep...">${x.sleepNote||""}</textarea></label>
+    <button class="btn" style="margin-top:12px" onclick="saveSleep()">Save Sleep</button>
+  </div>
+  <div class="card exercise">
+    <div class="row"><div><div class="kicker">ChatGPT import</div><h2>Paste from ChatGPT</h2></div><button class="btn ghost" onclick="fillExample()">Example</button></div>
+    <textarea id="importText" placeholder='Paste JSON or friendly text here'></textarea>
+    <button class="btn" onclick="importChatGPT()">Preview & Import</button>
+    <div class="small" style="margin-top:8px">Supports multiple DATE blocks plus STEPS, CALORIES, PROTEIN, FIBER, WATER/FLUIDS, SLEEP, WORKOUT and NOTES fields, or JSON.</div>
+  </div>
+  <div class="card exercise">
+    <div class="row"><div><div class="kicker">App update</div><h2>Paste an update</h2></div><button class="btn ghost" onclick="fillUpdateExample()">Example</button></div>
+    <textarea id="updateText" placeholder="Paste an UPDATE block from ChatGPT"></textarea>
+    <button class="btn" onclick="applyAppUpdate()">Apply Update</button>
+    <div class="small" style="margin-top:8px">Use this for goals, workout exercises, sets/reps, and simple app preferences. Your daily food/steps log still goes in ChatGPT import above.</div>
+  </div>
+  <div class="card exercise">
+    <div class="kicker">Bonus activity</div><h2>Add activity</h2>
+    <div class="formgrid">
+      <label>Date<input type="date" id="actDate" value="${d}"></label>
+      <label>Type<select id="actType"><option>Lagree</option><option>Pole Class</option><option>Pole Conditioning</option><option>Strength</option><option>Walk</option><option>Mobility</option><option>Other</option></select></label>
+      <label>Duration (min)<input type="number" id="actDur"></label>
+      <label>Steps optional<input type="number" id="actSteps"></label>
+      <label>Name<input id="actName"></label>
+    </div>
+    <label style="margin-top:10px">Notes<textarea id="actNotes"></textarea></label>
+    <button class="btn" onclick="addActivity()">Save Activity</button>
+  </div>`;
+}
+function saveDailyBasics(){
+  const d=localISODate(), x=state.daily[d]||(state.daily[d]={});
+  ["steps","calories","protein","fiber","water","weight"].forEach(f=>x[f]=document.getElementById(f).value?Number(document.getElementById(f).value):"");
+  x.habitCreatine=document.getElementById("habitCreatine").checked; x.postMealMovement=document.getElementById("postMealMovement").checked; x.dailyReminder=document.getElementById("dailyReminder").value;
+  x.stepsUpdatedAt=new Date().toISOString(); save();toast("Daily log saved");
+}
+function saveSleep(){
+  const d=localISODate(), x=state.daily[d]||(state.daily[d]={});
+  const start=document.getElementById("sleepStart").value,end=document.getElementById("sleepEnd").value,awake=Number(document.getElementById("awakeMin").value||0);
+  x.sleepStart=start;x.sleepEnd=end;x.awakenings=document.getElementById("awakenings").value;x.awakeMin=awake;x.sleepQuality=document.getElementById("sleepQuality").value;x.sleepNote=document.getElementById("sleepNote").value;
+  if(start&&end){
+    const [sh,sm]=start.split(":").map(Number),[eh,em]=end.split(":").map(Number);
+    let startMinutes=sh*60+sm;
+    let mins=(eh*60+em)-startMinutes; if(mins<=0) mins+=1440; mins=Math.max(0,mins-awake);
+    if(mins>14*60 && sh===12){ startMinutes=sm; mins=(eh*60+em)-startMinutes; if(mins<=0) mins+=1440; mins=Math.max(0,mins-awake); }
+    x.sleepHours=Math.round(mins/6)/10;
+  }
+  save();toast("Sleep saved");
+}
+function addActivity(){
+  const btn=event?.currentTarget; if(btn?.dataset.saving==="1") return; if(btn) btn.dataset.saving="1";
+  const d=document.getElementById("actDate")?.value||localISODate(),type=document.getElementById("actType").value,name=document.getElementById("actName").value;
+  state.activities.push({id:crypto.randomUUID?crypto.randomUUID():Date.now()+"",date:d,type,name,durationMin:Number(document.getElementById("actDur").value||0),steps:Number(document.getElementById("actSteps").value||0),notes:document.getElementById("actNotes").value,source:"manual"});
+  // Bonus activities are independent records and never consume a scheduled workout.
+  if(type==="Pole Class") state.poleClasses.push({id:Date.now()+"p",date:d,completed:true});
+  save();toast("Bonus activity saved");
+  renderHome(); renderLog(); renderWorkouts();
+}
+
+function fillUpdateExample(){
+  document.getElementById("updateText").value=`UPDATE:
+WEEKLY_STEPS: 44000
+CALORIES: 1700
+PROTEIN_MIN: 90
+PROTEIN_MAX: 105
+FIBER_MIN: 25
+FLUIDS_MIN: 70`;
+}
+function updateComponentKey(name){
+  const n=String(name||"").toLowerCase();
+  if(n.includes("upper")) return "strength_upper";
+  if(n.includes("lower")||n.includes("glute")) return "strength_lower";
+  return null;
+}
+function findPlanExerciseKey(componentKey,name,w=weekIndex()){
+  const q=String(name||"").trim().toLowerCase();
+  return planKeysForComponent(componentKey,w).find(k=>{
+    const ex=currentExerciseFor(k,w)||exerciseByKey(k);
+    return ex && (String(ex.name).toLowerCase()===q || String(ex.key).toLowerCase()===q);
+  });
+}
+function applyAppUpdate(){
+  const raw=(document.getElementById("updateText")?.value||"").trim(); if(!raw)return;
+  const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  const val=k=>{const m=lines.find(x=>x.toUpperCase().startsWith(k+":"));return m?m.slice(m.indexOf(":")+1).trim():null};
+  const num=k=>{const v=val(k);if(v==null)return null;const m=v.replace(/,/g,"").match(/-?\d+(?:\.\d+)?/);return m?Number(m[0]):null};
+  const g=state.settings.goals;
+  const goalMap={WEEKLY_STEPS:"weeklySteps",CALORIES:"calories",PROTEIN_MIN:"proteinMin",PROTEIN_MAX:"proteinMax",FIBER_MIN:"fiberMin",FIBER_MAX:"fiberMax",FLUIDS_MIN:"waterMin",FLUIDS_MAX:"waterMax",SLEEP_HOURS:"sleepHours"};
+  Object.entries(goalMap).forEach(([k,p])=>{const n=num(k);if(n!=null)g[p]=n});
+  const unit=val("WEIGHT_UNIT"); if(unit && /^(lb|kg)$/i.test(unit))state.settings.weightUnit=unit.toLowerCase();
+
+  // Workout update format:
+  // UPDATE_WORKOUT: Upper Body
+  // ADD: Exercise Name | 3 sets | 10-15 reps
+  // REMOVE: Exercise Name
+  // EDIT: Exercise Name | 3 sets | 12-15 reps
+  const workout=val("UPDATE_WORKOUT");
+  if(workout){
+    const ck=updateComponentKey(workout), w=weekIndex();
+    if(!ck){alert("Workout name not recognized. Use Upper Body or Lower Body.");return}
+    let keys=planKeysForComponent(ck,w);
+    lines.forEach(line=>{
+      const c=line.indexOf(":"); if(c<0)return;
+      const cmd=line.slice(0,c).trim().toUpperCase(), body=line.slice(c+1).trim();
+      if(cmd==="ADD"){
+        const parts=body.split("|").map(x=>x.trim()), name=parts[0];
+        const sets=Number((parts.find(x=>/set/i.test(x))||"3").match(/\d+/)?.[0]||3);
+        const reps=(parts.find(x=>/rep/i.test(x))||"8–12").replace(/\s*reps?\s*/i,"").trim();
+        const key="custom_"+Date.now()+"_"+Math.random().toString(36).slice(2,6);
+        state.customExercises[key]={key,name,sets,reps,restSec:90,strength:true,why:"Added by pasted app update."}; keys.push(key);
+      }else if(cmd==="REMOVE"){
+        const k=findPlanExerciseKey(ck,body,w); if(k)keys=keys.filter(x=>x!==k);
+      }else if(cmd==="EDIT"){
+        const parts=body.split("|").map(x=>x.trim()), name=parts[0], baseKey=findPlanExerciseKey(ck,name,w);
+        if(baseKey){
+          const ex=currentExerciseFor(baseKey,w)||exerciseByKey(baseKey);
+          const sets=Number((parts.find(x=>/set/i.test(x))||String(ex.sets||3)).match(/\d+/)?.[0]||ex.sets||3);
+          const reps=(parts.find(x=>/rep/i.test(x))||String(ex.reps||"8–12")).replace(/\s*reps?\s*/i,"").trim();
+          const key="custom_"+Date.now()+"_"+Math.random().toString(36).slice(2,6);
+          state.customExercises[key]={...ex,key,name:ex.name,sets,reps,why:"Edited by pasted app update."};
+          state.exerciseSwaps.ongoing[baseKey]=key;
+        }
+      }
+    });
+    state.componentPlans.ongoing[ck]=keys;
+  }
+  save(); toast("App update applied");
+  const box=document.getElementById("updateText"); if(box)box.value="";
+}
+
+function fillExample(){
+  document.getElementById("importText").value=`DATE: ${localISODate()}
+STEPS: 7265
+CALORIES: 1680
+PROTEIN: 101
+FIBER: 27
+WATER: 76
+SLEEP: 7.2
+WORKOUT:
+- Completed Tuesday Upper Body
+- Added 30 min walk
+NOTES: Felt good`;
+}
+function importChatGPT(){
+  const raw=document.getElementById("importText").value.trim(); if(!raw)return;
+  const parseNum=v=>{if(v==null)return undefined;const m=String(v).replace(/,/g,"").match(/-?\d+(?:\.\d+)?/);return m?Number(m[0]):undefined};
+  const importOne=(chunk,obj=null)=>{
+    let o=obj||{};
+    if(!obj){
+      const get=k=>chunk.match(new RegExp("^\\s*(?:[-*•]\\s*)?(?:\\*\\*)?"+k+"(?:\\*\\*)?\\s*:\s*(.+)$","im"))?.[1]?.trim();
+      o.date=(get("DATE")||localISODate()).replace(/[`*_]/g,"").trim();
+      o.steps=parseNum(get("STEPS"));o.calories=parseNum(get("CALORIES"));o.protein=parseNum(get("PROTEIN"));o.fiber=parseNum(get("FIBER"));o.water=parseNum(get("WATER")||get("FLUIDS"));o.sleep=parseNum(get("SLEEP"));
+      o.notes=get("NOTES")||get("NUTRITION")||get("FOOD/NUTRITION NOTE")||get("NUTRITION NOTE")||"";
+      o.workout=(chunk.match(/WORKOUT:\s*([\s\S]*?)(?:\n\s*(?:[-*•]\s*)?(?:\*\*)?[A-Z][A-Z /&_-]*(?:\*\*)?\s*:|$)/i)?.[1]||"").trim();
+    }
+    ["steps","calories","protein","fiber","water","sleep"].forEach(k=>{if(o[k]!=null)o[k]=parseNum(o[k])});
+    const hash=btoa(unescape(encodeURIComponent(chunk))).slice(0,64), already=state.imports.some(x=>x.hash===hash);
+    const d=o.date||localISODate(),x=state.daily[d]||(state.daily[d]={});
+    ["steps","calories","protein","fiber","water"].forEach(k=>{if(o[k]!=null)x[k]=o[k]}); if(o.sleep!=null)x.sleepHours=o.sleep;if(o.notes)x.notes=o.notes;
+    if(o.steps!=null)x.stepsUpdatedAt=new Date().toISOString();
+    if(!already)state.imports.push({hash,date:d,createdAt:new Date().toISOString()}); if(o.workout&&!already)creditWorkoutText(o.workout,d);
+    return d;
+  };
+  try{const parsed=JSON.parse(raw);if(Array.isArray(parsed))parsed.forEach(o=>importOne(JSON.stringify(o),o));else importOne(raw,parsed)}catch{
+    const starts=[...raw.matchAll(/^\s*DATE\s*:/gim)].map(m=>m.index);
+    if(starts.length>1){starts.forEach((st,i)=>importOne(raw.slice(st,starts[i+1]??raw.length).trim()))}else importOne(raw);
+  }
+  persistWithoutRerender();renderLog();renderHome();renderProgress();toast("ChatGPT log imported");
+}
+const STRENGTH_KEYS=new Set(["one_arm_db_row","db_shoulder_press","rear_delt_fly","lateral_raise","oh_triceps","triceps_kickback","standard_db_curl","hip_thrust","elevated_sumo","single_leg_hip_thrust","straight_leg_kickback","glute_bridge", ...Object.values(EXERCISE_VARIATIONS).flat().filter(e=>e.strength).map(e=>e.key)]);
+function renderProgress(){
+  const w=weekIndex(),dates=weekDates(w),g=state.settings.goals;
+  const sleep=dates.map(d=>{
+    const x=state.daily[d]||{};
+    let v=Number(x.sleepHours||0);
+    // Protect weekly trends from clearly invalid sleep totals (for example, 20h caused by a midnight entry saved as 12:00).
+    if(v>14 && x.sleepStart && x.sleepEnd){
+      const [sh0,sm]=String(x.sleepStart).split(":").map(Number),[eh,em]=String(x.sleepEnd).split(":").map(Number);
+      const sh=(sh0===12?0:sh0);
+      let mins=(eh*60+em)-(sh*60+sm); if(mins<=0) mins+=1440; mins=Math.max(0,mins-Number(x.awakeMin||0));
+      const repaired=Math.round(mins/6)/10; if(repaired>0&&repaired<=14)v=repaired;
+    }
+    return v>0&&v<=14?v:0;
+  }),max=Math.max(9,...sleep);
+  const milestones=state.milestones.length?state.milestones:[{title:"Hip thrust progression",status:"In progress"},{title:"RDL progression",status:"In progress"},{title:"Active straddle control",status:"In progress"},{title:"Shoulder mount",status:"In progress"},{title:"Backbend / shoulder mobility",status:"In progress"}];
+  document.getElementById("progressPage").innerHTML=`
+   <div class="card"><div class="kicker">Sleep trend</div><h2>This week</h2><div class="chart">${sleep.map((v,i)=>`<div class="bar"><span style="height:${v/max*100}%"></span><label>${["M","T","W","T","F","S","S"][i]}</label></div>`).join("")}</div>
+   <div class="small" style="margin-top:28px">Average: ${sleep.filter(Boolean).length?(sleep.reduce((a,b)=>a+b,0)/sleep.filter(Boolean).length).toFixed(1):"—"} h • Goal ${g.sleepHours} h</div></div>
+   <div class="card exercise"><div class="kicker">Performance milestones</div><h2>6-week wins</h2>${milestones.map(m=>`<div class="milestone row"><span>${m.title}</span><span class="badge">${m.status}</span></div>`).join("")}</div>
+   <div class="card exercise weekly-review"><div class="kicker">Week ${w+1} feedback</div><h2>Notes for next week</h2>
+   <div class="sub">Your exercise notes are pulled in automatically. Add anything below only if it is not already captured on an exercise.</div>
+   ${notesForWeek(w).length?`<div class="card" style="margin-top:12px;background:#F5FBF9;box-shadow:none;border:1px solid #CFE9E5"><div class="kicker">Pulled from this week</div>${notesForWeek(w).map(n=>`<div class="milestone"><b>${exerciseDisplayName(n.exercise)}</b><div class="small">${n.note}</div></div>`).join("")}</div>`:`<div class="small" style="margin-top:10px">No exercise notes saved yet this week.</div>`}
+   <label style="display:block;margin-top:12px">Anything else?<textarea placeholder="Optional: energy, schedule, overall soreness, pole limitations, or anything else not tied to one exercise." onblur="saveWeeklyNote(${w},this.value)">${state.weeklyNotes?.[weeklyReviewKey(w)]||""}</textarea></label>
+   <div class="row" style="margin-top:10px"><div class="small">${notesForWeek(w).length} exercise note${notesForWeek(w).length===1?"":"s"} automatically included.</div><button class="move-btn" onclick="copyWeeklyFeedback(${w})">Copy for ChatGPT</button></div></div>
+   <div class="card exercise"><div class="kicker">Workout history</div><h2>Recent strength logs</h2>
+   ${Object.entries(state.exerciseLogs).filter(([k])=>STRENGTH_KEYS.has(k.split("::")[1])).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,8).map(([k,v])=>`<div class="milestone"><div>${k.split("::")[1].replaceAll("_"," ")}</div><div class="small">${k.slice(0,10)} • ${v.sets.map(s=>`${s.weight||"—"}×${s.reps||"—"}`).join(" / ")}${v.rpe?` • ${v.rpe}`:""}</div></div>`).join("")||'<div class="sub">No strength history yet.</div>'}
+   </div>`;
+}
+function renderMore(){
+  const g=state.settings.goals;
+  document.getElementById("more").innerHTML=`
+   <div class="card"><div class="kicker">Settings</div><h2>Mode & goals</h2>
+   <div class="card" style="margin-top:12px;background:#FFFDF9;box-shadow:none">
+     <div class="row">
+       <div><h3>Pregnancy Mode</h3><div class="small">Switches the app from recomp progression to maintenance, recovery and comfort-first guidance.</div></div>
+       <label style="display:flex;align-items:center;gap:8px;color:var(--text)"><input class="check" id="pregnancyMode" type="checkbox" ${state.settings.pregnancyMode?"checked":""}> On</label>
+     </div>
+   </div>
+   <div class="formgrid" style="margin-top:10px">
+    <label>Weekly steps<input id="goalSteps" type="number" value="${g.weeklySteps}"></label>
+    <label>Calories<input id="goalCalories" type="number" value="${g.calories}"></label>
+    <label>Protein min (g)<input id="goalProteinMin" type="number" value="${g.proteinMin}"></label>
+    <label>Protein max (g)<input id="goalProteinMax" type="number" value="${g.proteinMax}"></label>
+    <label>Fiber min (g)<input id="goalFiberMin" type="number" value="${g.fiberMin}"></label>
+    <label>Fiber max (g)<input id="goalFiberMax" type="number" value="${g.fiberMax}"></label>
+    <label>Fluids min (oz)<input id="goalWaterMin" type="number" value="${g.waterMin||70}"></label>
+    <label>Fluids max (oz)<input id="goalWaterMax" type="number" value="${g.waterMax||80}"></label>
+    <label>Sleep hours<input id="goalSleep" type="number" step=".1" value="${g.sleepHours}"></label>
+    <label>Program start<input id="startDate" type="date" value="${state.programStartDate}"></label>
+    <label>Weight unit<select id="weightUnit"><option ${state.settings.weightUnit==="lb"?"selected":""}>lb</option><option ${state.settings.weightUnit==="kg"?"selected":""}>kg</option></select></label>
+   </div><button class="btn" style="margin-top:12px" onclick="saveSettings()">Save settings</button>
+   <div class="small" style="margin-top:10px">You can change these anytime. To customize a strength workout, open it from Workouts and use Edit, ↑/↓, Remove, or Add exercise. You can also drag workouts to another day.</div></div>
+   <div class="card exercise"><div class="kicker">Backup</div><h2>Your data</h2><div class="row" style="margin-top:12px;flex-wrap:wrap">
+    <button class="btn secondary" onclick="exportData()">Export JSON</button>
+    <label class="btn secondary" style="cursor:pointer;color:var(--text)">Restore JSON<input type="file" accept="application/json" style="display:none" onchange="restoreData(this.files[0])"></label>
+    <button class="btn danger" onclick="resetData()">Reset data</button>
+   </div><div class="small" style="margin-top:10px"><strong>Export JSON backs up everything:</strong> daily nutrition (including fiber and fluids), steps, sleep, weight, workout completion dates, bonus activities, pole classes, exercise sets/reps/weights, exercise notes, schedule moves, imports, settings and milestones. Keep a backup before replacing the app file.</div></div>
+   <div class="card exercise"><div class="kicker">About</div><p class="sub">Exercise demos load only for exact verified database matches. When no exact in-app image exists, the app provides exact-name video/photo search links rather than substituting a different movement. Each programmed movement also includes technique coaching for setup, focus, expected sensation, tempo, common mistakes, and a mind-to-muscle cue. Custom pole and mobility moves intentionally show a clean fallback instead of a misleading demo.</p><hr><p class="sub">Pregnancy Mode is a planning aid, not medical clearance. Your prenatal clinician's advice takes priority, especially after a recent ectopic/PUL, bleeding, pain or other complications.</p></div>`;
+}
+function saveSettings(){
+  state.settings.pregnancyMode=!!document.getElementById("pregnancyMode").checked;
+  state.settings.goals.weeklySteps=Number(document.getElementById("goalSteps").value);
+  state.settings.goals.waterMin=Number(document.getElementById("goalWaterMin").value); state.settings.goals.waterMax=Number(document.getElementById("goalWaterMax").value);
+  state.settings.goals.calories=Number(document.getElementById("goalCalories").value);
+  state.settings.goals.proteinMin=Number(document.getElementById("goalProteinMin").value);
+  state.settings.goals.proteinMax=Number(document.getElementById("goalProteinMax").value);
+  state.settings.goals.fiberMin=Number(document.getElementById("goalFiberMin").value);
+  state.settings.goals.fiberMax=Number(document.getElementById("goalFiberMax").value);
+  state.settings.goals.sleepHours=Number(document.getElementById("goalSleep").value);
+  state.programStartDate=document.getElementById("startDate").value;
+  state.settings.weightUnit=document.getElementById("weightUnit").value;save();toast("Settings saved");
+}
+function exportData(){
+  const backup={...state,_backup:{exportedAt:new Date().toISOString(),storageKey:STORAGE_KEY,includes:"full app state"}};
+  const blob=new Blob([JSON.stringify(backup,null,2)],{type:"application/json"}),a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download=`6-week-recomp-backup-${localISODate()}.json`;a.click();URL.revokeObjectURL(a.href);toast("Full backup exported")
+}
+function restoreData(file){if(!file)return;const r=new FileReader();r.onload=()=>{try{state=JSON.parse(r.result);save();toast("Backup restored")}catch{alert("Invalid JSON backup")}};r.readAsText(file)}
+function resetData(){if(confirm("Reset all local app data? This cannot be undone unless you exported a backup.")){state=emptyState();save();toast("Data reset")}}
+
+function switchPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===id));
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===id));
+  const map={home:["Dashboard","Stronger, freer, more consistent."],workouts:["Workouts","Your weekly plan."],log:["Daily Log","Nutrition, movement, sleep and imports."],progressPage:["Progress","Trends, milestones and history."],more:["More","Settings and backup."]};
+  document.getElementById("pageTitle").textContent=map[id][0];document.getElementById("pageSub").textContent=map[id][1];
+  renderAll(false);
+}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>switchPage(b.dataset.page));
+document.getElementById("quickAdd").onclick=()=>switchPage("log");
+
+function startWorkoutTimer(label){
+  if(activeTimer)clearInterval(activeTimer.interval);
+  activeTimer={type:"up",label,start:Date.now(),elapsed:0,paused:false};
+  tickTimer();activeTimer.interval=setInterval(tickTimer,1000);
+}
+function startCountdown(sec,label){
+  if(activeTimer)clearInterval(activeTimer.interval);
+  activeTimer={type:"down",label,remaining:sec,paused:false};
+  tickTimer();activeTimer.interval=setInterval(tickTimer,1000);
+}
+function autoRest(){startCountdown(90,"Rest")}
+function tickTimer(){
+  const bar=document.getElementById("timerBar");bar.classList.add("show");document.getElementById("timerLabel").textContent=activeTimer.label;
+  let sec;if(activeTimer.type==="up"){if(!activeTimer.paused)activeTimer.elapsed=Math.floor((Date.now()-activeTimer.start)/1000);sec=activeTimer.elapsed}
+  else {sec=activeTimer.remaining;if(!activeTimer.paused){activeTimer.remaining--; if(activeTimer.remaining<0){clearInterval(activeTimer.interval);toast("Timer complete");stopTimer();return}}}
+  document.getElementById("timerDisplay").textContent=String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");
+}
+function stopTimer(){if(activeTimer?.interval)clearInterval(activeTimer.interval);activeTimer=null;document.getElementById("timerBar").classList.remove("show")}
+document.getElementById("timerStop").onclick=stopTimer;
+document.getElementById("timerPause").onclick=()=>{if(!activeTimer)return;activeTimer.paused=!activeTimer.paused;if(activeTimer.type==="up"&&!activeTimer.paused)activeTimer.start=Date.now()-activeTimer.elapsed*1000;document.getElementById("timerPause").textContent=activeTimer.paused?"Resume":"Pause"};
+
+function renderAll(keepPage=true){
+  renderHome(); renderWorkouts(); renderLog(); renderProgress(); renderMore();
+}
+(async()=>{renderAll(); await loadExerciseDB(); renderAll()})();
+</script>
+
+<div id="weeklyDetailSheet" class="move-sheet" onclick="if(event.target===this)closeWeeklyDetail()">
+  <div class="move-sheet-panel">
+    <div class="row"><h3 id="weeklyDetailTitle">Week so far</h3><button class="btn secondary" onclick="closeWeeklyDetail()">Done</button></div>
+    <div id="weeklyDetailBody" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<div id="moveSheet" class="move-sheet" onclick="if(event.target===this)closeMoveMenu()">
+  <div class="move-sheet-panel">
+    <div class="row"><h3 id="moveSheetTitle">Move workout</h3><button class="btn secondary" onclick="closeMoveMenu()">Done</button></div>
+    <div class="small" style="margin-bottom:10px">Choose a different day. Your weekly goal stays the same.</div>
+    <div id="moveSheetDays" class="move-day-grid"></div>
+  </div>
+</div>
+
+</body>
+</html>
