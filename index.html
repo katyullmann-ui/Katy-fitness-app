@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="6 Week Recomp" />
-<title>Katy Recomp MASTER v34 • 6 Week Recomp</title>
+<title>Katy Recomp MASTER v35 • 6 Week Recomp</title>
 <style>
 :root{
   --bg:#F6F2EA; --card:#FFFFFF; --card2:#F0ECE3; --muted:#667275; --text:#163536;
@@ -229,7 +229,7 @@ const APP_CONFIG = {
       {key:"straddle_compression",name:"Straddle Compression Lifts",sets:2,reps:"5–8"},
       {key:"active_straddle_hold",name:"Active Straddle Hold",sets:2,reps:"15–20 sec",seconds:18}
     ]},
-    Tuesday: {type:"Upper Body + Bridal Arms", sessionKey:"tue_upper", strength:true, exercises:[
+    Tuesday: {type:"Upper Body", sessionKey:"tue_upper", strength:true, exercises:[
       {key:"wall_slides",name:"Wall Slides",sets:1,reps:"8",warmup:true},
       {key:"open_books",name:"Open Books",sets:1,reps:"5/side",warmup:true},
       {key:"arm_circles",name:"Arm Circles",sets:1,reps:"10 forward + 10 backward",warmup:true},
@@ -382,7 +382,7 @@ function componentDone(weekIdx,key){return !!state.componentLogs?.[weekIdx+"::"+
 function setComponent(weekIdx,key,completed=true,completedDate=localISODate()){
   state.componentLogs = state.componentLogs || {};
   state.componentLogs[weekIdx+"::"+key]={completed,completedDate};
-  persistWithoutRerender();
+  persistWithoutRerender(); renderHome(); renderProgress();
   const cb=event?.target; const card=cb?.closest?.('.component,.card'); if(card) card.classList.toggle('done',completed);
   toast(completed?'Workout marked done':'Workout reopened');
 }
@@ -391,7 +391,7 @@ function setComponent(weekIdx,key,completed=true,completedDate=localISODate()){
 const COMPONENT_WORKOUTS = {
   lagree_1:{title:"Lagree",sourceDay:"Monday",simple:true,exerciseKeys:[]},
   mobility_straddle:{title:"Active Straddle Mobility",sourceDay:"Monday",exerciseKeys:["90_90","adductor_rocks","half_kneel_hf","straddle_pancake","straddle_leg_lifts","straddle_compression","active_straddle_hold"]},
-  strength_upper:{title:"Upper Body + Bridal Arms",sourceDay:"Tuesday",exerciseKeys:["wall_slides","open_books","arm_circles","one_arm_db_row","db_shoulder_press","rear_delt_fly","lateral_raise","oh_triceps","triceps_kickback","standard_db_curl","bridal_lateral_pulse","bridal_goalpost","bridal_rear_pulse","bridal_triceps_pulse"],strength:true},
+  strength_upper:{title:"Upper Body",sourceDay:"Tuesday",exerciseKeys:["wall_slides","open_books","arm_circles","one_arm_db_row","db_shoulder_press","rear_delt_fly","lateral_raise","oh_triceps","triceps_kickback","standard_db_curl"],strength:true},
   pole_conditioning:{title:"Pole Conditioning + Active Flexibility",sourceDay:"Wednesday",exerciseKeys:["straddle_leg_lifts","straddle_compression","straight_leg_raise","active_straddle_hold","scap_push","reverse_crunch","dead_bug","straddle_pancake"]},
   strength_lower:{title:"Lower Body Strength",sourceDay:"Thursday",exerciseKeys:["hip_thrust","elevated_sumo","single_leg_hip_thrust","straight_leg_kickback","glute_bridge"],strength:true},
   mobility_splits:{title:"Splits Mobility",sourceDay:"Thursday",exerciseKeys:["half_kneel_hf","half_split","front_split","straddle_pancake","active_leg_lift"]},
@@ -530,7 +530,7 @@ function baseComponentsForDay(name){
       {key:"mobility_straddle",label:"Active Straddle Mobility",category:"mobility",detail:"Can be done any day this week"}
     ],
     Tuesday:[
-      {key:"strength_upper",label:"Upper Body + Bridal Arms",category:"strength",detail:"Back, shoulders, triceps + light high-rep finisher"}
+      {key:"strength_upper",label:"Upper Body",category:"strength",detail:"Back, shoulders + arms"}
     ],
     Wednesday:[
       {key:"pole_conditioning",label:"Pole Conditioning",category:"poleConditioning",detail:"Active flexibility + inversion support"}
@@ -743,8 +743,8 @@ function removeBonusActivity(id){
   renderWorkouts();
 }
 function weeklyComponentCounts(w=weekIndex()){
-  const all=Object.values(APP_CONFIG.schedule).flatMap((_,i)=>componentsForDay(Object.keys(APP_CONFIG.schedule)[i]));
-  const count=cat=>all.filter(c=>c.category===cat&&componentDone(w,c.key)).length;
+  const done=weekDates(w).flatMap(d=>completedComponentsOnDate(d));
+  const count=cat=>done.filter(c=>c.category===cat).length;
   const bonus=activitiesInWeek(w);
   const bonusLagree=bonus.filter(a=>(a.type||"").toLowerCase()==="lagree").length;
   return {lagree:count("lagree")+bonusLagree,strength:count("strength"),mobility:count("mobility"),poleConditioning:count("poleConditioning")};
@@ -756,11 +756,8 @@ function componentInfo(key){
   return allBaseComponents().find(c=>c.key===key) || {key,label:componentMeta(key)?.title||key,category:"other",detail:""};
 }
 function completedComponentsOnDate(dateStr){
-  const w=weekIndex(dateStr);
-  return Object.entries(state.componentLogs||{}).filter(([k,v])=>{
-    if(!v?.completed || v.completedDate!==dateStr) return false;
-    return Number(k.split("::")[0])===w;
-  }).map(([k,v])=>({key:k.split("::")[1],...componentInfo(k.split("::")[1]),completedDate:v.completedDate}));
+  return Object.entries(state.componentLogs||{}).filter(([k,v])=>v?.completed && v.completedDate===dateStr)
+    .map(([k,v])=>({key:k.split("::")[1],...componentInfo(k.split("::")[1]),completedDate:v.completedDate,obligationWeek:Number(k.split("::")[0])}));
 }
 function poleClassesOnDate(dateStr){
   return (state.poleClasses||[]).filter(x=>x.date===dateStr&&x.completed);
@@ -934,6 +931,7 @@ function weeklyComparisonHtml(w){
   return `<div class="card full"><div class="kicker">Week-over-week</div><h2>Last week vs this week</h2><div class="week-detail-row" style="grid-template-columns:1.2fr 1fr 1fr"><span></span><span class="kicker">Last week</span><span class="kicker">This week</span></div>${line("Avg calories",a.cal,b.cal," kcal")}${line("Avg protein",a.pro,b.pro," g")}${line("Avg fiber",a.fib,b.fib," g")}${line("Avg fluids",a.water,b.water," oz")}${line("Total steps",a.steps,b.steps,"")}</div>`;
 }
 
+function setTodayHabit(field,value){const x=todayData();x[field]=value;x.postMealMovement=!!(x.postMealBreakfast||x.postMealLunch||x.postMealDinner);persistWithoutRerender();renderHome();}
 function renderHome(){
   const w=weekIndex(), dates=weekDates(w), g=state.settings.goals;
   let steps=0, cals=[], prots=[], fibers=[], waters=[], sleeps=[];
@@ -976,7 +974,7 @@ function renderHome(){
     ${preg?`<div class="card full soft-highlight">
       <div class="row"><div><div class="kicker">Pregnancy mode</div><h2>Maintain strength, mobility & recovery</h2><div class="sub">No fat-loss scoring or pressure to hit PRs. Use comfort, form and recovery to guide training.</div></div><span class="badge">ON</span></div>
     </div>`:""}
-    <div class="card full"><div class="row"><div><div class="kicker">Today</div><div class="big">Creatine ${td.habitCreatine?"✓":"○"} <span style="font-size:.65em">• Post-meal movement ${td.postMealMovement?"✓":"○"}</span></div>${td.dailyReminder?`<div class="small" style="margin-top:6px"><strong>Note:</strong> ${td.dailyReminder}</div>`:""}</div></div></div>
+    <div class="card full"><div class="kicker">Today</div><div style="display:grid;gap:9px;margin-top:8px"><label style="display:flex;align-items:center;gap:10px;font-weight:800"><input class="check" type="checkbox" ${td.habitCreatine?"checked":""} onchange="setTodayHabit('habitCreatine',this.checked)"> Creatine</label><div class="small"><strong>Post-meal movement ${[td.postMealBreakfast,td.postMealLunch,td.postMealDinner].filter(Boolean).length}/3</strong></div><div style="display:flex;gap:14px;flex-wrap:wrap"><label><input class="check" type="checkbox" ${td.postMealBreakfast?"checked":""} onchange="setTodayHabit('postMealBreakfast',this.checked)"> Breakfast</label><label><input class="check" type="checkbox" ${td.postMealLunch?"checked":""} onchange="setTodayHabit('postMealLunch',this.checked)"> Lunch</label><label><input class="check" type="checkbox" ${td.postMealDinner?"checked":""} onchange="setTodayHabit('postMealDinner',this.checked)"> Dinner</label></div>${td.dailyReminder?`<div class="small"><strong>Note:</strong> ${td.dailyReminder}</div>`:""}</div></div>
     <div class="card full row">
       <div><div class="kicker">6-week goal</div><div class="big">Week ${weekNum} of ${g.weeks}</div><div class="sub">${overall}% through the program</div></div>
       <div class="ringwrap"><div class="ring" style="--pct:${overall}%"></div><div class="ringtext"><strong>${overall}%</strong><span class="small">progress</span></div></div>
@@ -1039,7 +1037,7 @@ function renderWorkouts(){
   const now=new Date(), currentW=weekIndex(), sunday=now.getDay()===0, preview=sunday;
   const w=preview?Math.min(state.settings.goals.weeks-1,currentW+1):currentW, names=Object.keys(APP_CONFIG.schedule), dates=weekDates(w);
   document.getElementById("workouts").innerHTML=`
-    ${preview?`<div class="card soft-highlight"><div class="kicker">Sunday preview</div><h2>Week ${w+1} is ready</h2><div class="small">Your upcoming Monday–Sunday plan is available all day Sunday so you can prepare for the week. Today’s current-week workout and logging remain available.</div></div>${adaptivePanel(w)}`:""}
+    ${preview?`<div class="card soft-highlight"><div class="kicker">Sunday preview</div><h2>Week ${w+1} is ready</h2><div class="small">Your upcoming Monday–Sunday plan is available all day Sunday so you can prepare for the week. Today’s current-week workout and logging remain available.</div></div>`:""}
     <div class="weekstrip">${dates.map(d=>{const dn=dayName(d);const any=completedLabelsOnDate(d).length>0;return `<div class="weekday ${d===localISODate()?"today":""} ${any?"done":""}" role="button" tabindex="0" aria-label="Open ${dn}" onclick="openDay('${dn}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDay('${dn}')} ">${dn.slice(0,1)}<strong>${new Date(d+"T12:00:00").getDate()}</strong></div>`}).join("")}</div>
     <div class="schedule-tools"><button class="move-btn" onclick="resetWeekSchedule(${w})">Reset week</button></div>
     <div class="small" style="margin:-2px 0 12px;text-align:center">Tap a workout to open it. Completed and bonus workouts stay attached to the day you actually did them.</div>
@@ -1112,7 +1110,7 @@ function openComponent(key,w=weekIndex()){
       </div>
       <div class="component-actions" style="margin-top:10px"><button class="move-btn" onclick="moveMenu(${w},'${key}','${meta.title.replace(/'/g,"")}')">Move to another day</button>${!meta.simple?`<button class="move-btn" onclick="addExerciseToPlan(${w},'${key}')">+ Add exercise</button>`:""}</div>
     </div>
-    ${meta.strength?`<div class="card soft-highlight"><div class="kicker">This week's workout</div><h2>Paste a workout from ChatGPT</h2><div class="small">One exercise per line. Example: One-Arm Row | 3 sets | 8–12 reps</div><textarea id="pasteWorkoutBox" rows="6" placeholder="Paste this week's ${meta.title} here..."></textarea><div style="margin-top:10px"><button class="btn" onclick="applyWorkoutPaste('${key}',${w})">Load this workout</button></div><div class="small" style="margin-top:8px">This changes only Week ${w+1}. You can still edit, reorder, add or remove exercises below.</div></div>`:""}
+    ${!meta.simple?`<div class="card soft-highlight"><div class="kicker">Update this routine</div><h2>Paste a routine from ChatGPT</h2><div class="small">Paste the whole routine, including headings like WARM-UP, MAIN WORKOUT, MOBILITY or SKILL. Example: Wall Slides | 1 | 10</div><textarea id="pasteWorkoutBox" rows="7" placeholder="Paste this week's ${meta.title} here..."></textarea><div style="margin-top:10px"><button class="btn" onclick="applyWorkoutPaste('${key}',${w})">Import routine</button></div><div class="small" style="margin-top:8px">This replaces only Week ${w+1}'s version. Your completed history stays saved.</div></div>`:""}
     ${body || `<div class="card exercise"><h3>${meta.title}</h3><p class="sub">${key.startsWith("lagree")?"Complete your Lagree class, then mark this workout Done above.":"Use this as a recovery-focused session and mark it Done when complete."}</p></div>`}
     ${meta.strength?`<div class="card exercise"><div class="kicker">Post-workout</div><div class="formgrid">
       <div><label>Energy (1–5)<input type="number" min="1" max="5" value="${state.sessionLogs[d+"::"+key]?.energy||""}" onchange="saveSessionField('${d}','${key}','energy',this.value)"></label></div>
@@ -1300,7 +1298,7 @@ function renderLog(){
     </div>
     <div style="margin-top:14px"><div class="kicker">Daily habits</div><div class="formgrid" style="margin-top:8px">
       <label style="display:flex;align-items:center;gap:8px">Creatine <input type="checkbox" id="habitCreatine" ${x.habitCreatine?"checked":""}></label>
-      <label style="display:flex;align-items:center;gap:8px">Post-meal movement <input type="checkbox" id="postMealMovement" ${x.postMealMovement?"checked":""}></label>
+      <div><div class="small" style="margin-bottom:6px"><strong>Post-meal movement</strong></div><div style="display:flex;gap:12px;flex-wrap:wrap"><label>Breakfast <input type="checkbox" id="postMealBreakfast" ${x.postMealBreakfast?"checked":""}></label><label>Lunch <input type="checkbox" id="postMealLunch" ${x.postMealLunch?"checked":""}></label><label>Dinner <input type="checkbox" id="postMealDinner" ${x.postMealDinner?"checked":""}></label></div></div>
     </div></div>
     <label style="margin-top:12px">Notes to self<textarea id="dailyReminder" placeholder="Tuesday: remember to...">${x.dailyReminder||""}</textarea></label>
     <button class="btn" style="margin-top:12px" onclick="saveDailyBasics()">Save Daily Log</button>
@@ -1346,7 +1344,7 @@ function renderLog(){
 function saveDailyBasics(){
   const d=localISODate(), x=state.daily[d]||(state.daily[d]={});
   ["steps","calories","protein","fiber","water","weight"].forEach(f=>x[f]=document.getElementById(f).value?Number(document.getElementById(f).value):"");
-  x.habitCreatine=document.getElementById("habitCreatine").checked; x.postMealMovement=document.getElementById("postMealMovement").checked; x.dailyReminder=document.getElementById("dailyReminder").value;
+  x.habitCreatine=document.getElementById("habitCreatine").checked;x.postMealBreakfast=document.getElementById("postMealBreakfast").checked;x.postMealLunch=document.getElementById("postMealLunch").checked;x.postMealDinner=document.getElementById("postMealDinner").checked;x.postMealMovement=!!(x.postMealBreakfast||x.postMealLunch||x.postMealDinner);x.dailyReminder=document.getElementById("dailyReminder").value;
   x.stepsUpdatedAt=new Date().toISOString(); save();toast("Daily log saved");
 }
 function saveSleep(){
@@ -1395,25 +1393,21 @@ function findPlanExerciseKey(componentKey,name,w=weekIndex()){
   });
 }
 function applyWorkoutPaste(componentKey,w=weekIndex()){
-  const el=document.getElementById("pasteWorkoutBox"); const raw=(el?.value||"").trim(); if(!raw)return;
-  const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).filter(x=>!/^upper body|^lower body|^workout/i.test(x));
-  const keys=[]; state.customExercises=state.customExercises||{};
+  const el=document.getElementById("pasteWorkoutBox"),raw=(el?.value||"").trim(); if(!raw)return;
+  const heading=/^(warm[- ]?up|main workout|workout|mobility|skill|cool[- ]?down|upper body|lower body|pole conditioning|active straddle mobility|splits mobility|back \+ shoulder mobility)\s*:?\s*$/i;
+  const lines=raw.split(/\r?\n/).map(x=>x.trim()).filter(Boolean).filter(x=>!heading.test(x));
+  const keys=[]; state.customExercises=state.customExercises||{}; const meta=componentMeta(componentKey);
   for(const line of lines){
-    let name=line,sets=3,reps="8–12";
-    const pipe=line.split("|").map(x=>x.trim());
-    if(pipe.length>1){name=pipe[0]; const st=pipe.find(x=>/set/i.test(x)); const rp=pipe.find(x=>/rep/i.test(x)); if(st)sets=Number(st.match(/\d+/)?.[0]||3); if(rp)reps=rp.replace(/\s*reps?\s*/i,"").trim();}
-    else {
-      const m=line.match(/^(.*?)(?:\s*[-:–]\s*)?(\d+)\s*[x×]\s*([\d–\-]+(?:\s*\/\s*side)?|to\s+failure.*)$/i);
-      if(m){name=m[1].trim();sets=Number(m[2]);reps=m[3].trim();}
-      else {const m2=line.match(/^(.*?)\s+(\d+)\s+sets?\s*[x×]?\s*(.+)$/i);if(m2){name=m2[1].trim();sets=Number(m2[2]);reps=m2[3].replace(/reps?/ig,"").trim();}}
-    }
-    if(!name)continue;
-    const key="custom_"+Date.now()+"_"+Math.random().toString(36).slice(2,7);
-    state.customExercises[key]={key,name,sets,reps,restSec:90,strength:true,why:"Pasted into this week's workout."}; keys.push(key);
+    let name=line,sets=1,reps="8"; const pipe=line.split("|").map(x=>x.trim());
+    if(pipe.length>=2){name=pipe[0];sets=Number((pipe[1].match(/\d+/)||[1])[0]);reps=(pipe[2]||"8").replace(/\s*reps?\s*/ig,"").trim()||"8";}
+    else {const m=line.match(/^(.*?)(?:\s*[-:–—]\s*)?(\d+)\s*[x×]\s*(.+)$/i);if(m){name=m[1].trim();sets=Number(m[2]);reps=m[3].replace(/reps?/ig,"").trim();}}
+    if(!name)continue; const key="custom_"+Date.now()+"_"+Math.random().toString(36).slice(2,7);
+    const secMatch=reps.match(/(\d+)\s*(?:sec|second)/i);
+    state.customExercises[key]={key,name,sets,reps,restSec:90,strength:!!meta?.strength,seconds:secMatch?Number(secMatch[1]):undefined,why:"Imported for this week's routine."};keys.push(key);
   }
-  if(!keys.length){alert("I couldn't read that workout. Try one exercise per line, like: One-Arm Row | 3 sets | 8–12 reps");return;}
-  state.componentPlans=state.componentPlans||{week:{},ongoing:{}}; state.componentPlans.week[w+"::"+componentKey]=keys;
-  persistWithoutRerender(); toast("Workout loaded for this week"); openComponent(componentKey,w);
+  if(!keys.length){alert("I couldn't read that routine. Try one exercise per line, like: Wall Slides | 1 | 10");return;}
+  state.componentPlans=state.componentPlans||{week:{},ongoing:{}};state.componentPlans.week[w+"::"+componentKey]=keys;
+  persistWithoutRerender();toast("Routine imported for this week");openComponent(componentKey,w);
 }
 function applyAppUpdate(){
   const raw=(document.getElementById("updateText")?.value||"").trim(); if(!raw)return;
@@ -1529,7 +1523,7 @@ function renderProgress(){
    <label style="display:block;margin-top:12px">Anything else?<textarea placeholder="Optional: energy, schedule, overall soreness, pole limitations, or anything else not tied to one exercise." onblur="saveWeeklyNote(${w},this.value)">${state.weeklyNotes?.[weeklyReviewKey(w)]||""}</textarea></label>
    <div class="row" style="margin-top:10px"><div class="small">${notesForWeek(w).length} exercise note${notesForWeek(w).length===1?"":"s"} automatically included.</div><button class="move-btn" onclick="copyWeeklyFeedback(${w})">Copy for ChatGPT</button></div></div>
    <div class="card exercise"><div class="kicker">Workout history</div><h2>Recent strength logs</h2>
-   ${Object.entries(state.exerciseLogs).filter(([k])=>STRENGTH_KEYS.has(k.split("::")[1])).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,8).map(([k,v])=>`<div class="milestone"><div>${k.split("::")[1].replaceAll("_"," ")}</div><div class="small">${k.slice(0,10)} • ${v.sets.map(s=>`${s.weight||"—"}×${s.reps||"—"}`).join(" / ")}${v.rpe?` • ${v.rpe}`:""}</div></div>`).join("")||'<div class="sub">No strength history yet.</div>'}
+   ${Object.entries(state.exerciseLogs).filter(([k,v])=>{const key=k.split("::")[1],ex=exerciseByKey(key);return (STRENGTH_KEYS.has(key)||ex?.strength)&&(v?.sets||[]).some(s=>s.weight||s.reps||s.done)}).sort((a,b)=>b[0].localeCompare(a[0])).slice(0,12).map(([k,v])=>{const key=k.split("::")[1],ex=exerciseByKey(key);return `<div class="milestone"><div>${ex?.name||key.replaceAll("_"," ")}</div><div class="small">${k.slice(0,10)} • ${v.sets.map(s=>`${s.weight||"—"}×${s.reps||"—"}`).join(" / ")}${v.rpe?` • ${v.rpe}`:""}</div></div>`}).join("")||'<div class="sub">No completed strength sets logged yet.</div>'}
    </div>`;
 }
 function renderMore(){
@@ -1618,6 +1612,10 @@ document.getElementById("timerPause").onclick=()=>{if(!activeTimer)return;active
 function renderAll(keepPage=true){
   renderHome(); renderWorkouts(); renderLog(); renderProgress(); renderMore();
 }
+// v35 migration: remove the retired Bridal Arms finisher from plans, but keep historical logs.
+state.componentPlans=state.componentPlans||{week:{},ongoing:{}};for(const bucket of [state.componentPlans.week||{},state.componentPlans.ongoing||{}]){for(const k of Object.keys(bucket)){if(k.includes("strength_upper"))bucket[k]=(bucket[k]||[]).filter(x=>!String(x).startsWith("bridal_"));}}
+for(const x of Object.values(state.daily||{})){if(x.postMealMovement&&x.postMealBreakfast==null&&x.postMealLunch==null&&x.postMealDinner==null)x.postMealLunch=true;}
+persistWithoutRerender();
 (async()=>{renderAll(); await loadExerciseDB(); renderAll()})();
 </script>
 
