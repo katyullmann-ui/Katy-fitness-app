@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="6 Week Recomp" />
-<title>Katy Recomp MASTER v35 • 6 Week Recomp</title>
+<title>Katy Recomp MASTER v37 • 6 Week Recomp</title>
 <style>
 :root{
   --bg:#F6F2EA; --card:#FFFFFF; --card2:#F0ECE3; --muted:#667275; --text:#163536;
@@ -204,10 +204,10 @@ Object.assign(COACHING,{
   single_leg_hip_thrust:{title:"Single-Leg Hip-Thrust Burnout",goal:"Finish the glutes one side at a time.",how:"Support your upper back, plant one foot, lift the other leg, and drive the planted heel down as you raise your hips.",focus:"Keep hips level and ribs down.",feel:"Glute of the planted leg.",tempo:"2 sec up → 1 sec squeeze → 2–3 sec down.",cue:"Level hips, heel down.",avoid:"Twisting or continuing after controlled form breaks."},
   straight_leg_kickback:{title:"Straight-Leg Kickback",goal:"Train glute extension with minimal knee movement.",how:"Brace on a bench, keep the working leg relatively straight, and drive it back and slightly up from the hip.",focus:"Keep pelvis square and torso stable.",feel:"Glute, not low back.",tempo:"2 sec lift → 1 sec squeeze → 3 sec lower.",cue:"Move from the hip.",avoid:"Opening the pelvis or using momentum."},
   glute_bridge:{title:"Glute Bridge",goal:"Accumulate controlled glute volume.",how:"Lie on your back with feet planted, gently tuck the pelvis, and squeeze the glutes to lift the hips.",focus:"Ribs down and shins roughly vertical at the top.",feel:"Glutes; hamstrings may assist.",tempo:"2 sec up → 1–2 sec squeeze → 3 sec lower.",cue:"Tuck, squeeze, lift.",avoid:"Finishing by arching the low back."},
-  bridal_lateral_pulse:{title:"Bridal Arms: Lateral Raise Pulses",goal:"Light high-rep shoulder finisher.",how:"With very light weights, hold arms in a comfortable partial lateral-raise position and make small controlled pulses.",focus:"Keep shoulders away from ears.",feel:"Side shoulders burning, not neck pain.",tempo:"Small continuous controlled pulses.",cue:"Tiny range, long neck.",avoid:"Shrugging or swinging."},
-  bridal_goalpost:{title:"Bridal Arms: Goalpost Press",goal:"High-rep shoulder finisher for endurance and shape.",how:"Hold very light weights with elbows bent in a goalpost shape and press upward through a comfortable range.",focus:"Ribs stay down; movement stays controlled.",feel:"Shoulders and triceps.",tempo:"Steady controlled reps for time.",cue:"Goalpost to tall.",avoid:"Back arching or painful shoulder range."},
-  bridal_rear_pulse:{title:"Bridal Arms: Rear-Delt Pulses",goal:"Finish rear shoulders and upper back with light resistance.",how:"Hinge slightly, open arms out and back, and pulse through a small controlled range.",focus:"Keep traps relaxed.",feel:"Back of shoulders and upper back.",tempo:"Small controlled pulses.",cue:"Reach wide, not high.",avoid:"Shrugging."},
-  bridal_triceps_pulse:{title:"Bridal Arms: Triceps Kickback Pulses",goal:"Finish the triceps with a light high-rep set.",how:"Hinge forward, straighten the elbows behind you, and pulse near full extension with very light weights.",focus:"Upper arms stay pinned.",feel:"Back of upper arms.",tempo:"Small continuous pulses.",cue:"Long arms, squeeze back.",avoid:"Swinging or dropping the elbows."}
+  bridal_lateral_pulse:{title:"Lateral Raise Pulses",goal:"Light high-rep shoulder finisher.",how:"With very light weights, hold arms in a comfortable partial lateral-raise position and make small controlled pulses.",focus:"Keep shoulders away from ears.",feel:"Side shoulders burning, not neck pain.",tempo:"Small continuous controlled pulses.",cue:"Tiny range, long neck.",avoid:"Shrugging or swinging."},
+  bridal_goalpost:{title:"Goalpost Press",goal:"High-rep shoulder finisher for endurance and shape.",how:"Hold very light weights with elbows bent in a goalpost shape and press upward through a comfortable range.",focus:"Ribs stay down; movement stays controlled.",feel:"Shoulders and triceps.",tempo:"Steady controlled reps for time.",cue:"Goalpost to tall.",avoid:"Back arching or painful shoulder range."},
+  bridal_rear_pulse:{title:"Rear-Delt Pulses",goal:"Finish rear shoulders and upper back with light resistance.",how:"Hinge slightly, open arms out and back, and pulse through a small controlled range.",focus:"Keep traps relaxed.",feel:"Back of shoulders and upper back.",tempo:"Small controlled pulses.",cue:"Reach wide, not high.",avoid:"Shrugging."},
+  bridal_triceps_pulse:{title:"Triceps Kickback Pulses",goal:"Finish the triceps with a light high-rep set.",how:"Hinge forward, straighten the elbows behind you, and pulse near full extension with very light weights.",focus:"Upper arms stay pinned.",feel:"Back of upper arms.",tempo:"Small continuous pulses.",cue:"Long arms, squeeze back.",avoid:"Swinging or dropping the elbows."}
 });
 
 const APP_CONFIG = {
@@ -239,11 +239,7 @@ const APP_CONFIG = {
       {key:"lateral_raise",name:"Dumbbell Lateral Raise",sets:3,reps:"12–20",search:"side lateral raise"},
       {key:"oh_triceps",name:"Overhead Triceps Extension",sets:3,reps:"10–15",search:"dumbbell standing triceps extension"},
       {key:"triceps_kickback",name:"Dumbbell Triceps Kickback",sets:3,reps:"12–20",strength:true},
-      {key:"standard_db_curl",name:"Dumbbell Biceps Curl",sets:2,reps:"10–15",strength:true},
-      {key:"bridal_lateral_pulse",name:"Bridal Arms: Lateral Raise Pulses",sets:2,reps:"40 sec",seconds:40},
-      {key:"bridal_goalpost",name:"Bridal Arms: Goalpost Press",sets:2,reps:"40 sec",seconds:40},
-      {key:"bridal_rear_pulse",name:"Bridal Arms: Rear-Delt Pulses",sets:2,reps:"40 sec",seconds:40},
-      {key:"bridal_triceps_pulse",name:"Bridal Arms: Triceps Kickback Pulses",sets:2,reps:"40 sec",seconds:40}
+      {key:"standard_db_curl",name:"Dumbbell Biceps Curl",sets:2,reps:"10–15",strength:true}
     ]},
     Wednesday: {type:"Pole Conditioning + Active Flexibility", sessionKey:"wed_pole_cond", poleConditioning:true, exercises:[
       {key:"straddle_leg_lifts",name:"Seated Straddle Leg Lifts",sets:3,reps:"6–10/side"},
@@ -552,24 +548,36 @@ function baseComponentsForDay(name){
   };
   return map[name]||[];
 }
+function moveRecordFor(weekIdx,key){
+  const v=state.scheduleMoves?.[weekIdx+"::"+key];
+  if(!v) return null;
+  // Backward compatibility: older versions stored only the weekday string.
+  if(typeof v==="string") return {targetWeek:weekIdx,targetDay:v};
+  return {targetWeek:Number.isFinite(Number(v.targetWeek))?Number(v.targetWeek):weekIdx,targetDay:v.targetDay||v.day||null};
+}
 function movedDayFor(weekIdx,key){
-  return state.scheduleMoves?.[weekIdx+"::"+key] || null;
+  const r=moveRecordFor(weekIdx,key);
+  return r && r.targetWeek===weekIdx ? r.targetDay : null;
 }
 function scheduledDayForComponent(weekIdx,key){
-  const moved=movedDayFor(weekIdx,key);
-  if(moved) return moved;
+  const r=moveRecordFor(weekIdx,key);
+  if(r){
+    if(r.targetWeek!==weekIdx) return null; // carried out of this week
+    return r.targetDay;
+  }
   for(const day of Object.keys(APP_CONFIG.schedule)){
     if(baseComponentsForDay(day).some(c=>c.key===key)) return day;
   }
   return null;
 }
-function moveComponent(weekIdx,key,toDay){
+function moveComponent(weekIdx,key,toDay,targetWeek=weekIdx){
   state.scheduleMoves=state.scheduleMoves||{};
+  targetWeek=Number(targetWeek);
   const original=Object.keys(APP_CONFIG.schedule).find(day=>baseComponentsForDay(day).some(c=>c.key===key));
-  if(toDay===original) delete state.scheduleMoves[weekIdx+"::"+key];
-  else state.scheduleMoves[weekIdx+"::"+key]=toDay;
+  if(targetWeek===weekIdx && toDay===original) delete state.scheduleMoves[weekIdx+"::"+key];
+  else state.scheduleMoves[weekIdx+"::"+key]={targetWeek,targetDay:toDay};
   save();
-  toast("Moved to "+toDay);
+  toast(targetWeek===weekIdx?"Moved to "+toDay:"Carried forward to Week "+(targetWeek+1)+" • "+toDay);
   renderHome(); renderWorkouts();
 }
 function resetWeekSchedule(weekIdx=weekIndex()){
@@ -578,11 +586,16 @@ function resetWeekSchedule(weekIdx=weekIndex()){
   save(); renderHome(); renderWorkouts(); toast("Week reset to suggested schedule");
 }
 function moveMenu(weekIdx,key,label){
-  const days=Object.keys(APP_CONFIG.schedule);
-  const current=scheduledDayForComponent(weekIdx,key);
-  const buttons=days.map(d=>`<button class="move-day-btn ${d===current?"active":""}" onclick="moveComponent(${weekIdx},'${key}','${d}');closeMoveMenu()">${d}</button>`).join("");
+  const days=Object.keys(APP_CONFIG.schedule), rec=moveRecordFor(weekIdx,key);
+  const currentWeek=rec?.targetWeek??weekIdx, currentDay=rec?.targetDay||scheduledDayForComponent(weekIdx,key);
+  const makeButtons=(targetWeek)=>weekDates(targetWeek).map((date,i)=>{
+    const d=days[i], active=targetWeek===currentWeek&&d===currentDay;
+    const dateLabel=new Date(date+"T12:00:00").toLocaleDateString(undefined,{month:"short",day:"numeric"});
+    return `<button class="move-day-btn ${active?"active":""}" onclick="moveComponent(${weekIdx},'${key}','${d}',${targetWeek});closeMoveMenu()"><strong>${d}</strong><span style="display:block;font-size:12px;font-weight:500;margin-top:2px">${dateLabel}</span></button>`;
+  }).join("");
+  const canNext=weekIdx+1<state.settings.goals.weeks;
   document.getElementById("moveSheetTitle").textContent="Move "+label;
-  document.getElementById("moveSheetDays").innerHTML=buttons;
+  document.getElementById("moveSheetDays").innerHTML=`<div class="kicker" style="grid-column:1/-1;margin-top:2px">Week ${weekIdx+1}</div>${makeButtons(weekIdx)}${canNext?`<div class="kicker" style="grid-column:1/-1;margin-top:12px">Next week • Week ${weekIdx+2}</div>${makeButtons(weekIdx+1)}`:""}`;
   document.getElementById("moveSheet").classList.add("open");
 }
 function closeMoveMenu(){document.getElementById("moveSheet")?.classList.remove("open")}
@@ -655,10 +668,21 @@ function dropOnDay(ev,day){
 
 function componentsForDay(name,weekIdx=weekIndex()){
   const all=Object.keys(APP_CONFIG.schedule).flatMap(day=>baseComponentsForDay(day));
-  return all.filter(c=>scheduledDayForComponent(weekIdx,c.key)===name).map(c=>({
-    ...c,
+  const native=all.filter(c=>scheduledDayForComponent(weekIdx,c.key)===name).map(c=>({
+    ...c,_logWeek:weekIdx,
     detail: movedDayFor(weekIdx,c.key) ? `Moved here for Week ${weekIdx+1}` : c.detail
   }));
+  // Add workouts carried forward from an earlier week without replacing this week's own workout.
+  const inbound=[];
+  Object.entries(state.scheduleMoves||{}).forEach(([id,val])=>{
+    const m=id.match(/^(\d+)::(.+)$/); if(!m) return;
+    const sourceWeek=Number(m[1]), key=m[2]; if(sourceWeek===weekIdx) return;
+    const rec=typeof val==="string"?{targetWeek:sourceWeek,targetDay:val}:val;
+    if(Number(rec?.targetWeek)!==weekIdx || rec?.targetDay!==name) return;
+    const base=all.find(c=>c.key===key); if(!base) return;
+    inbound.push({...base,_logWeek:sourceWeek,_carried:true,detail:`Carried forward from Week ${sourceWeek+1}`});
+  });
+  return [...native,...inbound];
 }
 
 function componentByKey(key){
@@ -931,7 +955,7 @@ function weeklyComparisonHtml(w){
   return `<div class="card full"><div class="kicker">Week-over-week</div><h2>Last week vs this week</h2><div class="week-detail-row" style="grid-template-columns:1.2fr 1fr 1fr"><span></span><span class="kicker">Last week</span><span class="kicker">This week</span></div>${line("Avg calories",a.cal,b.cal," kcal")}${line("Avg protein",a.pro,b.pro," g")}${line("Avg fiber",a.fib,b.fib," g")}${line("Avg fluids",a.water,b.water," oz")}${line("Total steps",a.steps,b.steps,"")}</div>`;
 }
 
-function setTodayHabit(field,value){const x=todayData();x[field]=value;x.postMealMovement=!!(x.postMealBreakfast||x.postMealLunch||x.postMealDinner);persistWithoutRerender();renderHome();}
+function setTodayHabit(field,value){const x=todayData();x[field]=value;persistWithoutRerender();renderHome();}
 function renderHome(){
   const w=weekIndex(), dates=weekDates(w), g=state.settings.goals;
   let steps=0, cals=[], prots=[], fibers=[], waters=[], sleeps=[];
@@ -974,7 +998,7 @@ function renderHome(){
     ${preg?`<div class="card full soft-highlight">
       <div class="row"><div><div class="kicker">Pregnancy mode</div><h2>Maintain strength, mobility & recovery</h2><div class="sub">No fat-loss scoring or pressure to hit PRs. Use comfort, form and recovery to guide training.</div></div><span class="badge">ON</span></div>
     </div>`:""}
-    <div class="card full"><div class="kicker">Today</div><div style="display:grid;gap:9px;margin-top:8px"><label style="display:flex;align-items:center;gap:10px;font-weight:800"><input class="check" type="checkbox" ${td.habitCreatine?"checked":""} onchange="setTodayHabit('habitCreatine',this.checked)"> Creatine</label><div class="small"><strong>Post-meal movement ${[td.postMealBreakfast,td.postMealLunch,td.postMealDinner].filter(Boolean).length}/3</strong></div><div style="display:flex;gap:14px;flex-wrap:wrap"><label><input class="check" type="checkbox" ${td.postMealBreakfast?"checked":""} onchange="setTodayHabit('postMealBreakfast',this.checked)"> Breakfast</label><label><input class="check" type="checkbox" ${td.postMealLunch?"checked":""} onchange="setTodayHabit('postMealLunch',this.checked)"> Lunch</label><label><input class="check" type="checkbox" ${td.postMealDinner?"checked":""} onchange="setTodayHabit('postMealDinner',this.checked)"> Dinner</label></div>${td.dailyReminder?`<div class="small"><strong>Note:</strong> ${td.dailyReminder}</div>`:""}</div></div>
+    <div class="card full"><div class="kicker">Today</div><div style="display:grid;gap:9px;margin-top:8px"><label style="display:flex;align-items:center;gap:10px;font-weight:800"><input class="check" type="checkbox" ${td.habitCreatine?"checked":""} onchange="setTodayHabit('habitCreatine',this.checked)"> Creatine</label><label style="display:flex;align-items:center;gap:10px;font-weight:800"><input class="check" type="checkbox" ${td.postMealMovement?"checked":""} onchange="setTodayHabit('postMealMovement',this.checked)"> Post-meal walk</label>${td.dailyReminder?`<div class="small"><strong>Note:</strong> ${td.dailyReminder}</div>`:""}</div></div>
     <div class="card full row">
       <div><div class="kicker">6-week goal</div><div class="big">Week ${weekNum} of ${g.weeks}</div><div class="sub">${overall}% through the program</div></div>
       <div class="ringwrap"><div class="ring" style="--pct:${overall}%"></div><div class="ringtext"><strong>${overall}%</strong><span class="small">progress</span></div></div>
@@ -1046,13 +1070,13 @@ function renderWorkouts(){
       return `<div class="card daycard" data-day="${n}" ondragover="dragOverDay(event)" ondragleave="dragLeaveDay(event)" ondrop="dropOnDay(event,'${n}')">
         <div class="row" onclick="openDay('${n}',${w})"><div><div class="kicker">${n}</div><h2>${s.type}</h2><div class="sub">${comps.length?comps.map(c=>c.label).join(" • "):"Nothing scheduled"}</div>${actual.length?`<div class="small" style="margin-top:7px"><strong>Completed:</strong> ${actual.join(" • ")}</div>`:""}</div><div class="badge">Open</div></div>
         <div class="component-grid">
-          ${comps.map(c=>{const rec=state.componentLogs?.[w+"::"+c.key], done=!!rec?.completed, when=rec?.completedDate;return `<div class="component clickable ${done?"done":""}" draggable="true" ondragstart="dragStartComponent(event,${w},'${c.key}')" onclick="if(!event.target.closest('input,button,.drag-handle')) openComponent('${c.key}',${w})">
-            <label>${c.label}<input class="check" type="checkbox" ${done?"checked":""} onclick="event.stopPropagation()" onchange="setComponent(${w},'${c.key}',this.checked)"></label>
+          ${comps.map(c=>{const lw=c._logWeek??w, rec=state.componentLogs?.[lw+"::"+c.key], done=!!rec?.completed, when=rec?.completedDate;return `<div class="component clickable ${done?"done":""}" draggable="true" ondragstart="dragStartComponent(event,${c._logWeek??w},'${c.key}')" onclick="if(!event.target.closest('input,button,.drag-handle')) openComponent('${c.key}',${c._logWeek??w})">
+            <label>${c.label}<input class="check" type="checkbox" ${done?"checked":""} onclick="event.stopPropagation()" onchange="setComponent(${c._logWeek??w},'${c.key}',this.checked)"></label>
             <div class="small">${done&&when&&dayName(when)!==n?`Completed ${fmtShortDate(when)} • `:""}${c.detail}</div>
             <div class="component-openhint">Tap to open workout →</div>
             <div class="component-actions">
-              <span class="drag-handle" aria-label="Drag ${c.label}" role="button" ontouchstart="touchDragStart(event,${w},'${c.key}')" onclick="event.stopPropagation()">☰</span>
-              <button class="move-btn" onclick="event.stopPropagation();moveMenu(${w},'${c.key}','${c.label.replace(/'/g,"")}')">Move</button>
+              <span class="drag-handle" aria-label="Drag ${c.label}" role="button" ontouchstart="touchDragStart(event,${c._logWeek??w},'${c.key}')" onclick="event.stopPropagation()">☰</span>
+              <button class="move-btn" onclick="event.stopPropagation();moveMenu(${c._logWeek??w},'${c.key}','${c.label.replace(/'/g,"")}')">Move</button>
             </div>
           </div>`}).join("")}
         </div>
@@ -1074,11 +1098,11 @@ function openDay(name,w=weekIndex()){
     <div class="card">
       <div class="kicker">${name}</div><h2>${comps.length?comps.map(c=>c.label).join(" + "):"Nothing scheduled"}</h2>
       <div class="component-grid">
-      ${comps.map(c=>{const rec=state.componentLogs?.[w+"::"+c.key],done=!!rec?.completed,when=rec?.completedDate;return `<div class="component clickable ${done?"done":""}" onclick="if(!event.target.closest('input,button'))openComponent('${c.key}',${w})">
-        <label>${c.label}<input class="check" type="checkbox" ${done?"checked":""} onclick="event.stopPropagation()" onchange="setComponent(${w},'${c.key}',this.checked)"></label>
+      ${comps.map(c=>{const lw=c._logWeek??w,rec=state.componentLogs?.[lw+"::"+c.key],done=!!rec?.completed,when=rec?.completedDate;return `<div class="component clickable ${done?"done":""}" onclick="if(!event.target.closest('input,button'))openComponent('${c.key}',${c._logWeek??w})">
+        <label>${c.label}<input class="check" type="checkbox" ${done?"checked":""} onclick="event.stopPropagation()" onchange="setComponent(${c._logWeek??w},'${c.key}',this.checked)"></label>
         <div class="small">${done&&when&&when!==d?`Completed ${fmtShortDate(when)} • `:""}${c.detail}</div>
         <div class="component-openhint">Open actual workout →</div>
-        <div class="component-actions"><button class="move-btn" onclick="event.stopPropagation();moveMenu(${w},'${c.key}','${c.label.replace(/'/g,"")}')">Move to another day</button></div>
+        <div class="component-actions"><button class="move-btn" onclick="event.stopPropagation();moveMenu(${c._logWeek??w},'${c.key}','${c.label.replace(/'/g,"")}')">Move to another day</button></div>
       </div>`}).join("")||'<div class="sub">Nothing was originally scheduled here.</div>'}
       </div>
     </div>
@@ -1088,10 +1112,11 @@ function openDay(name,w=weekIndex()){
 function openComponent(key,w=weekIndex()){
   const meta=componentMeta(key); if(!meta) return;
   switchPage("workouts");
-  const scheduledDay=scheduledDayForComponent(w,key)||meta.sourceDay;
-  const d=weekDates(w).find(x=>dayName(x)===scheduledDay)||localISODate();
+  const move=moveRecordFor(w,key), displayWeek=(move&&move.targetWeek!==w)?move.targetWeek:w;
+  const scheduledDay=(move?.targetDay)||scheduledDayForComponent(w,key)||meta.sourceDay;
+  const d=weekDates(displayWeek).find(x=>dayName(x)===scheduledDay)||localISODate();
   document.getElementById("pageTitle").textContent=meta.title;
-  document.getElementById("pageSub").textContent=`Scheduled ${scheduledDay} • Week ${w+1}`;
+  document.getElementById("pageSub").textContent=displayWeek!==w?`Carried forward from Week ${w+1} • ${scheduledDay}, Week ${displayWeek+1}`:`Scheduled ${scheduledDay} • Week ${w+1}`;
 
   const exercises=planKeysForComponent(key,w).map(baseKey=>({baseKey,ex:currentExerciseFor(baseKey,w)})).filter(x=>x.ex);
   const body=exercises.map(x=>renderExercise(x.ex,d,x.baseKey,w,key)).join("");
@@ -1298,7 +1323,7 @@ function renderLog(){
     </div>
     <div style="margin-top:14px"><div class="kicker">Daily habits</div><div class="formgrid" style="margin-top:8px">
       <label style="display:flex;align-items:center;gap:8px">Creatine <input type="checkbox" id="habitCreatine" ${x.habitCreatine?"checked":""}></label>
-      <div><div class="small" style="margin-bottom:6px"><strong>Post-meal movement</strong></div><div style="display:flex;gap:12px;flex-wrap:wrap"><label>Breakfast <input type="checkbox" id="postMealBreakfast" ${x.postMealBreakfast?"checked":""}></label><label>Lunch <input type="checkbox" id="postMealLunch" ${x.postMealLunch?"checked":""}></label><label>Dinner <input type="checkbox" id="postMealDinner" ${x.postMealDinner?"checked":""}></label></div></div>
+      <label style="display:flex;align-items:center;gap:8px">Post-meal walk <input type="checkbox" id="postMealMovement" ${x.postMealMovement?"checked":""}></label>
     </div></div>
     <label style="margin-top:12px">Notes to self<textarea id="dailyReminder" placeholder="Tuesday: remember to...">${x.dailyReminder||""}</textarea></label>
     <button class="btn" style="margin-top:12px" onclick="saveDailyBasics()">Save Daily Log</button>
@@ -1344,7 +1369,7 @@ function renderLog(){
 function saveDailyBasics(){
   const d=localISODate(), x=state.daily[d]||(state.daily[d]={});
   ["steps","calories","protein","fiber","water","weight"].forEach(f=>x[f]=document.getElementById(f).value?Number(document.getElementById(f).value):"");
-  x.habitCreatine=document.getElementById("habitCreatine").checked;x.postMealBreakfast=document.getElementById("postMealBreakfast").checked;x.postMealLunch=document.getElementById("postMealLunch").checked;x.postMealDinner=document.getElementById("postMealDinner").checked;x.postMealMovement=!!(x.postMealBreakfast||x.postMealLunch||x.postMealDinner);x.dailyReminder=document.getElementById("dailyReminder").value;
+  x.habitCreatine=document.getElementById("habitCreatine").checked;x.postMealMovement=document.getElementById("postMealMovement").checked;x.dailyReminder=document.getElementById("dailyReminder").value;
   x.stepsUpdatedAt=new Date().toISOString(); save();toast("Daily log saved");
 }
 function saveSleep(){
@@ -1612,9 +1637,22 @@ document.getElementById("timerPause").onclick=()=>{if(!activeTimer)return;active
 function renderAll(keepPage=true){
   renderHome(); renderWorkouts(); renderLog(); renderProgress(); renderMore();
 }
-// v35 migration: remove the retired Bridal Arms finisher from plans, but keep historical logs.
+// Compatibility migration: remove retired finisher exercises from active plans while keeping historical logs.
 state.componentPlans=state.componentPlans||{week:{},ongoing:{}};for(const bucket of [state.componentPlans.week||{},state.componentPlans.ongoing||{}]){for(const k of Object.keys(bucket)){if(k.includes("strength_upper"))bucket[k]=(bucket[k]||[]).filter(x=>!String(x).startsWith("bridal_"));}}
-for(const x of Object.values(state.daily||{})){if(x.postMealMovement&&x.postMealBreakfast==null&&x.postMealLunch==null&&x.postMealDinner==null)x.postMealLunch=true;}
+for(const x of Object.values(state.daily||{})){if(x.postMealMovement==null)x.postMealMovement=!!(x.postMealBreakfast||x.postMealLunch||x.postMealDinner);}
+// Compatibility: older versions stored workout completion in sessionLogs. Carry those completions into the current component system.
+(function migrateLegacyWorkoutCompletions(){
+  state.componentLogs=state.componentLogs||{};
+  const map={tue_upper:["strength_upper"],wed_pole_cond:["pole_conditioning"],thu_lower:["strength_lower","mobility_splits"],fri_lagree:["lagree_2"],sat_lagree:["lagree_3","mobility_back"]};
+  for(const [legacyKey,rec] of Object.entries(state.sessionLogs||{})){
+    if(!rec?.completed) continue;
+    const parts=legacyKey.split("::"), date=parts[0], sessionKey=parts.slice(1).join("::");
+    for(const componentKey of (map[sessionKey]||[])){
+      const wk=weekIndex(date), k=wk+"::"+componentKey;
+      if(!state.componentLogs[k]?.completed) state.componentLogs[k]={completed:true,completedDate:date,migratedFrom:sessionKey};
+    }
+  }
+})();
 persistWithoutRerender();
 (async()=>{renderAll(); await loadExerciseDB(); renderAll()})();
 </script>
@@ -1629,7 +1667,7 @@ persistWithoutRerender();
 <div id="moveSheet" class="move-sheet" onclick="if(event.target===this)closeMoveMenu()">
   <div class="move-sheet-panel">
     <div class="row"><h3 id="moveSheetTitle">Move workout</h3><button class="btn secondary" onclick="closeMoveMenu()">Done</button></div>
-    <div class="small" style="margin-bottom:10px">Choose a different day. Your weekly goal stays the same.</div>
+    <div class="small" style="margin-bottom:10px">Choose a day this week or carry it forward to next week. It only counts when you complete it.</div>
     <div id="moveSheetDays" class="move-day-grid"></div>
   </div>
 </div>
